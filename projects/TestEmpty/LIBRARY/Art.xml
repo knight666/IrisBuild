@@ -1,0 +1,60 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Art" itemID="5752c0f3-000001fd" linkageExportForAS="true" linkageExportForRS="true" linkageClassName="Art" linkageURL="." lastModified="1465041224">
+  <timeline>
+    <DOMTimeline name="Art">
+      <layers>
+        <DOMLayer name="Layer 2" color="#9933CC" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMShape>
+                  <strokes>
+                    <StrokeStyle index="1">
+                      <SolidStroke scaleMode="normal">
+                        <fill>
+                          <SolidColor/>
+                        </fill>
+                      </SolidStroke>
+                    </StrokeStyle>
+                  </strokes>
+                  <edges>
+                    <Edge strokeStyle="1" edges="!-1380 -3680|111.5 -970.5!111.5 -970.5|940 -3160!-4640 400|-620.5 965!-620.5 965|111.5 -970.5!-2260 5299|-620.5 965!2747 3817|4724.5 1716.5!4724.5 1716.5|1328 1239!1328 1239|2747 3817!900 5779|2747 3817!2747 3817|3640 5439!8580 -2380
+|4724.5 1716.5!4724.5 1716.5|9440 2379!-620.5 965|1328 1239!1328 1239|111.5 -970.5"/>
+                  </edges>
+                </DOMShape>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="Layer 1" color="#4FFF4F">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMShape>
+                  <fills>
+                    <FillStyle index="1">
+                      <SolidColor color="#0066CC"/>
+                    </FillStyle>
+                  </fills>
+                  <strokes>
+                    <StrokeStyle index="1">
+                      <SolidStroke scaleMode="normal">
+                        <fill>
+                          <SolidColor/>
+                        </fill>
+                      </SolidStroke>
+                    </StrokeStyle>
+                  </strokes>
+                  <edges>
+                    <Edge fillStyle1="1" strokeStyle="1" edges="
+!4019 -1107[5100 -193 5100 1099!5100 1099[5100 2391 4019 3305!4019 3305[2939 4219 1410 4219!1410 4219[-119 4219 -1200 3305!-1200 3305[-2280 2391 -2280 1099!-2280 1099[-2280 -193 -1200 -1107!-1200 -1107[-119 -2021 1410 -2021!1410 -2021
+[2939 -2021 4019 -1107"/>
+                  </edges>
+                </DOMShape>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>
