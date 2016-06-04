@@ -1,4 +1,7 @@
 <DOMDocument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" width="1280" height="720" currentTimeline="1" xflVersion="2.1" creatorInfo="Adobe Flash Professional CS5.5" platform="Windows" versionInfo="Saved by Adobe Flash Windows 11.5 build 325" majorVersion="11" minorVersion="5" buildNumber="325" viewAngle3D="100.925968316201" sharedLibraryURL="." nextSceneIdentifier="2" playOptionsPlayLoop="false" playOptionsPlayPages="false" playOptionsPlayFrameActions="false">
+     <media>
+          <DOMBitmapItem name="textinput_footer_cancel.png" itemID="5752e10b-0000020b" sourceExternalFilepath="./LIBRARY/textinput_footer_cancel.png" sourceLastImported="1415735326" externalFileSize="847" useImportedJPEGData="false" compressionType="lossless" originalCompressionType="lossless" quality="50" href="textinput_footer_cancel.png" bitmapDataHRef="M 1 1465049348.dat" frameRight="1200" frameBottom="860"/>
+     </media>
      <symbols>
           <Include href="Art.xml" itemID="5752c0f3-000001fd" lastModified="1465041224"/>
      </symbols>
@@ -17,6 +20,11 @@
                                                   <Point x="120.05" y="52.45"/>
                                              </transformationPoint>
                                         </DOMSymbolInstance>
+                                        <DOMBitmapInstance libraryItemName="textinput_footer_cancel.png">
+                                             <matrix>
+                                                  <Matrix tx="1029.95" ty="97.7"/>
+                                             </matrix>
+                                        </DOMBitmapInstance>
                                    </elements>
                               </DOMFrame>
                          </frames>
