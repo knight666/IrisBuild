@@ -3,6 +3,9 @@ def readElement(parent, name):
 	if element == None:
 		raise SyntaxError('Missing "' + str(name) + '" element under "' + str(parent.tag) + '" element.')
 
+	if element.text == None:
+		return ''
+	
 	return element.text
 
 def readPathList(value):

@@ -1,7 +1,8 @@
 import xml.etree.ElementTree as ET
 import libs.flash.XMLUtils as fxml
+from libs.graph.IDependency import IDependency
 
-class Publish:
+class Publish(IDependency):
 	def __init__(self, filename):
 		root = ET.parse(filename).getroot()
 
@@ -29,3 +30,16 @@ class Publish:
 			self.constants = []
 
 		self.documentClass = fxml.readElement(publish_flash, 'DocumentClass')
+
+	def getTaskFilename(self):
+		return './PublishSettings'
+
+	def getTaskCommand(self, path):
+		result = str(self.enabled)
+		result += ' ' + str.casefold(self.publishPath)
+		result += ' ' + str.casefold(self.versionActionScript)
+		result += ' ' + str(self.packagePaths)
+		result += ' ' + str(self.constants)
+		result += ' ' + str.casefold(self.documentClass)
+
+		return result
