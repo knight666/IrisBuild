@@ -5,7 +5,7 @@ from libs.graph.IDependency import IDependency
 class Document(IDependency):
 	def __init__(self, filename):
 		super().__init__()
-		
+
 		self.root = ET.parse(filename).getroot()
 		ns = { 'ns': 'http://ns.adobe.com/xfl/2008/' }
 
@@ -15,9 +15,6 @@ class Document(IDependency):
 		if media:
 			for b in media.findall('ns:DOMBitmapItem', ns):
 				self.bitmaps.append(Bitmap(b))
-
-		for b in self.bitmaps:
-			print('name', b.name, 'linkageIdentifier', b.linkageIdentifier, 'sourceExternalFilepath', b.sourceExternalFilepath)
 
 	def getTaskFilename(self):
 		return './DOMDocument'
@@ -41,5 +38,11 @@ class Document(IDependency):
 		result += ' ' + str.casefold(self.root.attrib.get('playOptionsPlayLoop', ''))
 		result += ' ' + str.casefold(self.root.attrib.get('playOptionsPlayPages', ''))
 		result += ' ' + str.casefold(self.root.attrib.get('playOptionsPlayFrameActions', ''))
+
+		return result
+
+	def getTaskDependencies(self):
+		result = []
+		result += self.bitmaps
 
 		return result

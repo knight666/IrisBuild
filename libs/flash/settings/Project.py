@@ -11,16 +11,13 @@ class Project:
 
 		self.dependencies = [ self.publish, self.document ]
 
-	def check(self):
+	def check(self, verbose=False):
 		intermediate_path = self.path + '/intermediate'
-
-		if not os.path.exists(intermediate_path):
-			os.mkdir(intermediate_path)
 
 		result = True
 
 		for d in self.dependencies:
-			if not d.check(self.path, intermediate_path):
+			if not d.check(self.path, intermediate_path, verbose):
 				result = False
 
 		return result
