@@ -4,6 +4,8 @@ from libs.graph.IDependency import IDependency
 
 class Publish(IDependency):
 	def __init__(self, filename):
+		super().__init__()
+		
 		root = ET.parse(filename).getroot()
 
 		profile = root.find('flash_profile')

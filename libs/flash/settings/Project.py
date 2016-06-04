@@ -1,3 +1,5 @@
+import os
+import os.path
 from libs.flash.settings.dom.Document import Document
 from libs.flash.settings.Publish import Publish
 
@@ -7,8 +9,18 @@ class Project:
 		self.publish = Publish(path + '\\PublishSettings.xml')
 		self.document = Document(path + '\\DOMDocument.xml')
 
+		self.dependencies = [ self.publish, self.document ]
+
 	def check(self):
-		print(self.publish.getTaskFilename())
-		print(self.publish.getTaskCommand(self.path))
-		print(self.document.getTaskFilename())
-		print(self.document.getTaskCommand(self.path))
+		intermediate_path = self.path + '/intermediate'
+
+		if not os.path.exists(intermediate_path):
+			os.mkdir(intermediate_path)
+
+		result = True
+
+		for d in self.dependencies:
+			if not d.check(self.path, intermediate_path):
+				result = False
+
+		return result

@@ -4,6 +4,8 @@ from libs.graph.IDependency import IDependency
 
 class Document(IDependency):
 	def __init__(self, filename):
+		super().__init__()
+		
 		self.root = ET.parse(filename).getroot()
 		ns = { 'ns': 'http://ns.adobe.com/xfl/2008/' }
 

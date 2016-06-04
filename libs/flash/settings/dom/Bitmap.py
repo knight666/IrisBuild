@@ -3,6 +3,8 @@ from libs.graph.IDependency import IDependency
 
 class Bitmap(IDependency):
 	def __init__(self, element):
+		super().__init__()
+		
 		self.element = element
 		self.name = element.attrib.get('name', '')
 		self.linkageIdentifier = element.attrib.get('linkageIdentifier', '')
