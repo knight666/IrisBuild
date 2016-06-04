@@ -29,13 +29,3 @@ class Publish:
 			self.constants = []
 
 		self.documentClass = fxml.readElement(publish_flash, 'DocumentClass')
-
-class Document:
-	def __init__(self, filename):
-		root = ET.parse(filename).getroot()
-		print(root.tag, root.attrib)
-
-class Project:
-	def __init__(self, path):
-		self.publish = Publish(path + '\\PublishSettings.xml')
-		self.document = Document(path + '\\DOMDocument.xml')
