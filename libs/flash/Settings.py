@@ -2,10 +2,7 @@ import xml.etree.ElementTree as ET
 import libs.flash.XMLUtils as fxml
 
 class Publish:
-	def __init__(self):
-		pass
-
-	def parse(self, filename):
+	def __init__(self, filename):
 		root = ET.parse(filename).getroot()
 
 		profile = root.find('flash_profile')
@@ -32,3 +29,13 @@ class Publish:
 			self.constants = []
 
 		self.documentClass = fxml.readElement(publish_flash, 'DocumentClass')
+
+class Document:
+	def __init__(self, filename):
+		root = ET.parse(filename).getroot()
+		print(root.tag, root.attrib)
+
+class Project:
+	def __init__(self, path):
+		self.publish = Publish(path + '\\PublishSettings.xml')
+		self.document = Document(path + '\\DOMDocument.xml')

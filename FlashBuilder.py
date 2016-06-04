@@ -1,6 +1,5 @@
 import libs.flash.Settings as fs 
 
 if __name__ == '__main__':
-	publish = fs.Publish()
-	publish.parse('projects/TestEmpty/PublishSettings.xml')
-	print('enabled', publish.enabled, 'publishPath', publish.publishPath, 'versionActionScript', publish.versionActionScript, 'packagePaths', publish.packagePaths, 'constants', publish.constants, 'documentClass', publish.documentClass)
+	project = fs.Project('projects/TestEmpty')
+	print('enabled', project.publish.enabled, 'publishPath', project.publish.publishPath, 'versionActionScript', project.publish.versionActionScript, 'packagePaths', project.publish.packagePaths, 'constants', project.publish.constants, 'documentClass', project.publish.documentClass)
