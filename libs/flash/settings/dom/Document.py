@@ -19,6 +19,9 @@ class Document(IDependency):
 	def getTaskFilename(self):
 		return './DOMDocument'
 
+	def getSourceFilename(self):
+		return './DOMDocument.xml'
+
 	def getTaskCommand(self, path):
 		result = str.casefold(self.root.attrib.get('backgroundColor', ''))
 		result += ' ' + str.casefold(self.root.attrib.get('width', ''))

@@ -5,7 +5,7 @@ from libs.graph.IDependency import IDependency
 class Publish(IDependency):
 	def __init__(self, filename):
 		super().__init__()
-		
+
 		root = ET.parse(filename).getroot()
 
 		profile = root.find('flash_profile')
@@ -35,6 +35,9 @@ class Publish(IDependency):
 
 	def getTaskFilename(self):
 		return './PublishSettings'
+
+	def getSourceFilename(self):
+		return './PublishSettings.xml'
 
 	def getTaskCommand(self, path):
 		result = str(self.enabled)

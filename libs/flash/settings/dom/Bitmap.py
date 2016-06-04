@@ -16,6 +16,9 @@ class Bitmap(IDependency):
 	def getTaskFilename(self):
 		return './media/bitmaps/' + str.casefold(self.name)
 
+	def getSourceFilename(self):
+		return self.element.attrib.get('sourceExternalFilepath', '')
+
 	def getTaskCommand(self, path):
 		result = str.casefold(self.element.attrib.get('name', ''))
 		result += ' ' + str.casefold(self.element.attrib.get('itemID', ''))
@@ -33,9 +36,5 @@ class Bitmap(IDependency):
 		result += ' ' + str.casefold(self.element.attrib.get('bitmapDataHRef', ''))
 		result += ' ' + str.casefold(self.element.attrib.get('frameRight', ''))
 		result += ' ' + str.casefold(self.element.attrib.get('frameBottom', ''))
-
-		filepath = os.path.abspath(path + self.sourceExternalFilepath)
-		if os.path.exists(filepath):
-			result += ' ' + time.ctime(os.path.getmtime(filepath))
 
 		return result
