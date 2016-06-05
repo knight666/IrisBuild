@@ -5,9 +5,9 @@ from libs.flash.settings.Publish import Publish
 
 class Project:
 	def __init__(self, path):
-		self.path = path
-		self.publish = Publish(path + '\\PublishSettings.xml')
-		self.document = Document(path + '\\DOMDocument.xml')
+		self.path = os.path.dirname(path)
+		self.publish = Publish(self.path + '\\PublishSettings.xml')
+		self.document = Document(self.path + '\\DOMDocument.xml')
 
 		self.dependencies = [ self.publish, self.document ]
 

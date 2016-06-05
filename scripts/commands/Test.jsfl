@@ -1,4 +1,4 @@
-FLfile.runCommandLine('python FlashBuilder.py');
-fl.trace(flash.documents[0].name);
-fl.trace(FLfile.uriToPlatformPath(fl.scriptURI));
 fl.trace(flash.getDocumentDOM().path);
+var command = "\"" + fl.configDirectory + "Commands\\FlashBuilder.py\" \"" + flash.getDocumentDOM().path + "\"";
+fl.trace(command);
+FLfile.runCommandLine(command);
