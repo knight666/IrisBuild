@@ -1,4 +1,5 @@
 import os
 
-target = os.path.abspath(os.getenv('APPDATA') + '\\..\\Local\\Adobe\\Flash CC\\language\\Configuration\\')
-print(target)
+if __name__ == '__main__':
+	target = os.path.abspath(os.getenv('LOCALAPPDATA') + '\\Adobe\\Flash CC\\language\\Configuration\\')
+	print(target)
