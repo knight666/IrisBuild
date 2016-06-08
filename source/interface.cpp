@@ -2,26 +2,19 @@
 
 #include "helpers.hpp"
 
+using namespace iris;
+
 JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {
-    char* path = NULL;
-    size_t pathSize = 0;
-    JSBool success = JS_TRUE;
+    std::string path;
 
     if (argumentCount < 1 ||
-        valueToString(context, argumentList[0], &path, &pathSize) == JS_FALSE)
+        !helpers::valueToString(*context, argumentList[0], path))
     {
-        success = JS_FALSE;
-        goto cleanup;
+        return JS_FALSE;
     }
 
-    stringToValue(context, path, pathSize, result);
+    helpers::stringToValue(*context, path, *result);
 
-cleanup:
-    if (path != NULL)
-    {
-        free(path);
-    }
-
-    return success;
+    return JS_TRUE;
 }

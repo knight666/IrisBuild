@@ -2,6 +2,7 @@
 
 // C/STL
 #include <stdlib.h>
+#include <string>
 
 extern "C" {
 
