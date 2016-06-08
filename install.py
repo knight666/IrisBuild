@@ -1,4 +1,5 @@
 from glob import glob
+import fnmatch
 import os
 import shutil
 
@@ -19,10 +20,16 @@ if __name__ == '__main__':
 	if not os.path.exists(target):
 		os.makedirs(target)
 
+	if os.path.exists('output\\windows\\Win32\\Release\\IrisBuild.dll'):
+		installFile('output\\windows\\Win32\\Release\\IrisBuild.dll', target)
+	elif os.path.exists('output\\windows\\Win32\\Debug\\IrisBuild.dll'):
+		installFile('output\\windows\\Win32\\Debug\\IrisBuild.dll', target)
+
 	for f in glob('scripts\\commands\\*.jsfl'):
 		installFile(f, os.path.abspath(target + '\\' + os.path.basename(f)))
 
 	installFile('FlashBuilder.py', target)
 
-	for f in glob('libs\\**\\*.py', recursive=True):
-		installFile(f, target + '\\' + f)
+	for root, dirnames, filenames in os.walk('libs'):
+		for filename in fnmatch.filter(filenames, '*.py'):
+			installFile(os.path.join(root, filename), os.path.join(target, 'libs', *dirnames) + '\\' + filename)
