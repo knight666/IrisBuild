@@ -10,6 +10,10 @@
 				'dependencies/utf8rewind-1.5.0/utf8rewind.gyp:utf8rewind',
 			],
 			'sources': [
+				'source/helpers.c',
+				'source/helpers.h',
+				'source/interface.c',
+				'source/interface.h',
 				'source/mm_jsapi.h',
 				'source/main.c',
 			],
