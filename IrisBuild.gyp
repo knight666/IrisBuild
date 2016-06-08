@@ -8,7 +8,7 @@
 			'type': 'shared_library',
 			'sources': [
 				'source/mm_jsapi.h',
-				'source/main.cpp',
+				'source/main.c',
 			],
 			'conditions': [
 				['OS=="win"', {
