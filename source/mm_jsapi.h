@@ -32,7 +32,7 @@ typedef JSBool (*JSNative)(JSContext *cx, JSObject *obj, unsigned int argc,
 
 /* unsigned short *JS_ValueToString(JSContext *cx, jsval v, unsigned int *pLength) */
 #define JS_ValueToString(c, v, l) \
-    (mmEnv.valueToString  ? (*(mmEnv.valueToString))(c, v, l) : (char *)0)
+    (mmEnv.valueToString  ? (*(mmEnv.valueToString))(c, v, l) : (unsigned short *)0)
 
 /* unsigned char *JS_ValueToBytes(JSContext *cx, jsval v, unsigned int *pLength) */
 #define JS_ValueToBytes(c, v, l) \
