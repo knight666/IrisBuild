@@ -1,2 +1,21 @@
 *.pyc
 *.tlog
+
+# Visual Studio
+ipch/*
+*_UpgradeReport_Files/*
+*.idb
+*.ilk
+*.ncv
+*.opensdf
+*.pdb
+*.props
+*.psess
+*.sdf
+*.sln
+*.suo
+*.targets
+*.VC.opendb
+*.vcproj*
+*.vcxproj*
+*.vspx
