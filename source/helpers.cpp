@@ -1,4 +1,4 @@
-#include "helpers.h"
+#include "helpers.hpp"
 
 JSBool valueToString(JSContext* context, jsval input, char** target, size_t* targetSize)
 {
@@ -40,7 +40,7 @@ JSBool stringToValue(JSContext* context, const char* input, size_t inputSize, js
     outputWide = (wchar_t*)malloc(outputWideSize);
     utf8towide(input, inputSize, outputWide, outputWideSize, NULL);
 
-    result = JS_StringToValue(context, outputWide, outputWideSize, target);
+    result = JS_StringToValue(context, outputWide, outputWideSize / sizeof(wchar_t), target);
 
     free(outputWide);
 

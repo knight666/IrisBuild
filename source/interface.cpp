@@ -1,6 +1,6 @@
-#include "interface.h"
+#include "interface.hpp"
 
-#include "helpers.h"
+#include "helpers.hpp"
 
 JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {

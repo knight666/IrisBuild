@@ -10,12 +10,12 @@
 				'dependencies/utf8rewind-1.5.0/utf8rewind.gyp:utf8rewind',
 			],
 			'sources': [
-				'source/helpers.c',
-				'source/helpers.h',
-				'source/interface.c',
-				'source/interface.h',
+				'source/helpers.cpp',
+				'source/helpers.hpp',
+				'source/interface.cpp',
+				'source/interface.hpp',
 				'source/mm_jsapi.h',
-				'source/main.c',
+				'source/main.cpp',
 			],
 			'conditions': [
 				['OS=="win"', {
