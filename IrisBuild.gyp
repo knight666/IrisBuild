@@ -10,6 +10,10 @@
 				'dependencies/utf8rewind-1.5.0/utf8rewind.gyp:utf8rewind',
 			],
 			'sources': [
+				'source/build/project.cpp',
+				'source/build/project.hpp',
+				'source/build/publish.cpp',
+				'source/build/publish.hpp',
 				'source/helpers.cpp',
 				'source/helpers.hpp',
 				'source/interface.cpp',

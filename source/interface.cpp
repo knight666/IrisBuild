@@ -1,5 +1,6 @@
 #include "interface.hpp"
 
+#include "build/project.hpp"
 #include "helpers.hpp"
 
 using namespace iris;
@@ -14,7 +15,10 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
         return JS_FALSE;
     }
 
-    helpers::stringToValue(*context, path, *result);
+    Project project(context);
+    project.load(path);
+
+    helpers::stringToValue(*context, project.getIntermediatePath(), *result);
 
     return JS_TRUE;
 }
