@@ -16,7 +16,10 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
     }
 
     Project project(context);
-    project.load(path);
+    if (!project.load(path))
+    {
+        return JS_TRUE;
+    }
 
     helpers::stringToValue(*context, project.getIntermediatePath(), *result);
 

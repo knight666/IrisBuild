@@ -13,6 +13,15 @@ namespace iris {
 
     bool Project::load(const std::string& filePath)
     {
+        static const char* Extension = ".xfl";
+        static const size_t ExtensionLength = strlen(Extension);
+
+        if (filePath.length() < ExtensionLength ||
+            filePath.compare(filePath.length() - ExtensionLength, ExtensionLength, Extension) != 0)
+        {
+            return false;
+        }
+
         m_filePath = filePath;
 
         m_intermediatePath = m_filePath;
@@ -21,6 +30,8 @@ namespace iris {
         {
             m_intermediatePath.erase(last_slash, m_intermediatePath.length() - last_slash);
         }
+
+        m_intermediatePath += "\\intermediate";
 
         return true;
     }
