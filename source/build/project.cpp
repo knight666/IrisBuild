@@ -42,14 +42,9 @@ namespace iris {
 
         helpers::createDirectory(m_intermediatePath);
 
-        // Set up logging
-
-        m_logger = std::shared_ptr<Logger>(new Logger(m_intermediatePath + "\\output.log"));
-        m_logger->write("Opening log.");
-
         // Load project settings
 
-        m_publish = std::shared_ptr<Publish>(new Publish(*this, m_logger));
+        m_publish = std::shared_ptr<Publish>(new Publish(*this));
         if (!m_publish->load(m_projectPath + "\\PublishSettings.xml"))
         {
             return false;
@@ -57,7 +52,7 @@ namespace iris {
 
         // Load document
 
-        m_document = std::shared_ptr<dom::Document>(new dom::Document(*this, m_logger));
+        m_document = std::shared_ptr<dom::Document>(new dom::Document(*this));
         if (!m_document->load(m_projectPath + "\\DOMDocument.xml"))
         {
             return false;

@@ -2,7 +2,33 @@
 
 namespace iris {
 
-    Logger::Logger(const std::string& filePath)
+    Logger::Logger()
+    {
+    }
+
+    Logger::~Logger()
+    {
+    }
+
+    Logger* Logger::s_instance = nullptr;
+
+    Logger& Logger::get()
+    {
+        return *s_instance;
+    }
+
+    void Logger::create()
+    {
+        s_instance = new Logger();
+    }
+
+    void Logger::destroy()
+    {
+        delete s_instance;
+        s_instance = nullptr;
+    }
+
+    void Logger::setFilePath(const std::string& filePath)
     {
         m_filePath = filePath;
 
@@ -11,11 +37,6 @@ namespace iris {
         {
             m_file.close();
         }
-    }
-
-
-    Logger::~Logger()
-    {
     }
 
     void Logger::write(const char* message, ...)

@@ -4,7 +4,6 @@
 
 namespace iris {
 
-    class Logger;
     class Project;
 
 };
@@ -17,7 +16,7 @@ namespace dom {
 
     public:
 
-        Document(Project& project, std::shared_ptr<Logger> logger);
+        Document(Project& project);
         ~Document();
 
         bool load(const std::string& filePath);
@@ -27,7 +26,6 @@ namespace dom {
         bool parseMedia(TiXmlElement& element);
 
         Project& m_project;
-        std::shared_ptr<Logger> m_logger;
         std::shared_ptr<TiXmlDocument> m_document;
 
     };

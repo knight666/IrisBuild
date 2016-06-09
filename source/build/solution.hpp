@@ -21,10 +21,10 @@ namespace iris {
 
     private:
 
-        static Solution* s_instance;
-
         Solution();
         ~Solution();
+
+        static Solution* s_instance;
 
         std::vector<std::shared_ptr<Project>> m_projects;
 

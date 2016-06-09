@@ -9,12 +9,21 @@ namespace iris {
 
     public:
 
-        Logger(const std::string& filePath);
-        ~Logger();
+        static Logger& get();
+
+        static void create();
+        static void destroy();
+
+        void setFilePath(const std::string& filePath);
 
         void write(const char* message, ...);
 
     private:
+
+        Logger();
+        ~Logger();
+
+        static Logger* s_instance;
 
         std::string m_filePath;
         std::ofstream m_file;

@@ -118,12 +118,12 @@ namespace helpers {
         return utf8(buffer);
     }
 
-    std::string readElementText(std::shared_ptr<Logger> logger, TiXmlElement* parent, const char* name)
+    std::string readElementText(TiXmlElement* parent, const char* name)
     {
         TiXmlElement* element = parent->FirstChildElement(name);
         if (element == nullptr)
         {
-            logger->write("ERROR! Missing \"%s\" element under \"%s\".", name, parent->Value());
+            Logger::get().write("ERROR! Missing \"%s\" element under \"%s\".", name, parent->Value());
 
             return "";
         }

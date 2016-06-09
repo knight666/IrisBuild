@@ -1,3 +1,5 @@
+IrisBuild.initialize(fl.configDirectory);
+
 var result = IrisBuild.loadProject(flash.getDocumentDOM().path);
 if (!result)
 {

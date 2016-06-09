@@ -4,7 +4,6 @@
 
 namespace iris {
 
-    class Logger;
     class Project;
 
     class Publish
@@ -12,7 +11,7 @@ namespace iris {
 
     public:
 
-        Publish(Project& project, std::shared_ptr<Logger> logger);
+        Publish(Project& project);
         ~Publish();
 
         bool load(const std::string& filePath);
@@ -20,7 +19,6 @@ namespace iris {
     private:
 
         Project& m_project;
-        std::shared_ptr<Logger> m_logger;
         std::shared_ptr<TiXmlDocument> m_document;
 
         bool m_enabled;

@@ -7,9 +7,8 @@
 namespace iris {
 namespace dom {
 
-    Document::Document(Project& project, std::shared_ptr<Logger> logger)
+    Document::Document(Project& project)
         : m_project(project)
-        , m_logger(logger)
     {
     }
 
@@ -19,10 +18,10 @@ namespace dom {
 
     bool Document::load(const std::string& filePath)
     {
-        m_logger->write("Loading \"%s\".", filePath.c_str());
+        Logger::get().write("Loading \"%s\".", filePath.c_str());
         if (!helpers::fileExists(filePath))
         {
-            m_logger->write("ERROR! Failed to load file.");
+            Logger::get().write("ERROR! Failed to load file.");
 
             return false;
         }
@@ -31,7 +30,7 @@ namespace dom {
         if (!m_document->LoadFile(filePath.c_str()) ||
             m_document->RootElement() == nullptr)
         {
-            m_logger->write("ERROR! Failed to parse document as XML.");
+            Logger::get().write("ERROR! Failed to parse document as XML.");
 
             return false;
         }
@@ -48,7 +47,7 @@ namespace dom {
 
     bool Document::parseMedia(TiXmlElement& element)
     {
-        m_logger->write("media found");
+        Logger::get().write("media found");
 
         return true;
     }
