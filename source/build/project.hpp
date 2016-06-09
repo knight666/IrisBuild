@@ -4,6 +4,8 @@
 
 namespace iris {
 
+    class Logger;
+
     class Project
     {
 
@@ -21,6 +23,7 @@ namespace iris {
         JSContext* m_context;
         std::string m_filePath;
         std::string m_intermediatePath;
+        std::shared_ptr<Logger> m_logger;
 
     };
 

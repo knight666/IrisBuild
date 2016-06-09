@@ -1,5 +1,8 @@
 #include "project.hpp"
 
+#include "../logging/logger.hpp"
+#include "../helpers.hpp"
+
 namespace iris {
 
     Project::Project(JSContext* context)
@@ -32,6 +35,11 @@ namespace iris {
         }
 
         m_intermediatePath += "\\intermediate";
+
+        helpers::createDirectory(m_intermediatePath);
+
+        m_logger = std::shared_ptr<Logger>(new Logger(m_intermediatePath + "\\output.log"));
+        m_logger->write("Opening log.");
 
         return true;
     }

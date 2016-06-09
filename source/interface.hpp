@@ -1,10 +1,18 @@
 #pragma once
 
-// C/STL
+// C
+#include <stdarg.h>
 #include <stdlib.h>
+#include <time.h>
+
+// STL
+#include <fstream>
 #include <memory>
 #include <string>
 #include <vector>
+
+// Windows
+#include <windows.h>
 
 extern "C" {
 

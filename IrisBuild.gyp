@@ -16,6 +16,8 @@
 				'source/build/publish.hpp',
 				'source/build/solution.cpp',
 				'source/build/solution.hpp',
+				'source/logging/logger.cpp',
+				'source/logging/logger.hpp',
 				'source/helpers.cpp',
 				'source/helpers.hpp',
 				'source/interface.cpp',
