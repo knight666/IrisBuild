@@ -7,6 +7,15 @@ namespace iris {
     class Logger;
     class Publish;
 
+    namespace dom {
+
+        class Document;
+
+    }
+};
+
+namespace iris {
+
     class Project
     {
 
@@ -27,6 +36,7 @@ namespace iris {
         std::string m_intermediatePath;
         std::shared_ptr<Logger> m_logger;
         std::shared_ptr<Publish> m_publish;
+        std::shared_ptr<dom::Document> m_document;
 
     };
 

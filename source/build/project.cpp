@@ -2,6 +2,7 @@
 
 #include "../logging/logger.hpp"
 #include "../helpers.hpp"
+#include "dom/document.hpp"
 #include "publish.hpp"
 
 namespace iris {
@@ -50,6 +51,14 @@ namespace iris {
 
         m_publish = std::shared_ptr<Publish>(new Publish(*this, m_logger));
         if (!m_publish->load(m_projectPath + "\\PublishSettings.xml"))
+        {
+            return false;
+        }
+
+        // Load document
+
+        m_document = std::shared_ptr<dom::Document>(new dom::Document(*this, m_logger));
+        if (!m_document->load(m_projectPath + "\\DOMDocument.xml"))
         {
             return false;
         }

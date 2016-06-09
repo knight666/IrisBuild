@@ -19,7 +19,7 @@ namespace iris {
 
     bool Publish::load(const std::string& filePath)
     {
-        m_logger->write("Loading publish settings at \"%s\".", filePath.c_str());
+        m_logger->write("Loading \"%s\".", filePath.c_str());
         if (!helpers::fileExists(filePath))
         {
             m_logger->write("ERROR! Failed to load file.");

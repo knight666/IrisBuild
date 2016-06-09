@@ -11,6 +11,8 @@
 				'dependencies.gyp:tinyxml',
 			],
 			'sources': [
+				'source/build/dom/document.cpp',
+				'source/build/dom/document.hpp',
 				'source/build/project.cpp',
 				'source/build/project.hpp',
 				'source/build/publish.cpp',
