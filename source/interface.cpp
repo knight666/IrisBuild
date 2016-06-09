@@ -1,6 +1,7 @@
 #include "interface.hpp"
 
 #include "build/project.hpp"
+#include "build/solution.hpp"
 #include "helpers.hpp"
 
 using namespace iris;
@@ -15,13 +16,16 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
         return JS_FALSE;
     }
 
-    Project project(context);
-    if (!project.load(path))
+    std::shared_ptr<Project> project(new Project(context));
+
+    Solution::get().addProject(project);
+
+    if (!project->load(path))
     {
         return JS_TRUE;
     }
 
-    helpers::stringToValue(*context, project.getIntermediatePath(), *result);
+    helpers::stringToValue(*context, project->getIntermediatePath(), *result);
 
     return JS_TRUE;
 }

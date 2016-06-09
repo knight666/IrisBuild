@@ -2,7 +2,9 @@
 
 // C/STL
 #include <stdlib.h>
+#include <memory>
 #include <string>
+#include <vector>
 
 extern "C" {
 

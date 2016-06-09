@@ -14,6 +14,8 @@
 				'source/build/project.hpp',
 				'source/build/publish.cpp',
 				'source/build/publish.hpp',
+				'source/build/solution.cpp',
+				'source/build/solution.hpp',
 				'source/helpers.cpp',
 				'source/helpers.hpp',
 				'source/interface.cpp',
