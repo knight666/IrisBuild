@@ -24,5 +24,8 @@ extern "C" {
 
 }
 
+// TinyXML
+#include <tinyxml.h>
+
 // Public interface
 extern "C" JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);

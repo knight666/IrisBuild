@@ -7,7 +7,8 @@
 			'target_name': 'IrisBuild',
 			'type': 'shared_library',
 			'dependencies': [
-				'dependencies/utf8rewind-1.5.0/utf8rewind.gyp:utf8rewind',
+				'dependencies.gyp:utf8rewind',
+				'dependencies.gyp:tinyxml',
 			],
 			'sources': [
 				'source/build/project.cpp',

@@ -4,61 +4,69 @@
 	],
 	'targets': [
 		{
-			'target_name': 'gtest',
+			'target_name': 'utf8rewind',
 			'type': 'static_library',
 			'variables': {
-				'project_dir': 'dependencies/gtest-svn-head',
+				'project_dir': 'dependencies/utf8rewind-1.5.0',
 			},
-			'defines': [
-				'GTEST_HAS_PTHREAD=0',
-			],
 			'include_dirs': [
-				'<(project_dir)',
-				'<(project_dir)/include',
+				'<(project_dir)/include/utf8rewind',
 			],
 			'sources': [
-				'<(project_dir)/src/gtest-all.cc',
+				'<(project_dir)/include/utf8rewind/utf8rewind.h',
+				'<(project_dir)/source/internal/base.h',
+				'<(project_dir)/source/internal/casemapping.c',
+				'<(project_dir)/source/internal/casemapping.h',
+				'<(project_dir)/source/internal/codepoint.c',
+				'<(project_dir)/source/internal/codepoint.h',
+				'<(project_dir)/source/internal/composition.c',
+				'<(project_dir)/source/internal/composition.h',
+				'<(project_dir)/source/internal/database.c',
+				'<(project_dir)/source/internal/database.h',
+				'<(project_dir)/source/internal/decomposition.c',
+				'<(project_dir)/source/internal/decomposition.h',
+				'<(project_dir)/source/internal/seeking.c',
+				'<(project_dir)/source/internal/seeking.h',
+				'<(project_dir)/source/internal/streaming.c',
+				'<(project_dir)/source/internal/streaming.h',
+				'<(project_dir)/source/unicodedatabase.c',
+				'<(project_dir)/source/unicodedatabase.h',
+				'<(project_dir)/source/utf8rewind.c',
 			],
 			'direct_dependent_settings': {
 				'include_dirs': [
-					'<(project_dir)/include',
-				],
-				'defines': [
-					'GTEST_HAS_PTHREAD=0',
-				],
-				'conditions': [
-					['OS=="win"', {
-						'defines': [
-							'GTEST_HAS_TR1_TUPLE=0',
-						],
-					}],
+					'<(project_dir)/include/utf8rewind',
 				],
 			},
 			'conditions': [
+				['OS=="win"', {
+					'msvs_settings': {
+						'VCCLCompilerTool': {
+							'CompileAs': 1, # Compile as C
+						},
+					},
+				}],
 				['OS!="win"', {
 					'product_dir': 'output/<(platform_name)/<(architecture_name)/<(CONFIGURATION_NAME)',
-				}],
-				['OS=="win"', {
-					'defines': [
-						'GTEST_HAS_TR1_TUPLE=0',
-					],
 				}],
 			],
 		},
 		{
-			'target_name': 'quickcheck',
-			'type': 'none',
+			'target_name': 'tinyxml',
+			'type': 'static_library',
 			'variables': {
-				'project_dir': 'dependencies/quickcheck_0.0.3',
+				'project_dir': 'dependencies/tinyxml_2_6_2',
 			},
 			'include_dirs': [
-				'<(project_dir)',
+				'<(project_dir)/include/utf8rewind',
 			],
 			'sources': [
-				'<(project_dir)/quickcheck/generate.hh',
-				'<(project_dir)/quickcheck/ostream.hh',
-				'<(project_dir)/quickcheck/Property.hh',
-				'<(project_dir)/quickcheck/quickcheck.hh',
+				'<(project_dir)/tinystr.cpp',
+				'<(project_dir)/tinystr.h',
+				'<(project_dir)/tinyxml.cpp',
+				'<(project_dir)/tinyxml.h',
+				'<(project_dir)/tinyxmlerror.cpp',
+				'<(project_dir)/tinyxmlparser.cpp',
 			],
 			'direct_dependent_settings': {
 				'include_dirs': [
