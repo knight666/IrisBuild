@@ -35,6 +35,7 @@ namespace iris {
         virtual std::vector<std::shared_ptr<Task>> getTaskDependencies() const override;
 
         JSContext* m_context;
+        std::string m_filePath;
         std::string m_projectPath;
         std::string m_intermediatePath;
         std::shared_ptr<Publish> m_publish;

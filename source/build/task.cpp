@@ -49,6 +49,8 @@ namespace iris {
             command << task->getTaskIntermediatePath() << std::endl;
         }
 
+        Logger::get().write("taskIntermediatePath: %s", getTaskIntermediatePath().c_str());
+        Logger::get().write("sourcePath: %s", getTaskSourcePath().c_str());
         Logger::get().write(command.str().c_str());
 
         return m_cacheResult;

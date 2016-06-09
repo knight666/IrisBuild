@@ -36,6 +36,8 @@ namespace dom {
             return false;
         }
 
+        m_filePath = filePath;
+
         TiXmlElement* media = m_document->RootElement()->FirstChildElement("media");
         if (media != nullptr &&
             !parseMedia(media))
@@ -67,6 +69,51 @@ namespace dom {
 
         return true;
     }
+
+
+    std::string Document::getTaskIntermediatePath() const
+    {
+        return m_project.getIntermediatePath() + "\\DOMDocument.tlog";
+    }
+
+    std::string Document::getTaskSourcePath() const
+    {
+        return m_filePath;
+    }
+
+    std::string Document::getTaskCommand() const
+    {
+        TiXmlElement* root = m_document->RootElement();
+
+        std::string result = helpers::readAttributeText(root, "backgroundColor");
+        result += " " + helpers::readAttributeText(root, "width");
+        result += " " + helpers::readAttributeText(root, "height");
+        result += " " + helpers::readAttributeText(root, "frameRate");
+        result += " " + helpers::readAttributeText(root, "currentTimeline");
+        result += " " + helpers::readAttributeText(root, "xflVersion");
+        result += " " + helpers::readAttributeText(root, "creatorInfo");
+        result += " " + helpers::readAttributeText(root, "platform");
+        result += " " + helpers::readAttributeText(root, "versionInfo");
+        result += " " + helpers::readAttributeText(root, "majorVersion");
+        result += " " + helpers::readAttributeText(root, "minorVersion");
+        result += " " + helpers::readAttributeText(root, "buildNumber");
+        result += " " + helpers::readAttributeText(root, "viewAngle3D");
+        result += " " + helpers::readAttributeText(root, "sharedLibraryURL");
+        result += " " + helpers::readAttributeText(root, "nextSceneIdentifier");
+        result += " " + helpers::readAttributeText(root, "playOptionsPlayLoop");
+        result += " " + helpers::readAttributeText(root, "playOptionsPlayPages");
+        result += " " + helpers::readAttributeText(root, "playOptionsPlayFrameActions");
+
+        return result;
+    }
+
+    std::vector<std::shared_ptr<Task>> Document::getTaskDependencies() const
+    {
+        std::vector<std::shared_ptr<Task>> dependencies;
+
+        return dependencies;
+    }
+
 
 };
 };

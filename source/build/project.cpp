@@ -29,6 +29,8 @@ namespace iris {
             return false;
         }
 
+        m_filePath = filePath;
+
         // Create intermediate directory
 
         m_projectPath = filePath;
@@ -71,7 +73,7 @@ namespace iris {
 
     std::string Project::getTaskSourcePath() const
     {
-        return m_projectPath;
+        return m_filePath;
     }
 
     std::string Project::getTaskCommand() const
@@ -82,6 +84,8 @@ namespace iris {
     std::vector<std::shared_ptr<Task>> Project::getTaskDependencies() const
     {
         std::vector<std::shared_ptr<Task>> dependencies;
+
+        dependencies.push_back(m_document);
 
         return dependencies;
     }
