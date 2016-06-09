@@ -61,4 +61,29 @@ namespace iris {
         return true;
     }
 
+    std::string Project::getTaskIntermediatePath() const
+    {
+        char filename[_MAX_FNAME] = { 0 };
+        _splitpath(m_projectPath.c_str(), nullptr, nullptr, filename, nullptr);
+
+        return m_intermediatePath + "\\" + filename + ".tlog";
+    }
+
+    std::string Project::getTaskSourcePath() const
+    {
+        return m_projectPath;
+    }
+
+    std::string Project::getTaskCommand() const
+    {
+        return m_projectPath;
+    }
+
+    std::vector<std::shared_ptr<Task>> Project::getTaskDependencies() const
+    {
+        std::vector<std::shared_ptr<Task>> dependencies;
+
+        return dependencies;
+    }
+
 };

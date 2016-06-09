@@ -1,21 +1,20 @@
 #pragma once
 
 #include "../interface.hpp"
+#include "task.hpp"
 
 namespace iris {
-
     class Publish;
 
     namespace dom {
-
         class Document;
-
     }
 };
 
 namespace iris {
 
     class Project
+        : public Task
     {
 
     public:
@@ -29,6 +28,11 @@ namespace iris {
         bool load(const std::string& filePath);
 
     private:
+
+        virtual std::string getTaskIntermediatePath() const override;
+        virtual std::string getTaskSourcePath() const override;
+        virtual std::string getTaskCommand() const override;
+        virtual std::vector<std::shared_ptr<Task>> getTaskDependencies() const override;
 
         JSContext* m_context;
         std::string m_projectPath;

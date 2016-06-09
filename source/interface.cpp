@@ -42,6 +42,8 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
         return JS_TRUE;
     }
 
+    project->check();
+
     helpers::stringToValue(*context, project->getIntermediatePath(), *result);
 
     return JS_TRUE;

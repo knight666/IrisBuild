@@ -17,10 +17,10 @@ namespace iris {
 
     protected:
 
-        virtual std::string getName() const = 0;
-        virtual std::string getSourceName() const = 0;
-        virtual std::string getCommand() const = 0;
-        virtual std::vector<std::shared_ptr<Task>> getDependencies() const = 0;
+        virtual std::string getTaskIntermediatePath() const = 0;
+        virtual std::string getTaskSourcePath() const = 0;
+        virtual std::string getTaskCommand() const = 0;
+        virtual std::vector<std::shared_ptr<Task>> getTaskDependencies() const = 0;
 
     private:
 
