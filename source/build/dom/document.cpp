@@ -3,6 +3,7 @@
 #include "../../logging/logger.hpp"
 #include "../../helpers.hpp"
 #include "../project.hpp"
+#include "bitmapitem.hpp"
 
 namespace iris {
 namespace dom {
@@ -37,7 +38,7 @@ namespace dom {
 
         TiXmlElement* media = m_document->RootElement()->FirstChildElement("media");
         if (media != nullptr &&
-            !parseMedia(*media))
+            !parseMedia(media))
         {
             return false;
         }
@@ -45,9 +46,24 @@ namespace dom {
         return true;
     }
 
-    bool Document::parseMedia(TiXmlElement& element)
+    bool Document::parseMedia(TiXmlElement* element)
     {
-        Logger::get().write("media found");
+        TiXmlElement* bitmap_element = element->FirstChildElement("DOMBitmapItem");
+        while (bitmap_element != nullptr)
+        {
+            std::shared_ptr<BitmapItem> bitmap(new BitmapItem(*this));
+
+            if (!bitmap->parse(bitmap_element))
+            {
+                Logger::get().write("ERROR! Failed to parse bitmap item.");
+
+                return false;
+            }
+
+            m_bitmaps.push_back(bitmap);
+
+            bitmap_element = bitmap_element->NextSiblingElement("DOMBitmapItem");
+        }
 
         return true;
     }

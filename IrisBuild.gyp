@@ -11,6 +11,8 @@
 				'dependencies.gyp:tinyxml',
 			],
 			'sources': [
+				'source/build/dom/bitmapitem.cpp',
+				'source/build/dom/bitmapitem.hpp',
 				'source/build/dom/document.cpp',
 				'source/build/dom/document.hpp',
 				'source/build/project.cpp',

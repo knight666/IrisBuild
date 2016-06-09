@@ -133,5 +133,11 @@ namespace helpers {
         return (text != nullptr) ? std::string(text) : "";
     }
 
+    std::string readAttributeText(TiXmlElement* owner, const char* name)
+    {
+        const char* value = owner->Attribute(name);
+        return (value != nullptr) ? std::string(value) : "";
+    }
+
 };
 };

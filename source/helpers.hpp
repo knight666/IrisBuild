@@ -17,6 +17,7 @@ namespace helpers {
     std::string absolutePath(const std::string& path);
 
     std::string readElementText(TiXmlElement* parent, const char* name);
+    std::string readAttributeText(TiXmlElement* owner, const char* name);
 
 };
 };
