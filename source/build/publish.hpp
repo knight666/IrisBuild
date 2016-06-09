@@ -18,7 +18,10 @@ namespace iris {
 
     private:
 
+        bool findElement(TiXmlNode* parent, const char* name, TiXmlElement** target);
+
         std::shared_ptr<Logger> m_logger;
+        std::shared_ptr<TiXmlDocument> m_document;
 
     };
 
