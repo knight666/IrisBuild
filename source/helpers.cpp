@@ -1,5 +1,7 @@
 #include "helpers.hpp"
 
+#include "logging/logger.hpp"
+
 namespace iris {
 namespace helpers {
 
@@ -114,6 +116,21 @@ namespace helpers {
         ::GetFullPathNameW(wide_path.c_str(), _MAX_PATH, buffer, nullptr);
 
         return utf8(buffer);
+    }
+
+    std::string readElementText(std::shared_ptr<Logger> logger, TiXmlElement* parent, const char* name)
+    {
+        TiXmlElement* element = parent->FirstChildElement(name);
+        if (element == nullptr)
+        {
+            logger->write("ERROR! Missing \"%s\" element under \"%s\".", name, parent->Value());
+
+            return "";
+        }
+
+        const char* text = element->GetText();
+
+        return (text != nullptr) ? std::string(text) : "";
     }
 
 };

@@ -28,22 +28,23 @@ namespace iris {
         }
 
         m_document = std::shared_ptr<TiXmlDocument>(new TiXmlDocument());
-        if (!m_document->LoadFile(filePath.c_str()))
+        if (!m_document->LoadFile(filePath.c_str()) ||
+            m_document->RootElement() == nullptr)
         {
             m_logger->write("ERROR! Failed to parse document as XML.");
 
             return false;
         }
 
-        TiXmlElement* root = m_document->RootElement();
-
-        TiXmlElement* profile = root->FirstChildElement("flash_profile");
+        TiXmlElement* profile = m_document->RootElement()->FirstChildElement("flash_profile");
         if (profile == nullptr)
         {
             m_logger->write("ERROR! Missing \"flash_profile\" element in hierarchy.");
 
             return false;
         }
+
+        // Parse publish properties
 
         TiXmlElement* publish_format = profile->FirstChildElement("PublishFormatProperties");
         if (publish_format == nullptr)
@@ -56,16 +57,44 @@ namespace iris {
         m_enabled = std::string(publish_format->Attribute("enabled")) == "true";
         m_logger->write("\tenabled: %s", m_enabled ? "yes" : "no");
 
-        TiXmlElement* flash_file_name = publish_format->FirstChildElement("flashFileName");
-        if (flash_file_name == nullptr)
+        m_publishPath = helpers::readElementText(m_logger, publish_format, "flashFileName");
+        if (m_publishPath.empty())
         {
-            m_logger->write("ERROR! Missing \"flashFileName\" element under \"PublishFormatProperties\".");
+            return false;
+        }
+
+        m_publishPath = helpers::absolutePath(m_project.getProjectPath() + "\\..\\" + m_publishPath);
+        m_logger->write("\tpublishPath: %s", m_publishPath.c_str());
+
+        // Parse flash properties
+
+        TiXmlElement* publish_flash = profile->FirstChildElement("PublishFlashProperties");
+        if (publish_flash == nullptr)
+        {
+            m_logger->write("ERROR! Missing \"PublishFlashProperties\" element under \"flash_profile\".");
 
             return false;
         }
 
-        m_publishPath = helpers::absolutePath(m_project.getProjectPath() + "\\..\\" + flash_file_name->GetText());
-        m_logger->write("\tpublishPath: %s", m_publishPath.c_str());
+        m_actionScriptVersion = helpers::readElementText(m_logger, publish_flash, "ActionScriptVersion");
+        m_logger->write("\tactionScriptVersion: %s", m_actionScriptVersion.c_str());
+
+        if (m_actionScriptVersion == "3")
+        {
+            m_packagePaths = helpers::readElementText(m_logger, publish_flash, "AS3PackagePaths");
+            m_constants = helpers::readElementText(m_logger, publish_flash, "AS3ConfigConst");
+        }
+        else
+        {
+            m_packagePaths = helpers::readElementText(m_logger, publish_flash, "PackagePaths");
+            m_constants = "";
+        }
+
+        m_logger->write("\tpackagePaths: %s", m_packagePaths.c_str());
+        m_logger->write("\tconstants: %s", m_constants.c_str());
+
+        m_documentClass = helpers::readElementText(m_logger, publish_flash, "DocumentClass");
+        m_logger->write("\tdocumentClass: %s", m_documentClass.c_str());
 
         return true;
     }
