@@ -14,6 +14,7 @@ namespace helpers {
 
     bool createDirectory(const std::string& path);
     bool fileExists(const std::string& path);
+    std::string absolutePath(const std::string& path);
 
 };
 };

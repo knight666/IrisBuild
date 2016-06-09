@@ -2,11 +2,14 @@
 
 #include "../logging/logger.hpp"
 #include "../helpers.hpp"
+#include "project.hpp"
 
 namespace iris {
 
-    Publish::Publish(std::shared_ptr<Logger> logger)
-        : m_logger(logger)
+    Publish::Publish(Project& project, std::shared_ptr<Logger> logger)
+        : m_project(project)
+        , m_logger(logger)
+        , m_enabled(false)
     {
     }
 
@@ -34,7 +37,7 @@ namespace iris {
 
         TiXmlElement* root = m_document->RootElement();
 
-        TiXmlNode* profile = root->FirstChild("flash_profile");
+        TiXmlElement* profile = root->FirstChildElement("flash_profile");
         if (profile == nullptr)
         {
             m_logger->write("ERROR! Missing \"flash_profile\" element in hierarchy.");
@@ -42,33 +45,27 @@ namespace iris {
             return false;
         }
 
-        TiXmlElement* publish_format = nullptr;
-        if (!findElement(profile, "PublishFormatProperties", &publish_format))
+        TiXmlElement* publish_format = profile->FirstChildElement("PublishFormatProperties");
+        if (publish_format == nullptr)
         {
+            m_logger->write("ERROR! Missing \"PublishFormatProperties\" element under \"flash_profile\".");
+
             return false;
         }
 
-        const char* enabled = publish_format->Attribute("enabled");
-        m_logger->write("enabled: %s", enabled);
+        m_enabled = std::string(publish_format->Attribute("enabled")) == "true";
+        m_logger->write("\tenabled: %s", m_enabled ? "yes" : "no");
 
-        return true;
-    }
-
-    bool Publish::findElement(TiXmlNode* parent, const char* name, TiXmlElement** target)
-    {
-        TiXmlNode* node = parent->FirstChildElement(name);
-        if (node != nullptr)
+        TiXmlElement* flash_file_name = publish_format->FirstChildElement("flashFileName");
+        if (flash_file_name == nullptr)
         {
-            *target = node->ToElement();
-        }
-
-        if (node == nullptr ||
-            *target == nullptr)
-        {
-            m_logger->write("ERROR! Missing \"%s\" element in hierarchy.", name);
+            m_logger->write("ERROR! Missing \"flashFileName\" element under \"PublishFormatProperties\".");
 
             return false;
         }
+
+        m_publishPath = helpers::absolutePath(m_project.getProjectPath() + "\\..\\" + flash_file_name->GetText());
+        m_logger->write("\tpublishPath: %s", m_publishPath.c_str());
 
         return true;
     }

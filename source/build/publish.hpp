@@ -5,23 +5,25 @@
 namespace iris {
 
     class Logger;
+    class Project;
 
     class Publish
     {
 
     public:
 
-        Publish(std::shared_ptr<Logger> logger);
+        Publish(Project& project, std::shared_ptr<Logger> logger);
         ~Publish();
 
         bool load(const std::string& filePath);
 
     private:
 
-        bool findElement(TiXmlNode* parent, const char* name, TiXmlElement** target);
-
+        Project& m_project;
         std::shared_ptr<Logger> m_logger;
         std::shared_ptr<TiXmlDocument> m_document;
+        bool m_enabled;
+        std::string m_publishPath;
 
     };
 

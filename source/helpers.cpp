@@ -106,5 +106,15 @@ namespace helpers {
         return found;
     }
 
+    std::string absolutePath(const std::string& path)
+    {
+        std::wstring wide_path = wide(path);
+
+        wchar_t buffer[_MAX_PATH + 1] = { 0 };
+        ::GetFullPathNameW(wide_path.c_str(), _MAX_PATH, buffer, nullptr);
+
+        return utf8(buffer);
+    }
+
 };
 };

@@ -48,7 +48,7 @@ namespace iris {
 
         // Load project settings
 
-        m_publish = std::shared_ptr<Publish>(new Publish(m_logger));
+        m_publish = std::shared_ptr<Publish>(new Publish(*this, m_logger));
         if (!m_publish->load(m_projectPath + "\\PublishSettings.xml"))
         {
             return false;

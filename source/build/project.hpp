@@ -15,6 +15,7 @@ namespace iris {
         Project(JSContext* context);
         ~Project();
 
+        const std::string& getProjectPath() const { return m_projectPath; }
         const std::string& getIntermediatePath() const { return m_intermediatePath; }
 
         bool load(const std::string& filePath);
