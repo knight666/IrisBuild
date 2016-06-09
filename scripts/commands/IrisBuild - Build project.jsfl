@@ -1,7 +1,7 @@
 var result = IrisBuild.loadProject(flash.getDocumentDOM().path);
 if (!result)
 {
-	fl.trace("Project must be loaded as an uncompressed .xfl file, not a .fla file.");
+	fl.trace("Failed to load uncompressed file \"" + flash.getDocumentDOM().path + "\", check the log for errors.");
 }
 else
 {

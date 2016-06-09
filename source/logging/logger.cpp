@@ -38,7 +38,7 @@ namespace iris {
         vsprintf_s(buffer, message, args);
         va_end(args);
 
-        m_file << "[" << timestamp << "] " << buffer;
+        m_file << "[" << timestamp << "] " << buffer << std::endl;
 
         m_file.close();
     }

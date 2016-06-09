@@ -90,7 +90,20 @@ namespace helpers {
     bool createDirectory(const std::string& path)
     {
         std::wstring wide_path = wide(path);
+
         return ::CreateDirectoryW(wide_path.c_str(), nullptr) == TRUE;
+    }
+
+    bool fileExists(const std::string& path)
+    {
+        std::wstring wide_path = wide(path);
+
+        WIN32_FIND_DATAW file_data = { 0 };
+        HANDLE handle = ::FindFirstFileW(wide_path.c_str(), &file_data);
+        bool found = handle != INVALID_HANDLE_VALUE;
+        ::FindClose(handle);
+
+        return found;
     }
 
 };

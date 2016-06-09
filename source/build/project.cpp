@@ -2,6 +2,7 @@
 
 #include "../logging/logger.hpp"
 #include "../helpers.hpp"
+#include "publish.hpp"
 
 namespace iris {
 
@@ -16,6 +17,8 @@ namespace iris {
 
     bool Project::load(const std::string& filePath)
     {
+        // Validate project type
+
         static const char* Extension = ".xfl";
         static const size_t ExtensionLength = strlen(Extension);
 
@@ -25,21 +28,31 @@ namespace iris {
             return false;
         }
 
-        m_filePath = filePath;
+        // Create intermediate directory
 
-        m_intermediatePath = m_filePath;
-        const size_t last_slash = m_intermediatePath.find_last_of('\\');
+        m_projectPath = filePath;
+        const size_t last_slash = m_projectPath.find_last_of('\\');
         if (last_slash != std::string::npos)
         {
-            m_intermediatePath.erase(last_slash, m_intermediatePath.length() - last_slash);
+            m_projectPath.erase(last_slash, m_projectPath.length() - last_slash);
         }
 
-        m_intermediatePath += "\\intermediate";
+        m_intermediatePath = m_projectPath + "\\intermediate";
 
         helpers::createDirectory(m_intermediatePath);
 
+        // Set up logging
+
         m_logger = std::shared_ptr<Logger>(new Logger(m_intermediatePath + "\\output.log"));
         m_logger->write("Opening log.");
+
+        // Load project settings
+
+        m_publish = std::shared_ptr<Publish>(new Publish(m_logger));
+        if (!m_publish->load(m_projectPath + "\\PublishSettings.xml"))
+        {
+            return false;
+        }
 
         return true;
     }

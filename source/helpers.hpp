@@ -13,6 +13,7 @@ namespace helpers {
     bool stringToValue(JSContext& context, const std::string& input, jsval& target);
 
     bool createDirectory(const std::string& path);
+    bool fileExists(const std::string& path);
 
 };
 };
