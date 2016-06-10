@@ -26,6 +26,8 @@ namespace iris {
         if (filePath.length() < ExtensionLength ||
             filePath.compare(filePath.length() - ExtensionLength, ExtensionLength, Extension) != 0)
         {
+            IRIS_LOG_ERROR("Project \"%s\" is not an uncompressed Flash file.", filePath.c_str());
+
             return false;
         }
 
@@ -49,6 +51,8 @@ namespace iris {
         m_publish = std::shared_ptr<Publish>(new Publish(*this));
         if (!m_publish->load(m_projectPath + "\\PublishSettings.xml"))
         {
+            IRIS_LOG_ERROR("Failed to parse publish settings.");
+
             return false;
         }
 
@@ -57,6 +61,8 @@ namespace iris {
         m_document = std::shared_ptr<dom::Document>(new dom::Document(*this));
         if (!m_document->load(m_projectPath + "\\DOMDocument.xml"))
         {
+            IRIS_LOG_ERROR("Failed to parse DOM document.");
+
             return false;
         }
 

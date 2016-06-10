@@ -14,6 +14,8 @@ JSBool initialize(JSContext* context, JSObject* target, unsigned int argumentCou
     if (argumentCount < 1 ||
         !helpers::valueToString(*context, argumentList[0], configurationPath))
     {
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"initialize\".");
+
         return JS_FALSE;
     }
 
@@ -30,7 +32,7 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
     if (argumentCount < 1 ||
         !helpers::valueToString(*context, argumentList[0], path))
     {
-        IRIS_LOG_ERROR("Invalid arguments for ", path.c_str());
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"loadProject\".");
 
         return JS_FALSE;
     }
@@ -43,6 +45,8 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
 
     if (!project->load(path))
     {
+        IRIS_LOG_ERROR("Failed to load the project.");
+
         return JS_TRUE;
     }
 
@@ -50,7 +54,7 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
 
     IRIS_LOG_INFO("Project is %s.", status ? "up-to-date" : "out-of-date");
 
-    helpers::stringToValue(*context, project->getIntermediatePath(), *result);
+    helpers::stringToValue(*context, status ? "true" : "false", *result);
 
     return JS_TRUE;
 }
