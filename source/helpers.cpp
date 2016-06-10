@@ -167,7 +167,7 @@ namespace helpers {
         TiXmlElement* element = parent->FirstChildElement(name);
         if (element == nullptr)
         {
-            Logger::get().write("ERROR! Missing \"%s\" element under \"%s\".", name, parent->Value());
+            IRIS_LOG_INFO("ERROR! Missing \"%s\" element under \"%s\".", name, parent->Value());
 
             return "";
         }

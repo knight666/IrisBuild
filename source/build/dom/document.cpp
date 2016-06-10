@@ -19,10 +19,10 @@ namespace dom {
 
     bool Document::load(const std::string& filePath)
     {
-        Logger::get().write("Loading \"%s\".", filePath.c_str());
+        IRIS_LOG_INFO("Loading \"%s\".", filePath.c_str());
         if (!helpers::fileExists(filePath))
         {
-            Logger::get().write("ERROR! Failed to load file.");
+            IRIS_LOG_INFO("ERROR! Failed to load file.");
 
             return false;
         }
@@ -31,7 +31,7 @@ namespace dom {
         if (!m_document->LoadFile(filePath.c_str()) ||
             m_document->RootElement() == nullptr)
         {
-            Logger::get().write("ERROR! Failed to parse document as XML.");
+            IRIS_LOG_INFO("ERROR! Failed to parse document as XML.");
 
             return false;
         }
@@ -57,7 +57,7 @@ namespace dom {
 
             if (!bitmap->parse(bitmap_element))
             {
-                Logger::get().write("ERROR! Failed to parse bitmap item.");
+                IRIS_LOG_INFO("ERROR! Failed to parse bitmap item.");
 
                 return false;
             }

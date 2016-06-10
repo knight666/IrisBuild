@@ -18,10 +18,10 @@ namespace iris {
 
     bool Publish::load(const std::string& filePath)
     {
-        Logger::get().write("Loading \"%s\".", filePath.c_str());
+        IRIS_LOG_INFO("Loading \"%s\".", filePath.c_str());
         if (!helpers::fileExists(filePath))
         {
-            Logger::get().write("ERROR! Failed to load file.");
+            IRIS_LOG_INFO("ERROR! Failed to load file.");
 
             return false;
         }
@@ -30,7 +30,7 @@ namespace iris {
         if (!m_document->LoadFile(filePath.c_str()) ||
             m_document->RootElement() == nullptr)
         {
-            Logger::get().write("ERROR! Failed to parse document as XML.");
+            IRIS_LOG_INFO("ERROR! Failed to parse document as XML.");
 
             return false;
         }
@@ -38,7 +38,7 @@ namespace iris {
         TiXmlElement* profile = m_document->RootElement()->FirstChildElement("flash_profile");
         if (profile == nullptr)
         {
-            Logger::get().write("ERROR! Missing \"flash_profile\" element in hierarchy.");
+            IRIS_LOG_INFO("ERROR! Missing \"flash_profile\" element in hierarchy.");
 
             return false;
         }
@@ -48,13 +48,13 @@ namespace iris {
         TiXmlElement* publish_format = profile->FirstChildElement("PublishFormatProperties");
         if (publish_format == nullptr)
         {
-            Logger::get().write("ERROR! Missing \"PublishFormatProperties\" element under \"flash_profile\".");
+            IRIS_LOG_INFO("ERROR! Missing \"PublishFormatProperties\" element under \"flash_profile\".");
 
             return false;
         }
 
         m_enabled = std::string(publish_format->Attribute("enabled")) == "true";
-        Logger::get().write("\tenabled: %s", m_enabled ? "yes" : "no");
+        IRIS_LOG_INFO("\tenabled: %s", m_enabled ? "yes" : "no");
 
         m_publishPath = helpers::readElementText(publish_format, "flashFileName");
         if (m_publishPath.empty())
@@ -63,20 +63,20 @@ namespace iris {
         }
 
         m_publishPath = helpers::absolutePath(m_project.getProjectPath() + "\\..\\" + m_publishPath);
-        Logger::get().write("\tpublishPath: %s", m_publishPath.c_str());
+        IRIS_LOG_INFO("\tpublishPath: %s", m_publishPath.c_str());
 
         // Parse flash properties
 
         TiXmlElement* publish_flash = profile->FirstChildElement("PublishFlashProperties");
         if (publish_flash == nullptr)
         {
-            Logger::get().write("ERROR! Missing \"PublishFlashProperties\" element under \"flash_profile\".");
+            IRIS_LOG_INFO("ERROR! Missing \"PublishFlashProperties\" element under \"flash_profile\".");
 
             return false;
         }
 
         m_actionScriptVersion = helpers::readElementText(publish_flash, "ActionScriptVersion");
-        Logger::get().write("\tactionScriptVersion: %s", m_actionScriptVersion.c_str());
+        IRIS_LOG_INFO("\tactionScriptVersion: %s", m_actionScriptVersion.c_str());
 
         if (m_actionScriptVersion == "3")
         {
@@ -89,11 +89,11 @@ namespace iris {
             m_constants = "";
         }
 
-        Logger::get().write("\tpackagePaths: %s", m_packagePaths.c_str());
-        Logger::get().write("\tconstants: %s", m_constants.c_str());
+        IRIS_LOG_INFO("\tpackagePaths: %s", m_packagePaths.c_str());
+        IRIS_LOG_INFO("\tconstants: %s", m_constants.c_str());
 
         m_documentClass = helpers::readElementText(publish_flash, "DocumentClass");
-        Logger::get().write("\tdocumentClass: %s", m_documentClass.c_str());
+        IRIS_LOG_INFO("\tdocumentClass: %s", m_documentClass.c_str());
 
         return true;
     }

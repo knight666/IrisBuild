@@ -38,10 +38,10 @@ namespace iris {
         m_cacheSet = true;
 
         std::string source = getTaskSourcePath();
-        Logger::get().write("sourcePath: %s", source.c_str());
+        IRIS_LOG_INFO("sourcePath: %s", source.c_str());
 
         std::string intermediate = getTaskIntermediatePath();
-        Logger::get().write("intermediatePath: %s", intermediate.c_str());
+        IRIS_LOG_INFO("intermediatePath: %s", intermediate.c_str());
 
         // Build task command output
 
@@ -56,7 +56,7 @@ namespace iris {
             m_cacheResult = m_cacheResult && task_check;
             if (!task_check)
             {
-                Logger::get().write("Dependency \"%s\" was out-of-date.", task->getTaskSourcePath().c_str());
+                IRIS_LOG_INFO("Dependency \"%s\" was out-of-date.", task->getTaskSourcePath().c_str());
             }
 
             command_stream << helpers::casefold(task->getTaskIntermediatePath()) << std::endl;
@@ -69,10 +69,10 @@ namespace iris {
         if (m_cacheResult)
         {
             std::string source_time = helpers::fileLastModifiedTime(source);
-            Logger::get().write("sourceTime: %s", source_time.c_str());
+            IRIS_LOG_INFO("sourceTime: %s", source_time.c_str());
 
             std::string intermediate_time = helpers::fileLastModifiedTime(intermediate);
-            Logger::get().write("intermediateTime: %s", intermediate_time.c_str());
+            IRIS_LOG_INFO("intermediateTime: %s", intermediate_time.c_str());
 
             m_cacheResult = source_time <= intermediate_time;
         }
@@ -93,8 +93,8 @@ namespace iris {
                 command_previous = file_stream.str();
             }
 
-            Logger::get().write("command: %s", command.c_str());
-            Logger::get().write("commandPrevious: %s", command_previous.c_str());
+            IRIS_LOG_INFO("command: %s", command.c_str());
+            IRIS_LOG_INFO("commandPrevious: %s", command_previous.c_str());
 
             m_cacheResult = command == command_previous;
         }
@@ -114,7 +114,7 @@ namespace iris {
             file.close();
         }
 
-        Logger::get().write("%s: %s", source.c_str(), m_cacheResult ? "up-to-date" : "OUT-OF-DATE");
+        IRIS_LOG_INFO("%s: %s", source.c_str(), m_cacheResult ? "up-to-date" : "OUT-OF-DATE");
 
         return m_cacheResult;
     }

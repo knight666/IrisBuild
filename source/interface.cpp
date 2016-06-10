@@ -18,7 +18,7 @@ JSBool initialize(JSContext* context, JSObject* target, unsigned int argumentCou
     }
 
     Logger::get().setFilePath(configurationPath + "IrisBuild.log");
-    Logger::get().write("Opening log.");
+    IRIS_LOG_INFO("Opening log.");
 
     return JS_TRUE;
 }
