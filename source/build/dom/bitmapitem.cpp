@@ -26,11 +26,11 @@ namespace dom {
         m_sourceExternalFilepath = helpers::readAttributeText(element, "sourceExternalFilepath");
         m_href = helpers::readAttributeText(element, "href");
 
-        IRIS_LOG_INFO("Bitmap \"%s\".", m_name.c_str());
-        IRIS_LOG_INFO("\tlinkageIdentifier: \"%s\".", m_linkageIdentifier.c_str());
-        IRIS_LOG_INFO("\tlinkageURL: \"%s\".", m_linkageURL.c_str());
-        IRIS_LOG_INFO("\tsourceExternalFilepath: \"%s\".", m_sourceExternalFilepath.c_str());
-        IRIS_LOG_INFO("\thref: \"%s\".", m_href.c_str());
+        IRIS_LOG_TRACE("Bitmap \"%s\".", m_name.c_str());
+        IRIS_LOG_INSANE("\tlinkageIdentifier: \"%s\".", m_linkageIdentifier.c_str());
+        IRIS_LOG_INSANE("\tlinkageURL: \"%s\".", m_linkageURL.c_str());
+        IRIS_LOG_INSANE("\tsourceExternalFilepath: \"%s\".", m_sourceExternalFilepath.c_str());
+        IRIS_LOG_INSANE("\thref: \"%s\".", m_href.c_str());
 
         m_element = element;
 

@@ -3,6 +3,7 @@
 namespace iris {
 
     Logger::Logger()
+        : m_levelMaximum(Level::Information)
     {
     }
 
@@ -28,6 +29,11 @@ namespace iris {
         s_instance = nullptr;
     }
 
+    void Logger::setMaximumLevel(Level level)
+    {
+        m_levelMaximum = level;
+    }
+
     void Logger::setFilePath(const std::string& filePath)
     {
         m_filePath = filePath;
@@ -41,6 +47,11 @@ namespace iris {
 
     void Logger::write(Level level, const char* filepath, int line, const char* message, ...)
     {
+        if (level > m_levelMaximum)
+        {
+            return;
+        }
+
         m_file.open(m_filePath.c_str(), std::ios::out | std::ios::app);
         if (!m_file.is_open())
         {

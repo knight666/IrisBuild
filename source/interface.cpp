@@ -30,8 +30,12 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
     if (argumentCount < 1 ||
         !helpers::valueToString(*context, argumentList[0], path))
     {
+        IRIS_LOG_ERROR("Invalid arguments for ", path.c_str());
+
         return JS_FALSE;
     }
+
+    IRIS_LOG_INFO("Loading project \"%s\".", path.c_str());
 
     std::shared_ptr<Project> project(new Project(context));
 
@@ -42,7 +46,9 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
         return JS_TRUE;
     }
 
-    project->check();
+    bool status = project->check();
+
+    IRIS_LOG_INFO("Project is %s.", status ? "up-to-date" : "out-of-date");
 
     helpers::stringToValue(*context, project->getIntermediatePath(), *result);
 

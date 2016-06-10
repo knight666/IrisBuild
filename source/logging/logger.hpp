@@ -29,6 +29,8 @@ namespace iris {
         static void create();
         static void destroy();
 
+        void setMaximumLevel(Level level);
+
         void setFilePath(const std::string& filePath);
 
         void write(Level level, const char* filepath, int line, const char* message, ...);
@@ -40,6 +42,7 @@ namespace iris {
 
         static Logger* s_instance;
 
+        Level m_levelMaximum;
         std::string m_filePath;
         std::ofstream m_file;
 
