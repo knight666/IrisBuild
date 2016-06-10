@@ -43,9 +43,3 @@ if __name__ == '__main__':
 
 			for f in glob('scripts\\commands\\*.jsfl'):
 				installFile(f, os.path.abspath(target_commands + '\\' + os.path.basename(f)))
-
-			installFile('FlashBuilder.py', target_commands)
-
-			for root, dirnames, filenames in os.walk('libs'):
-				for filename in fnmatch.filter(filenames, '*.py'):
-					installFile(os.path.join(root, filename), os.path.join(target_commands, 'libs', *dirnames) + '\\' + filename)
