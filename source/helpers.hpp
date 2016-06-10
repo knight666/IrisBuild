@@ -2,6 +2,11 @@
 
 #include "interface.hpp"
 
+#define XML_FOR_EACH(_element, _name, _iterator) \
+    for (TiXmlElement*  ##_iterator = (_element)->FirstChildElement(_name); \
+        ##_iterator != nullptr; \
+        ##_iterator = ##_iterator -> NextSiblingElement(_name))
+
 namespace iris {
 namespace helpers {
 

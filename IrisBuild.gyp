@@ -15,6 +15,8 @@
 				'source/build/dom/bitmapitem.hpp',
 				'source/build/dom/document.cpp',
 				'source/build/dom/document.hpp',
+				'source/build/dom/symbol.cpp',
+				'source/build/dom/symbol.hpp',
 				'source/build/project.cpp',
 				'source/build/project.hpp',
 				'source/build/publish.cpp',

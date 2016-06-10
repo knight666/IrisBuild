@@ -4,24 +4,24 @@
 #include "../task.hpp"
 
 namespace iris {
-    class Project;
+    namespace dom {
+        class Document;
+    };
 };
 
 namespace iris {
 namespace dom {
 
-    class Document
+    class Symbol
         : public Task
     {
 
     public:
 
-        Document(Project& project);
-        ~Document();
+        Symbol(Document& document);
+        ~Symbol();
 
-        Project& getProject() const { return m_project; }
-
-        bool load(const std::string& filePath);
+        bool parse(TiXmlElement* element);
 
     private:
 
@@ -30,11 +30,10 @@ namespace dom {
         virtual std::string getTaskCommand() const override;
         virtual std::vector<std::shared_ptr<Task>> getTaskDependencies() const override;
 
-        Project& m_project;
-        std::string m_filePath;
-        std::shared_ptr<TiXmlDocument> m_document;
+        Document& m_document;
+        TiXmlElement* m_element;
 
-        std::vector<std::shared_ptr<Task>> m_dependencies;
+        std::string m_href;
 
     };
 
