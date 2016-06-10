@@ -112,7 +112,7 @@ namespace helpers {
     {
         std::wstring wide_path = wide(path);
 
-        return ::CreateDirectoryW(wide_path.c_str(), nullptr) == TRUE;
+        return ::SHCreateDirectoryExW(nullptr, wide_path.c_str(), nullptr) == TRUE;
     }
 
     bool fileExists(const std::string& path)

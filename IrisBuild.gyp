@@ -34,6 +34,9 @@
 			],
 			'conditions': [
 				['OS=="win"', {
+					'libraries': [
+						'Shell32.lib'
+					],
 					'msvs_settings': {
 						'VCCLCompilerTool': {
 							'TreatWChar_tAsBuiltInType': 'false',
