@@ -1,6 +1,7 @@
 #include "task.hpp"
 
 #include "../logging/logger.hpp"
+#include "../helpers.hpp"
 
 namespace iris {
 
@@ -49,9 +50,19 @@ namespace iris {
             command << task->getTaskIntermediatePath() << std::endl;
         }
 
-        Logger::get().write("taskIntermediatePath: %s", getTaskIntermediatePath().c_str());
-        Logger::get().write("sourcePath: %s", getTaskSourcePath().c_str());
-        Logger::get().write(command.str().c_str());
+        // Check timestamps on source and intermediate file
+
+        std::string intermediate = getTaskIntermediatePath();
+        std::string intermediate_time = helpers::fileLastModifiedTime(intermediate);
+
+        std::string source = getTaskSourcePath();
+        std::string source_time = helpers::fileLastModifiedTime(source);
+
+        Logger::get().write("intermediatePath: %s", intermediate.c_str());
+        Logger::get().write("intermediateTime: %s", intermediate_time.c_str());
+        Logger::get().write("sourcePath: %s", source.c_str());
+        Logger::get().write("sourceTime: %s", source_time.c_str());
+        Logger::get().write("command: %s", command.str().c_str());
 
         return m_cacheResult;
     }

@@ -48,7 +48,7 @@ namespace dom {
 
     std::string BitmapItem::getTaskSourcePath() const
     {
-        return helpers::absolutePath(m_sourceExternalFilepath);
+        return helpers::absolutePath(m_document.getProject().getProjectPath() + m_sourceExternalFilepath);
     }
 
     std::string BitmapItem::getTaskCommand() const

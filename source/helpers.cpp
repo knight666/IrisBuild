@@ -108,6 +108,31 @@ namespace helpers {
         return found;
     }
 
+    std::string fileLastModifiedTime(const std::string& path)
+    {
+        std::wstring wide_path = wide(path);
+
+        HANDLE file;
+        FILETIME write_file_time;
+        SYSTEMTIME write_system_time;
+
+         if ((file = ::CreateFileW(wide_path.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr)) == INVALID_HANDLE_VALUE ||
+            ::GetFileTime(file, nullptr, nullptr, &write_file_time) == FALSE ||
+            ::FileTimeToSystemTime(&write_file_time, &write_system_time) == FALSE)
+        {
+            return "";
+        }
+
+        ::CloseHandle(file);
+
+        char buffer[256] = { 0 };
+        sprintf_s(buffer, "%04d-%02d-%02dT%02d:%02d:%02d.%04dZ",
+            write_system_time.wYear, write_system_time.wMonth, write_system_time.wDay,
+            write_system_time.wHour, write_system_time.wMinute, write_system_time.wSecond, write_system_time.wMilliseconds);
+
+        return std::string(buffer);
+    }
+
     std::string absolutePath(const std::string& path)
     {
         std::wstring wide_path = wide(path);
