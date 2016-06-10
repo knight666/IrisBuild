@@ -6,8 +6,9 @@ namespace iris {
 namespace helpers {
 
     // Strings
-    std::string utf8(const std::wstring& value);
-    std::wstring wide(const std::string& value);
+    std::string utf8(const std::wstring& text);
+    std::wstring wide(const std::string& text);
+    std::string casefold(const std::string& text);
 
     // JSFL
     bool valueToString(JSContext& context, jsval& input, std::string& output);

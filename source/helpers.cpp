@@ -5,13 +5,13 @@
 namespace iris {
 namespace helpers {
 
-    std::string utf8(const std::wstring& value)
+    std::string utf8(const std::wstring& text)
     {
         std::string converted;
 
         int32_t errors;
 
-        size_t size_in_bytes = widetoutf8(value.c_str(), value.size() * UTF8_WCHAR_SIZE, nullptr, 0, &errors);
+        size_t size_in_bytes = widetoutf8(text.c_str(), text.size() * UTF8_WCHAR_SIZE, nullptr, 0, &errors);
         if (size_in_bytes == 0 ||
             errors != UTF8_ERR_NONE)
         {
@@ -19,18 +19,18 @@ namespace helpers {
         }
 
         converted.resize(size_in_bytes);
-        widetoutf8(value.c_str(), value.size() * UTF8_WCHAR_SIZE, &converted[0], size_in_bytes, nullptr);
+        widetoutf8(text.c_str(), text.size() * UTF8_WCHAR_SIZE, &converted[0], size_in_bytes, nullptr);
 
         return converted;
     }
 
-    std::wstring wide(const std::string& value)
+    std::wstring wide(const std::string& text)
     {
         std::wstring converted;
 
         int32_t errors;
 
-        size_t size_in_bytes = utf8towide(value.c_str(), value.size(), nullptr, 0, &errors);
+        size_t size_in_bytes = utf8towide(text.c_str(), text.size(), nullptr, 0, &errors);
         if (size_in_bytes == 0 ||
             errors != UTF8_ERR_NONE)
         {
@@ -39,7 +39,26 @@ namespace helpers {
 
         converted.resize(size_in_bytes / UTF8_WCHAR_SIZE);
 
-        utf8towide(value.c_str(), value.size(), &converted[0], size_in_bytes, nullptr);
+        utf8towide(text.c_str(), text.size(), &converted[0], size_in_bytes, nullptr);
+
+        return converted;
+    }
+
+    std::string casefold(const std::string& text)
+    {
+        std::string converted;
+
+        int32_t errors;
+
+        size_t size_in_bytes = utf8casefold(text.c_str(), text.size(), nullptr, 0, UTF8_LOCALE_DEFAULT, &errors);
+        if (size_in_bytes == 0 ||
+            errors != UTF8_ERR_NONE)
+        {
+            return converted;
+        }
+
+        converted.resize(size_in_bytes);
+        utf8casefold(text.c_str(), text.size(), &converted[0], size_in_bytes, UTF8_LOCALE_DEFAULT, nullptr);
 
         return converted;
     }
