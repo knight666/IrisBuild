@@ -3,7 +3,7 @@
 namespace iris {
 
     Logger::Logger()
-        : m_levelMaximum(Level::Information)
+        : m_levelMaximum(Level::Trace)
     {
     }
 
