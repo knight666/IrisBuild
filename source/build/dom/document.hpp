@@ -23,6 +23,8 @@ namespace dom {
         Document(Project& project);
         ~Document();
 
+        Project& getProject() const { return m_project; }
+
         bool load(const std::string& filePath);
 
     private:

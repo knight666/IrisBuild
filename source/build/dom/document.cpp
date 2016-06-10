@@ -70,7 +70,6 @@ namespace dom {
         return true;
     }
 
-
     std::string Document::getTaskIntermediatePath() const
     {
         return m_project.getIntermediatePath() + "\\DOMDocument.tlog";
@@ -111,9 +110,13 @@ namespace dom {
     {
         std::vector<std::shared_ptr<Task>> dependencies;
 
+        for (std::shared_ptr<BitmapItem> bitmap : m_bitmaps)
+        {
+            dependencies.push_back(bitmap);
+        }
+
         return dependencies;
     }
-
 
 };
 };
