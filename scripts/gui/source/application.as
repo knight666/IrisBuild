@@ -11,9 +11,11 @@ private function onCreationComplete(e:Event):void
 	{
 		_targetSolutionURI = persistentData.data.IrisBuild_CurrentSolution;
 	}
+	
+	MMExecute("IrisBuild.initialize(fl.configDirectory);");
 }
 
 private function btnLoadClicked(e:Event):void
 {
-	MMExecute("fl.trace(\"Loading!\");");
+	MMExecute("var result = IrisBuild.loadProject(flash.getDocumentDOM().path); fl.trace(\"\\\"\" + flash.getDocumentDOM().path + \"\\\" is \" + (result == \"true\" ? \"up-to-date\" : \"out-of-date\") + \".\");");
 }

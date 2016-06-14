@@ -6,6 +6,7 @@ output/*
 
 # FlashDevelop
 obj/*
+*.swf
 
 # Visual Studio
 ipch/*
