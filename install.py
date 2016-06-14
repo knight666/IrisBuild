@@ -24,6 +24,10 @@ if __name__ == '__main__':
 
 			print('Installing at "' + install + '".')
 
+			target_iris = os.path.join(install, 'Configuration', 'IrisBuild')
+			if not os.path.exists(target_iris):
+				os.makedirs(target_iris)
+
 			# Shared library
 
 			target_libs = os.path.join(install, 'Configuration', 'External Libraries')
@@ -51,3 +55,6 @@ if __name__ == '__main__':
 				os.makedirs(target_gui)
 
 			installFile('build\\IrisBuildGUI.swf', target_gui)
+
+			for f in glob('scripts\\gui\\jsfl\\*.jsfl'):
+				installFile(f, os.path.abspath(target_iris + '\\jsfl\\' + os.path.basename(f)))

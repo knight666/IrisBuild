@@ -4,6 +4,26 @@ import flash.net.SharedObject;
 
 private var _targetSolutionURI:String = "";
 
+protected function execute(... parameters):String
+{
+	var scriptPath:String = "fl.runScript(fl.configURI + 'IrisBuild/jsfl/interface.jsfl', '" + parameters.shift().toString() + "'";
+	
+	var args:Array = [];
+	for (var i:int = 0; i < parameters.length; i++)
+	{
+		args.push("'" + (parameters[i] || "").split("'").join("\'") + "'");
+	}
+	
+	if (args.length > 0)
+	{
+		scriptPath += ", " + args.join(",");
+	}
+	
+	scriptPath += ");";
+	
+	return MMExecute(scriptPath);
+}
+
 private function onCreationComplete(e:Event):void
 {
 	var persistentData:SharedObject = SharedObject.getLocal("persistentData");
@@ -12,10 +32,10 @@ private function onCreationComplete(e:Event):void
 		_targetSolutionURI = persistentData.data.IrisBuild_CurrentSolution;
 	}
 	
-	MMExecute("IrisBuild.initialize(fl.configDirectory);");
+	execute("initialize");
 }
 
 private function btnLoadClicked(e:Event):void
 {
-	MMExecute("var result = IrisBuild.loadProject(flash.getDocumentDOM().path); fl.trace(\"\\\"\" + flash.getDocumentDOM().path + \"\\\" is \" + (result == \"true\" ? \"up-to-date\" : \"out-of-date\") + \".\");");
+	execute("loadProject");
 }
