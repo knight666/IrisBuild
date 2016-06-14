@@ -1,10 +1,20 @@
 import adobe.utils.MMExecute;
+import mx.collections.XMLListCollection;
 import flash.events.Event;
 import flash.net.SharedObject;
 
 private var _targetSolutionURI:String = "";
 
-protected function execute(... parameters):String
+[Bindable]
+private var _solutionTreeData:XML =
+	<root>
+		<node label="Project1" />
+		<node label="Project2" />
+		<node label="Project3" />
+		<node label="Project4" />
+	</root>;
+
+private function execute(... parameters):String
 {
 	var scriptPath:String = "fl.runScript(fl.configURI + 'IrisBuild/jsfl/interface.jsfl', '" + parameters.shift().toString() + "'";
 	
@@ -35,7 +45,7 @@ private function onCreationComplete(e:Event):void
 	execute("initialize");
 }
 
-private function btnLoadClicked(e:Event):void
+private function onBtnLoadClicked(e:Event):void
 {
 	execute("loadProject");
 }

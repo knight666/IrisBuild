@@ -9,14 +9,27 @@
 	<fx:Script source="source/application.as" />
 	
 	<s:Group width="100%" height="100%">
-		<s:Group>
-			<s:layout>
-				<s:VerticalLayout horizontalAlign="justify" paddingTop="8" paddingBottom="8" paddingLeft="8" paddingRight="8">
-				</s:VerticalLayout>
-			</s:layout>
-			<s:Label>This is just a label.</s:Label>
-			<s:Button id="btnLoad" label="Load project" width="100" click="btnLoadClicked(event)" />
-		</s:Group>
+		<s:layout>
+			<s:VerticalLayout
+				horizontalAlign="justify"
+				paddingTop="8"
+				paddingBottom="8"
+				paddingLeft="8"
+				paddingRight="8" />
+		</s:layout>
+		
+		<s:Label>This is just a label.</s:Label>
+		
+		<s:Button
+			id="btnLoad"
+			label="Load project"
+			click="onBtnLoadClicked(event)" />
+		
+		<mx:Tree
+			id="treSolution"
+			labelField="@label"
+			showRoot="false"
+			dataProvider="{_solutionTreeData.node}" />
 	</s:Group>
 
 </s:Application>
