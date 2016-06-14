@@ -37,6 +37,8 @@ JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentC
         return JS_FALSE;
     }
 
+    path = helpers::uriToAbsolute(path);
+
     return Solution::get().load(path) ? JS_TRUE : JS_FALSE;
 }
 
@@ -51,6 +53,8 @@ JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentC
 
         return JS_FALSE;
     }
+
+    path = helpers::uriToAbsolute(path);
 
     Solution::get().save(path);
 
@@ -68,6 +72,8 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
 
         return JS_FALSE;
     }
+
+    path = helpers::uriToAbsolute(path);
 
     IRIS_LOG_INFO("Loading project \"%s\".", path.c_str());
 

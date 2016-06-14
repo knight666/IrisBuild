@@ -162,6 +162,28 @@ namespace helpers {
         return utf8(buffer);
     }
 
+    std::string uriToAbsolute(const std::string& uri)
+    {
+        static const char* Identifier = "file:///";
+        static const size_t IdentifierLength = strlen(Identifier);
+
+        if (uri.length() < IdentifierLength ||
+            uri.compare(0, IdentifierLength, Identifier) != 0)
+        {
+            return uri;
+        }
+
+        std::string path = uri.substr(IdentifierLength, uri.length() - IdentifierLength);
+
+        size_t drive_separator = path.find('|');
+        if (drive_separator != std::string::npos)
+        {
+            path.replace(drive_separator, drive_separator + 1, 1, ':');
+        }
+
+        return absolutePath(path);
+    }
+
     std::string readElementText(TiXmlElement* parent, const char* name)
     {
         TiXmlElement* element = parent->FirstChildElement(name);

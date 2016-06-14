@@ -24,6 +24,7 @@ namespace helpers {
     bool fileExists(const std::string& path);
     std::string fileLastModifiedTime(const std::string& path);
     std::string absolutePath(const std::string& path);
+    std::string uriToAbsolute(const std::string& uri);
 
     // XML
     std::string readElementText(TiXmlElement* parent, const char* name);
