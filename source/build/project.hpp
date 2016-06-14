@@ -25,7 +25,10 @@ namespace iris {
         const std::string& getProjectPath() const { return m_projectPath; }
         const std::string& getIntermediatePath() const { return m_intermediatePath; }
 
-        bool load(const std::string& filePath);
+        bool parse(const std::string& filePath);
+
+        bool load(TiXmlElement* element, uint32_t version);
+        void save(TiXmlElement* element, uint32_t version);
 
     private:
 

@@ -28,7 +28,7 @@
 		<mx:Tree
 			id="treSolution"
 			labelField="@label"
-			showRoot="false"
+			showRoot="true"
 			dataProvider="{_solutionTreeData.node}" />
 	</s:Group>
 

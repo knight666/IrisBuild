@@ -43,7 +43,7 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
 
     Solution::get().addProject(project);
 
-    if (!project->load(path))
+    if (!project->parse(path))
     {
         IRIS_LOG_ERROR("Failed to load the project.");
 

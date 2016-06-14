@@ -19,6 +19,9 @@ namespace iris {
         std::shared_ptr<Project> getCurrentProject() const;
         void addProject(std::shared_ptr<Project> project);
 
+        bool load(const std::string& filePath);
+        void save(const std::string& filePath);
+
     private:
 
         Solution();
@@ -27,6 +30,7 @@ namespace iris {
         static Solution* s_instance;
 
         std::vector<std::shared_ptr<Project>> m_projects;
+        std::string m_workingDirectory;
 
     };
 

@@ -16,7 +16,7 @@ namespace iris {
     {
     }
 
-    bool Project::load(const std::string& filePath)
+    bool Project::parse(const std::string& filePath)
     {
         // Validate project type
 
@@ -67,6 +67,16 @@ namespace iris {
         }
 
         return true;
+    }
+
+    bool Project::load(TiXmlElement* element, uint32_t version)
+    {
+        return true;
+    }
+
+    void Project::save(TiXmlElement* element, uint32_t version)
+    {
+
     }
 
     std::string Project::getTaskIntermediatePath() const

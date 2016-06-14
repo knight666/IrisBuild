@@ -7,11 +7,13 @@ private var _targetSolutionURI:String = "";
 
 [Bindable]
 private var _solutionTreeData:XML =
-	<root>
-		<node label="Project1" />
-		<node label="Project2" />
-		<node label="Project3" />
-		<node label="Project4" />
+	<root label="Solution">
+		<node label= "Solution">
+			<node label="Project1" />
+			<node label="Project2" />
+			<node label="Project3" />
+			<node label="Project4" />
+		</node>
 	</root>;
 
 private function execute(... parameters):String
