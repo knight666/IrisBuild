@@ -4,6 +4,9 @@ output/*
 *.pyc
 *.tlog
 
+# FlashDevelop
+obj/*
+
 # Visual Studio
 ipch/*
 *_UpgradeReport_Files/*
