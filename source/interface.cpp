@@ -25,6 +25,38 @@ JSBool initialize(JSContext* context, JSObject* target, unsigned int argumentCou
     return JS_TRUE;
 }
 
+JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    std::string path;
+
+    if (argumentCount < 1 ||
+        !helpers::valueToString(*context, argumentList[0], path))
+    {
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"loadSolution\".");
+
+        return JS_FALSE;
+    }
+
+    return Solution::get().load(path) ? JS_TRUE : JS_FALSE;
+}
+
+JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    std::string path;
+
+    if (argumentCount < 1 ||
+        !helpers::valueToString(*context, argumentList[0], path))
+    {
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"loadSolution\".");
+
+        return JS_FALSE;
+    }
+
+    Solution::get().save(path);
+
+    return JS_TRUE;
+}
+
 JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {
     std::string path;

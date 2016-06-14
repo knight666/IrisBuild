@@ -38,16 +38,23 @@ private function execute(... parameters):String
 
 private function onCreationComplete(e:Event):void
 {
+	execute("initialize");
+	
 	var persistentData:SharedObject = SharedObject.getLocal("persistentData");
 	if (persistentData && persistentData.data.hasOwnProperty("IrisBuild_CurrentSolution"))
 	{
 		_targetSolutionURI = persistentData.data.IrisBuild_CurrentSolution;
+		execute("loadSolution", _targetSolutionURI);
 	}
-	
-	execute("initialize");
 }
 
 private function onBtnLoadClicked(e:Event):void
 {
-	execute("loadProject");
+	var path:String = execute("openSolution");
+	if (path != "null")
+	{
+		execute("loadSolution", path);
+		
+		_targetSolutionURI = path;
+	}
 }

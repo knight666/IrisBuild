@@ -22,7 +22,7 @@
 		
 		<s:Button
 			id="btnLoad"
-			label="Load project"
+			label="Load solution"
 			click="onBtnLoadClicked(event)" />
 		
 		<mx:Tree

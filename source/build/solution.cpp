@@ -73,7 +73,7 @@ namespace iris {
 
         int32_t version_semantic[3] = { 0 };
         sscanf_s(version_text.c_str(), "%d.%d.%d", &version_semantic[0], &version_semantic[1], &version_semantic[2]);
-        uint32_t version = IRIS_SAVE_VERSION(version_semantic[0], version_semantic[1], version_semantic[2]);
+        uint32_t version = IRIS_SAVE_VERSION_MAKE(version_semantic[0], version_semantic[1], version_semantic[2]);
 
         IRIS_LOG_TRACE("version: \"%s\".", version_text.c_str());
 
