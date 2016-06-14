@@ -6,15 +6,7 @@ import flash.net.SharedObject;
 private var _targetSolutionURI:String = "";
 
 [Bindable]
-private var _solutionTreeData:XML =
-	<root label="Solution">
-		<node label= "Solution">
-			<node label="Project1" />
-			<node label="Project2" />
-			<node label="Project3" />
-			<node label="Project4" />
-		</node>
-	</root>;
+private var _solutionTreeData:XML = <root />;
 
 private function execute(... parameters):String
 {
@@ -43,8 +35,7 @@ private function onCreationComplete(e:Event):void
 	var persistentData:SharedObject = SharedObject.getLocal("persistentData");
 	if (persistentData && persistentData.data.hasOwnProperty("IrisBuild_CurrentSolution"))
 	{
-		_targetSolutionURI = persistentData.data.IrisBuild_CurrentSolution;
-		execute("loadSolution", _targetSolutionURI);
+		loadSolution(persistentData.data.IrisBuild_CurrentSolution);
 	}
 }
 
@@ -53,8 +44,18 @@ private function onBtnLoadClicked(e:Event):void
 	var path:String = execute("openSolution");
 	if (path != "null")
 	{
-		execute("loadSolution", path);
-		
-		_targetSolutionURI = path;
+		loadSolution(path);
 	}
+}
+
+private function loadSolution(path:String):void
+{
+	var serialized:String = execute("loadSolution", path);
+	
+	_solutionTreeData = XML(serialized);
+	
+	var persistentData:SharedObject = SharedObject.getLocal("persistentData");
+	persistentData.data.IrisBuild_CurrentSolution = path;
+	
+	_targetSolutionURI = path;
 }

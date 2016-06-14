@@ -18,6 +18,8 @@ namespace iris {
 
         const std::string& getWorkingDirectory() const { return m_workingDirectory; }
 
+        std::string getSerializedDataProvider() const;
+
         std::shared_ptr<Project> getCurrentProject() const;
         void addProject(std::shared_ptr<Project> project);
 
@@ -31,8 +33,10 @@ namespace iris {
 
         static Solution* s_instance;
 
-        std::vector<std::shared_ptr<Project>> m_projects;
+        std::string m_filePath;
         std::string m_workingDirectory;
+
+        std::vector<std::shared_ptr<Project>> m_projects;
 
     };
 

@@ -39,7 +39,15 @@ JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentC
 
     path = helpers::uriToAbsolute(path);
 
-    return Solution::get().load(path) ? JS_TRUE : JS_FALSE;
+    if (Solution::get().load(path))
+    {
+        std::string serialized = Solution::get().getSerializedDataProvider();
+        IRIS_LOG_TRACE("serialized: \"%s\"", serialized.c_str());
+
+        helpers::stringToValue(*context, serialized, *result);
+    }
+
+    return JS_TRUE;
 }
 
 JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
