@@ -5,6 +5,7 @@
 
 namespace iris {
     class Publish;
+    class Solution;
 
     namespace dom {
         class Document;
@@ -19,7 +20,7 @@ namespace iris {
 
     public:
 
-        Project(JSContext* context);
+        Project(Solution& solution);
         ~Project();
 
         const std::string& getProjectPath() const { return m_projectPath; }
@@ -37,7 +38,8 @@ namespace iris {
         virtual std::string getTaskCommand() const override;
         virtual std::vector<std::shared_ptr<Task>> getTaskDependencies() const override;
 
-        JSContext* m_context;
+        Solution& m_solution;
+
         std::string m_filePath;
         std::string m_projectPath;
         std::string m_intermediatePath;

@@ -4,11 +4,12 @@
 #include "../helpers.hpp"
 #include "dom/document.hpp"
 #include "publish.hpp"
+#include "solution.hpp"
 
 namespace iris {
 
-    Project::Project(JSContext* context)
-        : m_context(context)
+    Project::Project(Solution& solution)
+        : m_solution(solution)
     {
     }
 
@@ -18,8 +19,6 @@ namespace iris {
 
     bool Project::parse(const std::string& filePath)
     {
-        // Validate project type
-
         static const char* Extension = ".xfl";
         static const size_t ExtensionLength = strlen(Extension);
 
@@ -71,6 +70,15 @@ namespace iris {
 
     bool Project::load(TiXmlElement* element, uint32_t version)
     {
+        std::string path = helpers::readAttributeText(element, "path");
+        IRIS_LOG_TRACE("path: %s", path.c_str());
+
+        std::string file_path = helpers::absolutePath(m_solution.getWorkingDirectory() + path);
+        if (!parse(file_path))
+        {
+            return false;
+        }
+
         return true;
     }
 

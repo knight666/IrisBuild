@@ -77,9 +77,7 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
 
     IRIS_LOG_INFO("Loading project \"%s\".", path.c_str());
 
-    std::shared_ptr<Project> project(new Project(context));
-
-    Solution::get().addProject(project);
+    std::shared_ptr<Project> project(new Project(Solution::get()));
 
     if (!project->parse(path))
     {

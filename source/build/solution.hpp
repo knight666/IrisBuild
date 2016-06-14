@@ -16,6 +16,8 @@ namespace iris {
         static void create();
         static void destroy();
 
+        const std::string& getWorkingDirectory() const { return m_workingDirectory; }
+
         std::shared_ptr<Project> getCurrentProject() const;
         void addProject(std::shared_ptr<Project> project);
 

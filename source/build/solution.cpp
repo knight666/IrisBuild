@@ -106,7 +106,7 @@ namespace iris {
 
         XML_FOR_EACH(projects, "Project", project_element)
         {
-            std::shared_ptr<Project> project(new Project(nullptr));
+            std::shared_ptr<Project> project(new Project(*this));
 
             if (!project->load(project_element, version))
             {
