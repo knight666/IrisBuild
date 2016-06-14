@@ -6,8 +6,8 @@
     <movie input="" />
     <movie path="build\IrisBuildGUI.swf" />
     <movie fps="30" />
-    <movie width="800" />
-    <movie height="600" />
+    <movie width="300" />
+    <movie height="150" />
     <movie version="17" />
     <movie minorVersion="0" />
     <movie platform="Flash Player" />
