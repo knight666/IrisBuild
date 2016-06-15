@@ -30,7 +30,7 @@ JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentC
     std::string path;
 
     if (argumentCount < 1 ||
-        !helpers::valueToString(*context, argumentList[0], path))
+        !helpers::fromJsfl(context, argumentList[0], path))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"loadSolution\".");
 
@@ -44,7 +44,7 @@ JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentC
         std::string serialized = Solution::get().getSerializedDataProvider();
         IRIS_LOG_TRACE("serialized: \"%s\"", serialized.c_str());
 
-        helpers::stringToValue(*context, serialized, *result);
+        helpers::toJsfl(context, serialized, *result);
     }
 
     return JS_TRUE;
@@ -55,7 +55,7 @@ JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentC
     std::string path;
 
     if (argumentCount < 1 ||
-        !helpers::valueToString(*context, argumentList[0], path))
+        !helpers::fromJsfl(context, argumentList[0], path))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"loadSolution\".");
 
@@ -74,7 +74,7 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
     std::string path;
 
     if (argumentCount < 1 ||
-        !helpers::valueToString(*context, argumentList[0], path))
+        !helpers::fromJsfl(context, argumentList[0], path))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"loadProject\".");
 
@@ -98,7 +98,7 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
 
     IRIS_LOG_INFO("Project is %s.", status ? "up-to-date" : "out-of-date");
 
-    helpers::stringToValue(*context, status ? "true" : "false", *result);
+    helpers::toJsfl(context, status, *result);
 
     return JS_TRUE;
 }

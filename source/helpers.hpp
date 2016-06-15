@@ -20,66 +20,62 @@ namespace helpers {
     bool stringToValue(JSContext& context, const std::string& input, jsval& target);
 
     template<typename ValueType>
-    ValueType fromJsfl(JSContext* context, jsval value);
+    bool fromJsfl(JSContext* context, const jsval& input, ValueType& target);
 
     template<>
-    inline std::string fromJsfl(JSContext* context, jsval value)
+    inline bool fromJsfl(JSContext* context, const jsval& input, std::string& target)
     {
-        unsigned int value_width_length = 0;
-        unsigned short* value_wide = JS_ValueToString(context, value, &value_width_length);
+        unsigned int input_wide_length = 0;
+        unsigned short* input_wide = JS_ValueToString(context, input, &input_wide_length);
 
-        if (value_wide == nullptr ||
-            value_width_length == 0)
+        if (input_wide == nullptr ||
+            input_wide_length == 0)
         {
-            return std::string();
+            return false;
         }
 
         int32_t errors = 0;
 
-        size_t size_in_bytes = widetoutf8(value_wide, value_width_length * UTF8_WCHAR_SIZE, nullptr, 0, &errors);
+        size_t size_in_bytes = widetoutf8(input_wide, input_wide_length * UTF8_WCHAR_SIZE, nullptr, 0, &errors);
         if (size_in_bytes == 0 ||
             errors != UTF8_ERR_NONE)
         {
-            return std::string();
+            return false;
         }
 
-        std::string converted;
-        converted.resize(size_in_bytes);
-        widetoutf8(value_wide, value_width_length * UTF8_WCHAR_SIZE, &converted[0], size_in_bytes, nullptr);
+        target.resize(size_in_bytes);
+        widetoutf8(input_wide, input_wide_length * UTF8_WCHAR_SIZE, &target[0], size_in_bytes, nullptr);
 
-        return converted;
+        return true;
     }
 
     template<typename ValueType>
-    jsval toJsfl(JSContext* context, const ValueType& value);
+    bool toJsfl(JSContext* context, const ValueType& input, jsval& target);
 
     template<>
-    inline jsval toJsfl(JSContext* context, const std::string& value)
+    inline bool toJsfl(JSContext* context, const std::string& input, jsval& target)
     {
         int32_t errors = 0;
 
-        size_t size_in_bytes = utf8towide(value.c_str(), value.size(), nullptr, 0, &errors);
+        size_t size_in_bytes = utf8towide(input.c_str(), input.size(), nullptr, 0, &errors);
         if (size_in_bytes == 0 ||
             errors != UTF8_ERR_NONE)
         {
-            return (jsval)0;
+            return false;
         }
 
         std::wstring converted;
         converted.resize(size_in_bytes / UTF8_WCHAR_SIZE);
 
-        utf8towide(value.c_str(), value.size(), &converted[0], size_in_bytes, nullptr);
+        utf8towide(input.c_str(), input.size(), &converted[0], size_in_bytes, nullptr);
 
-        jsval result;
-        JS_StringToValue(context, &converted[0], (uint32_t)(size_in_bytes / UTF8_WCHAR_SIZE), &result);
-
-        return result;
+        return (JS_StringToValue(context, &converted[0], (uint32_t)(size_in_bytes / UTF8_WCHAR_SIZE), &target) == JS_TRUE);
     }
 
     template<>
-    inline jsval toJsfl(JSContext* context, const bool& value)
+    inline bool toJsfl(JSContext* context, const bool& input, jsval& target)
     {
-        return toJsfl<std::string>(context, std::string(value ? "true" : "false"));
+        return toJsfl<std::string>(context, std::string(input ? "true" : "false"), target);
     }
 
     // OS
