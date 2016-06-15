@@ -24,6 +24,7 @@ namespace iris {
         Project(Solution& solution);
         ~Project();
 
+        const std::string& getFilePath() const { return m_filePath; }
         const std::string& getProjectPath() const { return m_projectPath; }
         const std::string& getIntermediatePath() const { return m_intermediatePath; }
 

@@ -22,8 +22,6 @@ namespace iris {
         const std::string getFilePath() const { return m_filePath; }
         const std::string& getWorkingDirectory() const { return m_workingDirectory; }
 
-        std::string getSerializedDataProvider() const;
-
         bool accept(Visitor& visitor) const;
 
         std::shared_ptr<Project> getCurrentProject() const;

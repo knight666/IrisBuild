@@ -2,6 +2,7 @@
 
 #include "build/project.hpp"
 #include "build/solution.hpp"
+#include "build/treevisitor.hpp"
 #include "logging/logger.hpp"
 #include "helpers.hpp"
 
@@ -41,10 +42,12 @@ JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentC
 
     if (Solution::get().load(path))
     {
-        std::string serialized = Solution::get().getSerializedDataProvider();
-        IRIS_LOG_TRACE("serialized: \"%s\"", serialized.c_str());
+        TreeVisitor printer;
+        Solution::get().accept(printer);
 
-        helpers::toJsfl(context, serialized, *result);
+        IRIS_LOG_TRACE("serialized: \"%s\"", printer.getSerialized().c_str());
+
+        helpers::toJsfl(context, printer.getSerialized(), *result);
     }
 
     return JS_TRUE;

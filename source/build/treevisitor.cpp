@@ -49,7 +49,11 @@ namespace iris {
     bool TreeVisitor::visitEnter(const Project& project)
     {
         TiXmlElement* project_element = new TiXmlElement("node");
-        project_element->SetAttribute("label", project.getProjectPath().c_str());
+
+        char filename[_MAX_FNAME] = { 0 };
+        _splitpath(project.getFilePath().c_str(), nullptr, nullptr, filename, nullptr);
+
+        project_element->SetAttribute("label", filename);
         m_solutionElement->LinkEndChild(project_element);
 
         return true;

@@ -48,36 +48,6 @@ namespace iris {
         m_projects.push_back(project);
     }
 
-    std::string Solution::getSerializedDataProvider() const
-    {
-        TiXmlDocument document;
-
-        TiXmlElement* root_element = new TiXmlElement("root");
-        document.LinkEndChild(root_element);
-
-        char filename[_MAX_FNAME] = { 0 };
-        _splitpath(m_filePath.c_str(), nullptr, nullptr, filename, nullptr);
-
-        TiXmlElement* solution_element = new TiXmlElement("node");
-        solution_element->SetAttribute("label", filename);
-        root_element->LinkEndChild(solution_element);
-
-        for (std::shared_ptr<Project> project : m_projects)
-        {
-            TiXmlElement* project_element = new TiXmlElement("node");
-            project_element->SetAttribute("label", project->getProjectPath().c_str());
-            solution_element->LinkEndChild(project_element);
-        }
-
-        TiXmlPrinter printer;
-        printer.SetIndent(nullptr);
-        printer.SetLineBreak(nullptr);
-
-        document.Accept(&printer);
-
-        return std::string(printer.CStr());
-    }
-
     bool Solution::accept(Visitor& visitor) const
     {
         bool result = visitor.visitEnter(*this);
