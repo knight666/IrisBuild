@@ -19,7 +19,7 @@ namespace dom {
     {
     }
 
-    bool Document::accept(Visitor& visitor) const
+    bool Document::accept(Visitor& visitor)
     {
         return visitor.visitEnter(*this) && visitor.visitLeave(*this);
     }

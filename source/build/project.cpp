@@ -69,7 +69,7 @@ namespace iris {
         return true;
     }
 
-    bool Project::accept(Visitor& visitor) const
+    bool Project::accept(Visitor& visitor)
     {
         return visitor.visitEnter(*this) && m_publish->accept(visitor) && m_document->accept(visitor) && visitor.visitLeave(*this);
     }

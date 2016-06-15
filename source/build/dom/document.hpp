@@ -22,7 +22,7 @@ namespace dom {
 
         Project& getProject() const { return m_project; }
 
-        bool accept(Visitor& visitor) const;
+        bool accept(Visitor& visitor);
 
         bool load(const std::string& filePath);
 

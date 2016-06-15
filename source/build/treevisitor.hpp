@@ -15,10 +15,10 @@ namespace iris {
 
         const std::string& getSerialized() const { return m_serialized; }
 
-        virtual bool visitEnter(const Solution& solution) override;
-        virtual bool visitLeave(const Solution& solution) override;
+        virtual bool visitEnter(Solution& solution) override;
+        virtual bool visitLeave(Solution& solution) override;
 
-        virtual bool visitEnter(const Project& project) override;
+        virtual bool visitEnter(Project& project) override;
 
     private:
 

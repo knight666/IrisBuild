@@ -8,6 +8,14 @@ private var _targetSolutionURI:String = "";
 [Bindable]
 private var _solutionTreeData:XML = <root />;
 
+[Bindable]
+[Embed(source="assets/Checked.png")] 
+public var iconClean:Class; 
+
+[Bindable]
+[Embed(source="assets/Attention.png")] 
+public var iconDirty:Class; 
+
 private function execute(... parameters):String
 {
 	var scriptPath:String = "fl.runScript(fl.configURI + 'IrisBuild/jsfl/interface.jsfl', '" + parameters.shift().toString() + "'";
@@ -55,7 +63,10 @@ private function onBtnLoadClicked(e:Event):void
 
 private function onBtnCheckClicked(e:Event):void
 {
+	execute("verifySolution");
+	
 	_solutionTreeData = XML(execute("getSolutionTreeDataProvider"));
+	treSolution.expandItem(_solutionTreeData.root.getItemAt(0), true);
 }
 
 private function onBtnBuildClicked(e:Event):void
@@ -68,6 +79,7 @@ private function loadSolution(path:String):void
 	execute("loadSolution", path);
 	
 	_solutionTreeData = XML(execute("getSolutionTreeDataProvider"));
+	treSolution.expandItem(_solutionTreeData.root.getItemAt(0), true);
 	
 	var persistentData:SharedObject = SharedObject.getLocal("persistentData");
 	persistentData.data.IrisBuild_CurrentSolution = path;

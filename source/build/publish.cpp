@@ -17,7 +17,7 @@ namespace iris {
     {
     }
 
-    bool Publish::accept(Visitor& visitor) const
+    bool Publish::accept(Visitor& visitor)
     {
         return visitor.visitEnter(*this) && visitor.visitLeave(*this);
     }

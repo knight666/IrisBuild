@@ -22,7 +22,9 @@ namespace iris {
         const std::string getFilePath() const { return m_filePath; }
         const std::string& getWorkingDirectory() const { return m_workingDirectory; }
 
-        bool accept(Visitor& visitor) const;
+        bool verify();
+
+        bool accept(Visitor& visitor);
 
         std::shared_ptr<Project> getCurrentProject() const;
         void addProject(std::shared_ptr<Project> project);

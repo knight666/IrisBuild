@@ -19,6 +19,11 @@ function loadSolution(path)
 	return IrisBuild.loadSolution(path);
 }
 
+function verifySolution()
+{
+	return IrisBuild.verifySolution();
+}
+
 function getSolutionTreeDataProvider()
 {
 	return IrisBuild.getSolutionTreeDataProvider();

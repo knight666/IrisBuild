@@ -21,17 +21,17 @@ namespace iris {
 
         virtual ~Visitor() { }
 
-        virtual bool visitEnter(const Solution& solution) { return true; }
-        virtual bool visitLeave(const Solution& solution) { return true; }
+        virtual bool visitEnter(Solution& solution) { return true; }
+        virtual bool visitLeave(Solution& solution) { return true; }
 
-        virtual bool visitEnter(const Project& project) { return true; }
-        virtual bool visitLeave(const Project& project) { return true; }
+        virtual bool visitEnter(Project& project) { return true; }
+        virtual bool visitLeave(Project& project) { return true; }
 
-        virtual bool visitEnter(const Publish& publish) { return true; }
-        virtual bool visitLeave(const Publish& publish) { return true; }
+        virtual bool visitEnter(Publish& publish) { return true; }
+        virtual bool visitLeave(Publish& publish) { return true; }
 
-        virtual bool visitEnter(const dom::Document& document) { return true; }
-        virtual bool visitLeave(const dom::Document& document) { return true; }
+        virtual bool visitEnter(dom::Document& document) { return true; }
+        virtual bool visitLeave(dom::Document& document) { return true; }
 
     };
 

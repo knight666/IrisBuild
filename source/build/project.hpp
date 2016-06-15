@@ -30,7 +30,7 @@ namespace iris {
 
         bool parse(const std::string& filePath);
 
-        bool accept(Visitor& visitor) const;
+        bool accept(Visitor& visitor);
 
         bool load(TiXmlElement* element, uint32_t version);
         void save(TiXmlElement* element, uint32_t version);

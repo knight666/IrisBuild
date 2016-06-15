@@ -48,7 +48,24 @@ namespace iris {
         m_projects.push_back(project);
     }
 
-    bool Solution::accept(Visitor& visitor) const
+    bool Solution::verify()
+    {
+        bool result = true;
+
+        for (std::shared_ptr<Project> project : m_projects)
+        {
+            project->reset();
+        }
+
+        for (std::shared_ptr<Project> project : m_projects)
+        {
+            result = result && project->check();
+        }
+
+        return result;
+    }
+
+    bool Solution::accept(Visitor& visitor)
     {
         bool result = visitor.visitEnter(*this);
 

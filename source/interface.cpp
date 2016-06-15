@@ -62,6 +62,15 @@ JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentC
     return JS_TRUE;
 }
 
+JSBool verifySolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    bool verified = Solution::get().verify();
+
+    helpers::toJsfl(context, verified, *result);
+
+    return JS_TRUE;
+}
+
 JSBool getSolutionTreeDataProvider(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {
     TreeVisitor printer;

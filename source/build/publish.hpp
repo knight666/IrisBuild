@@ -17,7 +17,7 @@ namespace iris {
         Publish(Project& project);
         ~Publish();
 
-        bool accept(Visitor& visitor) const;
+        bool accept(Visitor& visitor);
 
         bool load(const std::string& filePath);
 

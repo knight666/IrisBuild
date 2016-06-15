@@ -14,7 +14,7 @@ namespace iris {
     {
     }
 
-    bool TreeVisitor::visitEnter(const Solution& solution)
+    bool TreeVisitor::visitEnter(Solution& solution)
     {
         m_document.Clear();
         m_solutionElement = nullptr;
@@ -33,7 +33,7 @@ namespace iris {
         return true;
     }
 
-    bool TreeVisitor::visitLeave(const Solution& solution)
+    bool TreeVisitor::visitLeave(Solution& solution)
     {
         TiXmlPrinter printer;
         printer.SetIndent(nullptr);
@@ -46,7 +46,7 @@ namespace iris {
         return true;
     }
 
-    bool TreeVisitor::visitEnter(const Project& project)
+    bool TreeVisitor::visitEnter(Project& project)
     {
         TiXmlElement* project_element = new TiXmlElement("node");
 
@@ -54,6 +54,7 @@ namespace iris {
         _splitpath(project.getFilePath().c_str(), nullptr, nullptr, filename, nullptr);
 
         project_element->SetAttribute("label", filename);
+        project_element->SetAttribute("icon", project.check() ? "iconClean" : "iconDirty");
         m_solutionElement->LinkEndChild(project_element);
 
         return true;
