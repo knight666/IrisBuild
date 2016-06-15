@@ -6,6 +6,7 @@
 namespace iris {
     class Publish;
     class Solution;
+    class Visitor;
 
     namespace dom {
         class Document;
@@ -27,6 +28,8 @@ namespace iris {
         const std::string& getIntermediatePath() const { return m_intermediatePath; }
 
         bool parse(const std::string& filePath);
+
+        bool accept(Visitor& visitor) const;
 
         bool load(TiXmlElement* element, uint32_t version);
         void save(TiXmlElement* element, uint32_t version);

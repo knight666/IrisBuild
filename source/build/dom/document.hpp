@@ -5,6 +5,7 @@
 
 namespace iris {
     class Project;
+    class Visitor;
 };
 
 namespace iris {
@@ -20,6 +21,8 @@ namespace dom {
         ~Document();
 
         Project& getProject() const { return m_project; }
+
+        bool accept(Visitor& visitor) const;
 
         bool load(const std::string& filePath);
 

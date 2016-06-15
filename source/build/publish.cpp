@@ -3,6 +3,7 @@
 #include "../logging/logger.hpp"
 #include "../helpers.hpp"
 #include "project.hpp"
+#include "visitor.hpp"
 
 namespace iris {
 
@@ -14,6 +15,11 @@ namespace iris {
 
     Publish::~Publish()
     {
+    }
+
+    bool Publish::accept(Visitor& visitor) const
+    {
+        return visitor.visitEnter(*this) && visitor.visitLeave(*this);
     }
 
     bool Publish::load(const std::string& filePath)

@@ -3,8 +3,11 @@
 #include "../interface.hpp"
 
 namespace iris {
-
     class Project;
+    class Visitor;
+};
+
+namespace iris {
 
     class Publish
     {
@@ -13,6 +16,8 @@ namespace iris {
 
         Publish(Project& project);
         ~Publish();
+
+        bool accept(Visitor& visitor) const;
 
         bool load(const std::string& filePath);
 

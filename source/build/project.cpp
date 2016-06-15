@@ -5,6 +5,7 @@
 #include "dom/document.hpp"
 #include "publish.hpp"
 #include "solution.hpp"
+#include "visitor.hpp"
 
 namespace iris {
 
@@ -66,6 +67,11 @@ namespace iris {
         }
 
         return true;
+    }
+
+    bool Project::accept(Visitor& visitor) const
+    {
+        return visitor.visitEnter(*this) && m_publish->accept(visitor) && m_document->accept(visitor) && visitor.visitLeave(*this);
     }
 
     bool Project::load(TiXmlElement* element, uint32_t version)

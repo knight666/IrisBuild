@@ -3,6 +3,7 @@
 #include "../logging/logger.hpp"
 #include "../helpers.hpp"
 #include "project.hpp"
+#include "visitor.hpp"
 
 namespace iris {
 
@@ -75,6 +76,23 @@ namespace iris {
         document.Accept(&printer);
 
         return std::string(printer.CStr());
+    }
+
+    bool Solution::accept(Visitor& visitor) const
+    {
+        bool result = visitor.visitEnter(*this);
+
+        for (std::shared_ptr<Project> project : m_projects)
+        {
+            if (!project->accept(visitor))
+            {
+                return false;
+            }
+        }
+
+        result = result && visitor.visitLeave(*this);
+
+        return result;
     }
 
     bool Solution::load(const std::string& filePath)

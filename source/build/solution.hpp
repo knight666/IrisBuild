@@ -3,8 +3,11 @@
 #include "../interface.hpp"
 
 namespace iris {
-
     class Project;
+    class Visitor;
+};
+
+namespace iris {
 
     class Solution
     {
@@ -16,9 +19,12 @@ namespace iris {
         static void create();
         static void destroy();
 
+        const std::string getFilePath() const { return m_filePath; }
         const std::string& getWorkingDirectory() const { return m_workingDirectory; }
 
         std::string getSerializedDataProvider() const;
+
+        bool accept(Visitor& visitor) const;
 
         std::shared_ptr<Project> getCurrentProject() const;
         void addProject(std::shared_ptr<Project> project);

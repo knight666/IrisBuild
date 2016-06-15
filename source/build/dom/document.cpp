@@ -3,6 +3,7 @@
 #include "../../logging/logger.hpp"
 #include "../../helpers.hpp"
 #include "../project.hpp"
+#include "../visitor.hpp"
 #include "bitmapitem.hpp"
 #include "symbol.hpp"
 
@@ -16,6 +17,11 @@ namespace dom {
 
     Document::~Document()
     {
+    }
+
+    bool Document::accept(Visitor& visitor) const
+    {
+        return visitor.visitEnter(*this) && visitor.visitLeave(*this);
     }
 
     bool Document::load(const std::string& filePath)
