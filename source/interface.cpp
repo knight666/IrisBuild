@@ -40,17 +40,7 @@ JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentC
 
     path = helpers::uriToAbsolute(path);
 
-    if (Solution::get().load(path))
-    {
-        TreeVisitor printer;
-        Solution::get().accept(printer);
-
-        IRIS_LOG_TRACE("serialized: \"%s\"", printer.getSerialized().c_str());
-
-        helpers::toJsfl(context, printer.getSerialized(), *result);
-    }
-
-    return JS_TRUE;
+    return Solution::get().load(path) ? JS_TRUE : JS_FALSE;
 }
 
 JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
@@ -68,6 +58,18 @@ JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentC
     path = helpers::uriToAbsolute(path);
 
     Solution::get().save(path);
+
+    return JS_TRUE;
+}
+
+JSBool getSolutionTreeDataProvider(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    TreeVisitor printer;
+    Solution::get().accept(printer);
+
+    IRIS_LOG_TRACE("serialized: \"%s\"", printer.getSerialized().c_str());
+
+    helpers::toJsfl(context, printer.getSerialized(), *result);
 
     return JS_TRUE;
 }

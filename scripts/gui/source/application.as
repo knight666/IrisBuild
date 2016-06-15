@@ -55,7 +55,7 @@ private function onBtnLoadClicked(e:Event):void
 
 private function onBtnCheckClicked(e:Event):void
 {
-
+	_solutionTreeData = XML(execute("getSolutionTreeDataProvider"));
 }
 
 private function onBtnBuildClicked(e:Event):void
@@ -65,9 +65,9 @@ private function onBtnBuildClicked(e:Event):void
 
 private function loadSolution(path:String):void
 {
-	var serialized:String = execute("loadSolution", path);
+	execute("loadSolution", path);
 	
-	_solutionTreeData = XML(serialized);
+	_solutionTreeData = XML(execute("getSolutionTreeDataProvider"));
 	
 	var persistentData:SharedObject = SharedObject.getLocal("persistentData");
 	persistentData.data.IrisBuild_CurrentSolution = path;

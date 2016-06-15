@@ -11,12 +11,15 @@ function loadProject()
 
 function openSolution()
 {
-	var filePath = fl.browseForFileURL("open", "Select a solution file.", "IrisBuild Solution (*.xml)", "xml");
-	//return FLfile.uriToPlatformPath(filePath);
-	return filePath;
+	return fl.browseForFileURL("open", "Select a solution file.", "IrisBuild Solution (*.xml)", "xml");
 }
 
 function loadSolution(path)
 {
 	return IrisBuild.loadSolution(path);
+}
+
+function getSolutionTreeDataProvider()
+{
+	return IrisBuild.getSolutionTreeDataProvider();
 }
