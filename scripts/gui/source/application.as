@@ -39,6 +39,11 @@ private function onCreationComplete(e:Event):void
 	}
 }
 
+private function onBtnNewClicked(e:Event):void
+{
+
+}
+
 private function onBtnLoadClicked(e:Event):void
 {
 	var path:String = execute("openSolution");
@@ -46,6 +51,16 @@ private function onBtnLoadClicked(e:Event):void
 	{
 		loadSolution(path);
 	}
+}
+
+private function onBtnCheckClicked(e:Event):void
+{
+
+}
+
+private function onBtnBuildClicked(e:Event):void
+{
+
 }
 
 private function loadSolution(path:String):void

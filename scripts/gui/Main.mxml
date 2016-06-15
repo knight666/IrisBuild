@@ -18,18 +18,52 @@
 				paddingRight="8" />
 		</s:layout>
 		
-		<s:Label>This is just a label.</s:Label>
-		
-		<s:Button
-			id="btnLoad"
-			label="Load solution"
-			click="onBtnLoadClicked(event)" />
+		<s:Group width="100%">
+			<s:layout>
+				<s:HorizontalLayout />
+			</s:layout>
+			
+			<s:Button
+				id="btnNew"
+				icon="@Embed('assets/File.png')"
+				click="onBtnNewClicked(event)"
+				width="32"
+				height="32" />
+			
+			<s:Button
+				id="btnLoad"
+				icon="@Embed('assets/Open Folder.png')"
+				click="onBtnLoadClicked(event)"
+				width="32"
+				height="32" />
+		</s:Group>
 		
 		<mx:Tree
 			id="treSolution"
 			labelField="@label"
 			showRoot="true"
-			dataProvider="{_solutionTreeData.node}" />
+			dataProvider="{_solutionTreeData.node}" 
+			height="100%" />
+		
+		<s:Group width="100%">
+			<s:layout>
+				<s:HorizontalLayout />
+			</s:layout>
+			
+			<s:Button
+				id="btnCheck"
+				icon="@Embed('assets/Search.png')"
+				click="onBtnCheckClicked(event)"
+				width="32"
+				height="32" />
+			
+			<s:Button
+				id="btnBuild"
+				icon="@Embed('assets/Hammer.png')"
+				click="onBtnBuildClicked(event)"
+				width="32"
+				height="32" />
+		</s:Group>
 	</s:Group>
 
 </s:Application>
