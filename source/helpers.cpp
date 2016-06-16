@@ -117,6 +117,21 @@ namespace helpers {
         return utf8(buffer);
     }
 
+    std::string relativePath(const std::string& pathFrom, const std::string& pathTo)
+    {
+        std::wstring wide_from = wide(pathFrom);
+        std::wstring wide_to = wide(pathTo);
+
+        wchar_t buffer[_MAX_PATH] = { 0 };
+
+        ::PathRelativePathToW(
+            buffer,
+            wide_from.c_str(), FILE_ATTRIBUTE_DIRECTORY,
+            wide_to.c_str(), FILE_ATTRIBUTE_NORMAL);
+
+        return utf8(buffer);
+    }
+
     std::string uriToAbsolute(const std::string& uri)
     {
         static const char* Identifier = "file:///";

@@ -82,7 +82,8 @@ private function onBtnAddProjectClicked(e:Event):void
 {
 	if (execute("addProject"))
 	{
-		loadSolution(_targetSolutionURI);
+		var persistentData:SharedObject = SharedObject.getLocal("persistentData");
+		loadSolution(persistentData.data.IrisBuild_CurrentSolution);
 	}
 }
 

@@ -42,7 +42,8 @@
 			'conditions': [
 				['OS=="win"', {
 					'libraries': [
-						'Shell32.lib'
+						'Shell32.lib',
+						'Shlwapi.lib'
 					],
 					'msvs_settings': {
 						'VCCLCompilerTool': {

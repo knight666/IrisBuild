@@ -16,6 +16,7 @@
 // Windows
 #include <windows.h>
 #include <ShlObj.h>
+#include <Shlwapi.h>
 
 extern "C" {
 

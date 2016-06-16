@@ -90,8 +90,12 @@ namespace iris {
 
     bool Project::save(TiXmlElement* element, uint32_t version)
     {
+        std::string relative = helpers::relativePath(m_solution.getWorkingDirectory(), m_filePath);
+
+        IRIS_LOG_TRACE("workingDirectory %s filePath %s relative %s", m_solution.getWorkingDirectory().c_str(), m_filePath.c_str(), relative.c_str());
+
         TiXmlElement* project_element = new TiXmlElement("Project");
-        project_element->SetAttribute("path", m_filePath.c_str());
+        project_element->SetAttribute("path", relative.c_str());
         element->LinkEndChild(project_element);
 
         return true;

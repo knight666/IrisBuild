@@ -80,6 +80,7 @@ namespace helpers {
     bool fileExists(const std::string& path);
     std::string fileLastModifiedTime(const std::string& path);
     std::string absolutePath(const std::string& path);
+    std::string relativePath(const std::string& pathFrom, const std::string& pathTo);
     std::string uriToAbsolute(const std::string& uri);
 
     // XML
