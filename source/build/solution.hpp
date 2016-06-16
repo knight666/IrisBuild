@@ -14,10 +14,8 @@ namespace iris {
 
     public:
 
-        static Solution& get();
-
-        static void create();
-        static void destroy();
+        Solution();
+        ~Solution();
 
         const std::string getFilePath() const { return m_filePath; }
         const std::string& getWorkingDirectory() const { return m_workingDirectory; }
@@ -33,11 +31,6 @@ namespace iris {
         void save(const std::string& filePath);
 
     private:
-
-        Solution();
-        ~Solution();
-
-        static Solution* s_instance;
 
         std::string m_filePath;
         std::string m_workingDirectory;

@@ -1,10 +1,14 @@
 #include "application.hpp"
 
+#include "build/solution.hpp"
+#include "logging/logger.hpp"
+
 namespace iris {
 
     Application* Application::s_instance = nullptr;
 
     Application::Application()
+        : m_solution(new Solution())
     {
     }
 
@@ -28,14 +32,22 @@ namespace iris {
         s_instance = nullptr;
     }
 
-    std::shared_ptr<Solution> Application::createSolution(const std::string& filePath)
+    bool Application::initialize(const std::string& configurationPath)
     {
-        return nullptr;
+        Logger::get().setFilePath(configurationPath + "IrisBuild.log");
+        IRIS_LOG_INFO("Opening log.");
+
+        m_configurationPath = configurationPath;
+
+        return true;
     }
 
-    std::shared_ptr<Solution> Application::loadSolution(const std::string& filePath)
+    std::shared_ptr<Solution> Application::createSolution(const std::string& filePath)
     {
-        return nullptr;
+        m_solution = std::shared_ptr<Solution>(new Solution());
+        m_solution->save(filePath);
+
+        return m_solution;
     }
 
 };

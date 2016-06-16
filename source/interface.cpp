@@ -4,6 +4,7 @@
 #include "build/solution.hpp"
 #include "build/treevisitor.hpp"
 #include "logging/logger.hpp"
+#include "application.hpp"
 #include "helpers.hpp"
 
 using namespace iris;
@@ -20,8 +21,22 @@ JSBool initialize(JSContext* context, JSObject* target, unsigned int argumentCou
         return JS_FALSE;
     }
 
-    Logger::get().setFilePath(configurationPath + "IrisBuild.log");
-    IRIS_LOG_INFO("Opening log.");
+    return Application::get().initialize(helpers::uriToAbsolute(configurationPath)) ? JS_TRUE : JS_FALSE;
+}
+
+JSBool createSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    std::string path;
+
+    if (argumentCount < 1 ||
+        !helpers::fromJsfl(context, argumentList[0], path))
+    {
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"createSolution\".");
+
+        return JS_FALSE;
+    }
+
+    Application::get().createSolution(helpers::uriToAbsolute(path));
 
     return JS_TRUE;
 }
@@ -38,9 +53,7 @@ JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentC
         return JS_FALSE;
     }
 
-    path = helpers::uriToAbsolute(path);
-
-    return Solution::get().load(path) ? JS_TRUE : JS_FALSE;
+    return Application::get().getSolution()->load(helpers::uriToAbsolute(path)) ? JS_TRUE : JS_FALSE;
 }
 
 JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
@@ -55,16 +68,14 @@ JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentC
         return JS_FALSE;
     }
 
-    path = helpers::uriToAbsolute(path);
-
-    Solution::get().save(path);
+    Application::get().getSolution()->save(helpers::uriToAbsolute(path));
 
     return JS_TRUE;
 }
 
 JSBool verifySolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {
-    bool verified = Solution::get().verify();
+    bool verified = Application::get().getSolution()->verify();
 
     helpers::toJsfl(context, verified, *result);
 
@@ -74,7 +85,7 @@ JSBool verifySolution(JSContext* context, JSObject* target, unsigned int argumen
 JSBool getSolutionTreeDataProvider(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {
     TreeVisitor printer;
-    Solution::get().accept(printer);
+    Application::get().getSolution()->accept(printer);
 
     IRIS_LOG_TRACE("serialized: \"%s\"", printer.getSerialized().c_str());
 
@@ -99,7 +110,7 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
 
     IRIS_LOG_INFO("Loading project \"%s\".", path.c_str());
 
-    std::shared_ptr<Project> project(new Project(Solution::get()));
+    std::shared_ptr<Project> project(new Project(*Application::get().getSolution()));
 
     if (!project->parse(path))
     {

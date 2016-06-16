@@ -1,11 +1,12 @@
-#include "build/solution.hpp"
 #include "logging/logger.hpp"
+#include "application.hpp"
 
 MM_STATE
 
 void MM_Init()
 {
     JS_DefineFunction(L"initialize", initialize, 1);
+    JS_DefineFunction(L"createSolution", loadSolution, 1);
     JS_DefineFunction(L"loadSolution", loadSolution, 1);
     JS_DefineFunction(L"saveSolution", saveSolution, 1);
     JS_DefineFunction(L"verifySolution", verifySolution, 0);
@@ -13,11 +14,11 @@ void MM_Init()
     JS_DefineFunction(L"loadProject", loadProject, 1);
 
     iris::Logger::create();
-    iris::Solution::create();
+    iris::Application::create();
 }
 
 void MM_Terminate()
 {
-    iris::Solution::destroy();
+    iris::Application::destroy();
     iris::Logger::destroy();
 }

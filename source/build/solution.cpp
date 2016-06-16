@@ -7,30 +7,12 @@
 
 namespace iris {
 
-    Solution* Solution::s_instance = nullptr;
-
     Solution::Solution()
     {
     }
 
     Solution::~Solution()
     {
-    }
-
-    Solution& Solution::get()
-    {
-        return *s_instance;
-    }
-
-    void Solution::create()
-    {
-        s_instance = new Solution();
-    }
-
-    void Solution::destroy()
-    {
-        delete s_instance;
-        s_instance = nullptr;
     }
 
     std::shared_ptr<Project> Solution::getCurrentProject() const

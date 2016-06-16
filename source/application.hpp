@@ -18,10 +18,11 @@ namespace iris {
         static void create();
         static void destroy();
 
+        bool initialize(const std::string& configurationPath);
+
         std::shared_ptr<Solution> getSolution() const { return m_solution; }
 
         std::shared_ptr<Solution> createSolution(const std::string& filePath);
-        std::shared_ptr<Solution> loadSolution(const std::string& filePath);
 
     private:
 
@@ -30,6 +31,7 @@ namespace iris {
 
         static Application* s_instance;
 
+        std::string m_configurationPath;
         std::shared_ptr<Solution> m_solution;
 
     };
