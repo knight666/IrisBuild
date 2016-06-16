@@ -6,6 +6,7 @@
 	creationComplete="onCreationComplete(event)"
 	frameRate="8">
 	
+	<fx:Script source="source/helpers.as" />
 	<fx:Script source="source/application.as" />
 	
 	<s:Group width="100%" height="100%">

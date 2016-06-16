@@ -137,6 +137,35 @@ JSBool removeProject(JSContext* context, JSObject* target, unsigned int argument
     return JS_TRUE;
 }
 
+JSBool getLoggerMaximumLevel(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    Logger::Level level = Logger::get().getMaximumLevel();
+
+    helpers::toJsfl(context, (double)level, *result);
+
+    return JS_TRUE;
+}
+
+JSBool setLoggerMaximumLevel(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    double level;
+
+    if (argumentCount < 1 ||
+        !helpers::fromJsfl(context, argumentList[0], level))
+    {
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"setLoggerMaximumLevel\".");
+
+        return JS_FALSE;
+    }
+
+    uint32_t level_cast = (uint32_t)level;
+    Logger::get().setMaximumLevel((Logger::Level)level_cast);
+
+    IRIS_LOG_WARN("setLoggerMaximumLevel level %d", level_cast);
+
+    return JS_TRUE;
+}
+
 JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {
     std::string path;

@@ -6,6 +6,7 @@ import mx.containers.TitleWindow;
 import mx.managers.PopUpManager;
 
 private var _targetSolutionURI:String = "";
+private var _titleWindow:TitleWindow;
 
 [Bindable]
 private var _solutionTreeData:XML = <root />;
@@ -16,31 +17,9 @@ public var iconClean:Class;
 
 [Bindable]
 [Embed(source="assets/Attention.png")] 
-public var iconDirty:Class; 
+public var iconDirty:Class;
 
-private function execute(... parameters):String
-{
-	var scriptPath:String = "fl.runScript(fl.configURI + 'IrisBuild/jsfl/interface.jsfl', '" + parameters.shift().toString() + "'";
-	
-	var args:Array = [];
-	for (var i:int = 0; i < parameters.length; i++)
-	{
-		args.push("'" + (parameters[i] || "").split("'").join("\'") + "'");
-	}
-	
-	if (args.length > 0)
-	{
-		scriptPath += ", " + args.join(",");
-	}
-	
-	scriptPath += ");";
-	
-	return MMExecute(scriptPath);
-}
-
-private var _titleWindow:TitleWindow;
-
-private function onCreationComplete(e:Event):void
+public function onCreationComplete(e:Event):void
 {
 	execute("initialize");
 	
@@ -51,7 +30,7 @@ private function onCreationComplete(e:Event):void
 	}
 }
 
-private function onBtnNewClicked(e:Event):void
+public function onBtnNewClicked(e:Event):void
 {
 	var path:String = execute("createSolution");
 	if (path != "null")
@@ -60,7 +39,7 @@ private function onBtnNewClicked(e:Event):void
 	}
 }
 
-private function onBtnLoadClicked(e:Event):void
+public function onBtnLoadClicked(e:Event):void
 {
 	var path:String = execute("openSolution");
 	if (path != "null")
@@ -69,7 +48,7 @@ private function onBtnLoadClicked(e:Event):void
 	}
 }
 
-private function onBtnCheckClicked(e:Event):void
+public function onBtnCheckClicked(e:Event):void
 {
 	execute("verifySolution");
 	
@@ -77,18 +56,18 @@ private function onBtnCheckClicked(e:Event):void
 	treSolution.expandItem(_solutionTreeData.root.getItemAt(0), true);
 }
 
-private function onBtnBuildClicked(e:Event):void
+public function onBtnBuildClicked(e:Event):void
 {
 
 }
 
-private function onBtnSettingsClicked(e:Event):void
+public function onBtnSettingsClicked(e:Event):void
 {
 	_titleWindow = PopUpManager.createPopUp(this, Settings, true) as TitleWindow;
 	PopUpManager.centerPopUp(_titleWindow);
 }
 
-private function onBtnAddProjectClicked(e:Event):void
+public function onBtnAddProjectClicked(e:Event):void
 {
 	if (execute("addProject"))
 	{
@@ -97,7 +76,7 @@ private function onBtnAddProjectClicked(e:Event):void
 	}
 }
 
-private function onBtnRemoveProjectClicked(e:Event):void
+public function onBtnRemoveProjectClicked(e:Event):void
 {
 
 }

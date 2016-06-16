@@ -42,4 +42,6 @@ extern "C" JSBool verifySolution(JSContext* context, JSObject* target, unsigned 
 extern "C" JSBool getSolutionTreeDataProvider(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
 extern "C" JSBool addProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
 extern "C" JSBool removeProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
+extern "C" JSBool getLoggerMaximumLevel(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
+extern "C" JSBool setLoggerMaximumLevel(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
 extern "C" JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);

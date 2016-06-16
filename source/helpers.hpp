@@ -46,6 +46,12 @@ namespace helpers {
         return true;
     }
 
+    template<>
+    inline bool fromJsfl(JSContext* context, const jsval& input, double& target)
+    {
+        return JS_ValueToDouble(context, input, &target) == JS_TRUE;
+    }
+
     template<typename ValueType>
     bool toJsfl(JSContext* context, const ValueType& input, jsval& target);
 
@@ -73,6 +79,12 @@ namespace helpers {
     inline bool toJsfl(JSContext* context, const bool& input, jsval& target)
     {
         return toJsfl<std::string>(context, std::string(input ? "true" : "false"), target);
+    }
+
+    template<>
+    inline bool toJsfl(JSContext* context, const double& input, jsval& target)
+    {
+        return JS_DoubleToValue(context, input, &target) == JS_TRUE;
     }
 
     // OS

@@ -46,6 +46,16 @@ function removeProject(path)
 	return IrisBuild.removeProject(path) == "true";
 }
 
+function getLoggerMaximumLevel()
+{
+	return IrisBuild.getLoggerMaximumLevel();
+}
+
+function setLoggerMaximumLevel(level)
+{
+	IrisBuild.setLoggerMaximumLevel(level);
+}
+
 function getSolutionTreeDataProvider()
 {
 	return IrisBuild.getSolutionTreeDataProvider();

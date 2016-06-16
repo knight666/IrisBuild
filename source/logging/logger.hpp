@@ -29,6 +29,7 @@ namespace iris {
         static void create();
         static void destroy();
 
+        Level getMaximumLevel() const { return m_levelMaximum; }
         void setMaximumLevel(Level level);
 
         void setFilePath(const std::string& filePath);

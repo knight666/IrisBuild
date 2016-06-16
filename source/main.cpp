@@ -13,6 +13,8 @@ void MM_Init()
     JS_DefineFunction(L"getSolutionTreeDataProvider", getSolutionTreeDataProvider, 0);
     JS_DefineFunction(L"addProject", addProject, 1);
     JS_DefineFunction(L"removeProject", removeProject, 1);
+    JS_DefineFunction(L"getLoggerMaximumLevel", getLoggerMaximumLevel, 0);
+    JS_DefineFunction(L"setLoggerMaximumLevel", setLoggerMaximumLevel, 1);
     JS_DefineFunction(L"loadProject", loadProject, 1);
 
     iris::Logger::create();
