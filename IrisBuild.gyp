@@ -30,6 +30,8 @@
 				'source/build/visitor.hpp',
 				'source/logging/logger.cpp',
 				'source/logging/logger.hpp',
+				'source/application.cpp',
+				'source/application.hpp',
 				'source/helpers.cpp',
 				'source/helpers.hpp',
 				'source/interface.cpp',
