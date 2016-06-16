@@ -80,7 +80,10 @@ private function onBtnBuildClicked(e:Event):void
 
 private function onBtnAddProjectClicked(e:Event):void
 {
-	
+	if (execute("addProject"))
+	{
+		loadSolution(_targetSolutionURI);
+	}
 }
 
 private function onBtnRemoveProjectClicked(e:Event):void

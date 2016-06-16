@@ -16,9 +16,6 @@ namespace helpers {
     std::string casefold(const std::string& text);
 
     // JSFL
-    bool valueToString(JSContext& context, jsval& input, std::string& output);
-    bool stringToValue(JSContext& context, const std::string& input, jsval& target);
-
     template<typename ValueType>
     bool fromJsfl(JSContext* context, const jsval& input, ValueType& target);
 

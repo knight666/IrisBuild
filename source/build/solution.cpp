@@ -15,33 +15,56 @@ namespace iris {
     {
     }
 
-    std::shared_ptr<Project> Solution::getCurrentProject() const
+    std::shared_ptr<Project> Solution::addProject(const std::string& filePath)
     {
-        if (m_projects.size() == 0)
+        std::map<std::string, std::shared_ptr<Project>>::iterator found = m_projects.find(filePath);
+        if (found != m_projects.end())
+        {
+            return found->second;
+        }
+
+        std::shared_ptr<Project> project(new Project(*this));
+        if (!project->parse(filePath))
         {
             return nullptr;
         }
 
-        return m_projects[m_projects.size() - 1];
+        m_projects.insert(std::make_pair(project->getFilePath(), project));
+
+        save(m_filePath);
+
+        return project;
     }
 
-    void Solution::addProject(std::shared_ptr<Project> project)
+    bool Solution::removeProject(const std::string& filePath)
     {
-        m_projects.push_back(project);
+        std::map<std::string, std::shared_ptr<Project>>::iterator found = m_projects.find(filePath);
+        if (found != m_projects.end())
+        {
+            IRIS_LOG_ERROR("Project \"%s\" is not registered or has already been removed.", filePath.c_str());
+
+            return false;
+        }
+
+        m_projects.erase(found);
+
+        save(m_filePath);
+
+        return true;
     }
 
     bool Solution::verify()
     {
         bool result = true;
 
-        for (std::shared_ptr<Project> project : m_projects)
+        for (std::pair<std::string, std::shared_ptr<Project>> project : m_projects)
         {
-            project->reset();
+            project.second->reset();
         }
 
-        for (std::shared_ptr<Project> project : m_projects)
+        for (std::pair<std::string, std::shared_ptr<Project>> project : m_projects)
         {
-            result = result && project->check();
+            result = result && project.second->check();
         }
 
         return result;
@@ -51,9 +74,9 @@ namespace iris {
     {
         bool result = visitor.visitEnter(*this);
 
-        for (std::shared_ptr<Project> project : m_projects)
+        for (std::pair<std::string, std::shared_ptr<Project>> project : m_projects)
         {
-            if (!project->accept(visitor))
+            if (!project.second->accept(visitor))
             {
                 return false;
             }
@@ -135,7 +158,7 @@ namespace iris {
                 return false;
             }
 
-            m_projects.push_back(project);
+            m_projects.insert(std::make_pair(project->getFilePath(), project));
         }
 
         m_filePath = filePath;
@@ -157,9 +180,9 @@ namespace iris {
         TiXmlElement* projects_element = new TiXmlElement("Projects");
         root_element->LinkEndChild(projects_element);
 
-        for (std::shared_ptr<Project> project : m_projects)
+        for (std::pair<std::string, std::shared_ptr<Project>> project : m_projects)
         {
-            if (!project->save(projects_element, IRIS_SAVE_VERSION))
+            if (!project.second->save(projects_element, IRIS_SAVE_VERSION))
             {
                 return false;
             }

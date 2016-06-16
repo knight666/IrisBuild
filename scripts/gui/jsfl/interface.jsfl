@@ -30,6 +30,22 @@ function verifySolution()
 	return IrisBuild.verifySolution() == "true";
 }
 
+function addProject()
+{
+	var path = fl.browseForFileURL("select", "Select a project file.", "Flash Uncompressed Document (*.xfl)", "xfl");
+	if (!path)
+	{
+		return false;
+	}
+	
+	return IrisBuild.addProject(path) == "true";
+}
+
+function removeProject(path)
+{
+	return IrisBuild.removeProject(path) == "true";
+}
+
 function getSolutionTreeDataProvider()
 {
 	return IrisBuild.getSolutionTreeDataProvider();

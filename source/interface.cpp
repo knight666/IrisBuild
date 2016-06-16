@@ -14,7 +14,7 @@ JSBool initialize(JSContext* context, JSObject* target, unsigned int argumentCou
     std::string configurationPath;
 
     if (argumentCount < 1 ||
-        !helpers::valueToString(*context, argumentList[0], configurationPath))
+        !helpers::fromJsfl(context, argumentList[0], configurationPath))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"initialize\".");
 
@@ -70,7 +70,7 @@ JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentC
     if (argumentCount < 1 ||
         !helpers::fromJsfl(context, argumentList[0], path))
     {
-        IRIS_LOG_ERROR("Invalid arguments supplied for \"loadSolution\".");
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"saveSolution\".");
 
         return JS_FALSE;
     }
@@ -97,6 +97,42 @@ JSBool getSolutionTreeDataProvider(JSContext* context, JSObject* target, unsigne
     IRIS_LOG_TRACE("serialized: \"%s\"", printer.getSerialized().c_str());
 
     helpers::toJsfl(context, printer.getSerialized(), *result);
+
+    return JS_TRUE;
+}
+
+JSBool addProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    std::string path;
+
+    if (argumentCount < 1 ||
+        !helpers::fromJsfl(context, argumentList[0], path))
+    {
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"addProject\".");
+
+        return JS_FALSE;
+    }
+
+    std::shared_ptr<Project> project = Application::get().getSolution()->addProject(helpers::uriToAbsolute(path));
+    helpers::toJsfl(context, project != nullptr, *result);
+
+    return JS_TRUE;
+}
+
+JSBool removeProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    std::string path;
+
+    if (argumentCount < 1 ||
+        !helpers::fromJsfl(context, argumentList[0], path))
+    {
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"removeProject\".");
+
+        return JS_FALSE;
+    }
+
+    bool success = Application::get().getSolution()->removeProject(helpers::uriToAbsolute(path));
+    helpers::toJsfl(context, success, *result);
 
     return JS_TRUE;
 }
