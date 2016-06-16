@@ -78,6 +78,16 @@ private function onBtnBuildClicked(e:Event):void
 
 }
 
+private function onBtnAddProjectClicked(e:Event):void
+{
+	
+}
+
+private function onBtnRemoveProjectClicked(e:Event):void
+{
+	
+}
+
 private function loadSolution(path:String):void
 {
 	execute("loadSolution", path);
