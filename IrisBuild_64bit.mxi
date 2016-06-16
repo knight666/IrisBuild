@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<macromedia-extension name="IrisBuild" version="1.0.0" type="command">
+	<author name="Quinten Lansu" />
+	<products>
+		<product name="Flash" version="7" primary="true" />
+	</products>
+	<description>
+		<![CDATA[
+			Build system that keeps track of changes in projects, linked assets and dependendent source files.
+		]]>
+	</description>
+	<ui-access>
+		<![CDATA[
+			Use the IrisBuildGUI window to manage your solution.
+		]]>
+	</ui-access>
+	<license-agreement>
+		<![CDATA[
+		]]>
+	</license-agreement>
+	<files>
+		<file source="build/IrisBuildGUI.swf" destination="$flash/WindowSWF" />
+		<file source="output/windows/x64/Release/IrisBuild.dll" destination="$flash/External Libraries" />
+		<file source="scripts/gui/jsfl/interface.jsfl" destination="$flash/IrisBuild" />
+	</files>
+</macromedia-extension>
