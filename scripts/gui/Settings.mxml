@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+	title="IrisBuild Settings"
+	layout="vertical"
+	width="300"
+	height="400"
+	titleStyleName="titleText"
+	backgroundColor="white"
+	backgroundAlpha="1.0"
+	borderColor="white"
+	borderAlpha="1.0"
+	cornerRadius="0"
+	showCloseButton="true"
+	close="titleWindow_close(event)">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+
+			private function titleWindow_close(evt:CloseEvent):void {
+				PopUpManager.removePopUp(this)
+			}
+		]]>
+	</mx:Script>
+</mx:TitleWindow>

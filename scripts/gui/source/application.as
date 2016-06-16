@@ -2,6 +2,8 @@ import adobe.utils.MMExecute;
 import mx.collections.XMLListCollection;
 import flash.events.Event;
 import flash.net.SharedObject;
+import mx.containers.TitleWindow;
+import mx.managers.PopUpManager;
 
 private var _targetSolutionURI:String = "";
 
@@ -35,6 +37,8 @@ private function execute(... parameters):String
 	
 	return MMExecute(scriptPath);
 }
+
+private var _titleWindow:TitleWindow;
 
 private function onCreationComplete(e:Event):void
 {
@@ -78,6 +82,12 @@ private function onBtnBuildClicked(e:Event):void
 
 }
 
+private function onBtnSettingsClicked(e:Event):void
+{
+	_titleWindow = PopUpManager.createPopUp(this, Settings, true) as TitleWindow;
+	PopUpManager.centerPopUp(_titleWindow);
+}
+
 private function onBtnAddProjectClicked(e:Event):void
 {
 	if (execute("addProject"))
@@ -89,7 +99,7 @@ private function onBtnAddProjectClicked(e:Event):void
 
 private function onBtnRemoveProjectClicked(e:Event):void
 {
-	
+
 }
 
 private function loadSolution(path:String):void

@@ -81,6 +81,13 @@
 				label="Build"
 				click="onBtnBuildClicked(event)"
 				height="32" />
+			
+			<s:Button
+				id="btnSettings"
+				icon="@Embed('assets/Services.png')"
+				label="Settings"
+				click="onBtnSettingsClicked(event)"
+				height="32" />
 		</s:Group>
 	</s:Group>
 
