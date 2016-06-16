@@ -6,7 +6,7 @@ MM_STATE
 void MM_Init()
 {
     JS_DefineFunction(L"initialize", initialize, 1);
-    JS_DefineFunction(L"createSolution", loadSolution, 1);
+    JS_DefineFunction(L"createSolution", createSolution, 1);
     JS_DefineFunction(L"loadSolution", loadSolution, 1);
     JS_DefineFunction(L"saveSolution", saveSolution, 1);
     JS_DefineFunction(L"verifySolution", verifySolution, 0);

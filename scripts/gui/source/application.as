@@ -49,7 +49,11 @@ private function onCreationComplete(e:Event):void
 
 private function onBtnNewClicked(e:Event):void
 {
-
+	var path:String = execute("createSolution");
+	if (path != "null")
+	{
+		loadSolution(path);
+	}
 }
 
 private function onBtnLoadClicked(e:Event):void

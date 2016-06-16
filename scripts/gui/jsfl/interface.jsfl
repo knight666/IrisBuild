@@ -14,14 +14,20 @@ function openSolution()
 	return fl.browseForFileURL("open", "Select a solution file.", "IrisBuild Solution (*.xml)", "xml");
 }
 
+function createSolution()
+{
+	path = fl.browseForFileURL("save", "Specify a filename for the solution file.", "IrisBuild Solution (*.xml)", "xml");
+	return IrisBuild.createSolution(path) == "true" ? path : null;
+}
+
 function loadSolution(path)
 {
-	return IrisBuild.loadSolution(path);
+	return IrisBuild.loadSolution(path) == "true";
 }
 
 function verifySolution()
 {
-	return IrisBuild.verifySolution();
+	return IrisBuild.verifySolution() == "true";
 }
 
 function getSolutionTreeDataProvider()

@@ -147,6 +147,9 @@ namespace iris {
     {
         TiXmlDocument document;
 
+        TiXmlDeclaration* declaration = new TiXmlDeclaration("1.0", "utf-8", "");
+        document.LinkEndChild(declaration);
+
         TiXmlElement* root_element = new TiXmlElement("Solution");
         root_element->SetAttribute("version", IRIS_SAVE_VERSION);
         document.LinkEndChild(root_element);

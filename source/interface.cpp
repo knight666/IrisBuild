@@ -21,7 +21,10 @@ JSBool initialize(JSContext* context, JSObject* target, unsigned int argumentCou
         return JS_FALSE;
     }
 
-    return Application::get().initialize(helpers::uriToAbsolute(configurationPath)) ? JS_TRUE : JS_FALSE;
+    bool success = Application::get().initialize(helpers::uriToAbsolute(configurationPath));
+    helpers::toJsfl(context, success, *result);
+
+    return JS_TRUE;
 }
 
 JSBool createSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
@@ -36,7 +39,10 @@ JSBool createSolution(JSContext* context, JSObject* target, unsigned int argumen
         return JS_FALSE;
     }
 
-    return Application::get().createSolution(helpers::uriToAbsolute(path)) ? JS_TRUE : JS_FALSE;
+    bool success = Application::get().createSolution(helpers::uriToAbsolute(path));
+    helpers::toJsfl(context, success, *result);
+
+    return JS_TRUE;
 }
 
 JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
@@ -51,7 +57,10 @@ JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentC
         return JS_FALSE;
     }
 
-    return Application::get().getSolution()->load(helpers::uriToAbsolute(path)) ? JS_TRUE : JS_FALSE;
+    bool success = Application::get().getSolution()->load(helpers::uriToAbsolute(path));
+    helpers::toJsfl(context, success, *result);
+
+    return JS_TRUE;
 }
 
 JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
@@ -66,14 +75,16 @@ JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentC
         return JS_FALSE;
     }
 
-    return Application::get().getSolution()->save(helpers::uriToAbsolute(path)) ? JS_TRUE : JS_FALSE;
+    bool success = Application::get().getSolution()->save(helpers::uriToAbsolute(path));
+    helpers::toJsfl(context, success, *result);
+
+    return JS_TRUE;
 }
 
 JSBool verifySolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {
-    bool verified = Application::get().getSolution()->verify();
-
-    helpers::toJsfl(context, verified, *result);
+    bool success = Application::get().getSolution()->verify();
+    helpers::toJsfl(context, success, *result);
 
     return JS_TRUE;
 }
