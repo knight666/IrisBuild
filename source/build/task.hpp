@@ -14,6 +14,7 @@ namespace iris {
 
         void reset();
         bool check();
+        void update();
 
     protected:
 
@@ -26,6 +27,7 @@ namespace iris {
 
         bool m_cacheSet;
         bool m_cacheResult;
+        std::string m_cacheCommand;
 
     };
 
