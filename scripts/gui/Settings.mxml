@@ -3,10 +3,9 @@
 	xmlns:fx="http://ns.adobe.com/mxml/2009"
 	xmlns:s="library://ns.adobe.com/flex/spark"
 	xmlns:mx="library://ns.adobe.com/flex/mx"
-	title="IrisBuild Settings"
+	title="Settings"
 	layout="vertical"
 	width="300"
-	height="400"
 	titleStyleName="titleText"
 	backgroundColor="white"
 	backgroundAlpha="1.0"
@@ -24,7 +23,7 @@
 				<s:Label>Logging level</s:Label>
 			</mx:GridItem>
 			<mx:GridItem>
-				<s:DropDownList id="drpLogging" width="100%">
+				<s:DropDownList id="drpLogging">
 					<mx:ArrayCollection>
 						<fx:String>INFO</fx:String>
 						<fx:String>TRACE</fx:String>
