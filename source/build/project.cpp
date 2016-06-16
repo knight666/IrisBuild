@@ -88,9 +88,13 @@ namespace iris {
         return true;
     }
 
-    void Project::save(TiXmlElement* element, uint32_t version)
+    bool Project::save(TiXmlElement* element, uint32_t version)
     {
+        TiXmlElement* project_element = new TiXmlElement("Project");
+        project_element->SetAttribute("path", m_filePath.c_str());
+        element->LinkEndChild(project_element);
 
+        return true;
     }
 
     std::string Project::getTaskIntermediatePath() const

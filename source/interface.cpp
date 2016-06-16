@@ -36,9 +36,7 @@ JSBool createSolution(JSContext* context, JSObject* target, unsigned int argumen
         return JS_FALSE;
     }
 
-    Application::get().createSolution(helpers::uriToAbsolute(path));
-
-    return JS_TRUE;
+    return Application::get().createSolution(helpers::uriToAbsolute(path)) ? JS_TRUE : JS_FALSE;
 }
 
 JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
@@ -68,9 +66,7 @@ JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentC
         return JS_FALSE;
     }
 
-    Application::get().getSolution()->save(helpers::uriToAbsolute(path));
-
-    return JS_TRUE;
+    return Application::get().getSolution()->save(helpers::uriToAbsolute(path)) ? JS_TRUE : JS_FALSE;
 }
 
 JSBool verifySolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)

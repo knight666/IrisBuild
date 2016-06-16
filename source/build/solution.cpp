@@ -92,9 +92,8 @@ namespace iris {
 
         std::string version_text = helpers::readAttributeText(document.RootElement(), "version");
 
-        int32_t version_semantic[3] = { 0 };
-        sscanf_s(version_text.c_str(), "%d.%d.%d", &version_semantic[0], &version_semantic[1], &version_semantic[2]);
-        uint32_t version = IRIS_SAVE_VERSION_MAKE(version_semantic[0], version_semantic[1], version_semantic[2]);
+        uint32_t version = 0;
+        sscanf_s(version_text.c_str(), "%d", &version);
 
         IRIS_LOG_TRACE("version: \"%s\".", version_text.c_str());
 
@@ -144,9 +143,26 @@ namespace iris {
         return true;
     }
 
-    void Solution::save(const std::string& path)
+    bool Solution::save(const std::string& path)
     {
+        TiXmlDocument document;
 
+        TiXmlElement* root_element = new TiXmlElement("Solution");
+        root_element->SetAttribute("version", IRIS_SAVE_VERSION);
+        document.LinkEndChild(root_element);
+
+        TiXmlElement* projects_element = new TiXmlElement("Projects");
+        root_element->LinkEndChild(projects_element);
+
+        for (std::shared_ptr<Project> project : m_projects)
+        {
+            if (!project->save(projects_element, IRIS_SAVE_VERSION))
+            {
+                return false;
+            }
+        }
+
+        return document.SaveFile(path.c_str());
     }
 
 };

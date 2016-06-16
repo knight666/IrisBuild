@@ -42,12 +42,10 @@ namespace iris {
         return true;
     }
 
-    std::shared_ptr<Solution> Application::createSolution(const std::string& filePath)
+    bool Application::createSolution(const std::string& filePath)
     {
         m_solution = std::shared_ptr<Solution>(new Solution());
-        m_solution->save(filePath);
-
-        return m_solution;
+        return m_solution->save(filePath);
     }
 
 };

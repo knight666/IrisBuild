@@ -33,7 +33,7 @@ namespace iris {
         bool accept(Visitor& visitor);
 
         bool load(TiXmlElement* element, uint32_t version);
-        void save(TiXmlElement* element, uint32_t version);
+        bool save(TiXmlElement* element, uint32_t version);
 
     private:
 

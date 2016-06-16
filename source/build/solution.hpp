@@ -28,7 +28,7 @@ namespace iris {
         void addProject(std::shared_ptr<Project> project);
 
         bool load(const std::string& filePath);
-        void save(const std::string& filePath);
+        bool save(const std::string& filePath);
 
     private:
 

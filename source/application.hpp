@@ -22,7 +22,7 @@ namespace iris {
 
         std::shared_ptr<Solution> getSolution() const { return m_solution; }
 
-        std::shared_ptr<Solution> createSolution(const std::string& filePath);
+        bool createSolution(const std::string& filePath);
 
     private:
 
