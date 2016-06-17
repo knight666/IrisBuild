@@ -1,52 +1,25 @@
-#pragma once
+#ifdef IRIS_IMPLEMENT_FUNCTIONS
+    #define IRIS_WIDEN(_text) L ## _text
+    #define IRIS_INTERFACE(_name, _argumentCount) \
+        JS_DefineFunction(IRIS_WIDEN(#_name), _name, _argumentCount);
+#else
+    #define IRIS_INTERFACE(_name, _argumentCount) \
+        extern "C" JSBool _name (JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
+#endif
 
-// C
-#include <stdarg.h>
-#include <stdlib.h>
-#include <time.h>
+IRIS_INTERFACE(initialize, 1)
+IRIS_INTERFACE(createSolution, 1)
+IRIS_INTERFACE(loadSolution, 1)
+IRIS_INTERFACE(saveSolution, 1)
+IRIS_INTERFACE(verifySolution, 0)
+IRIS_INTERFACE(getSolutionTreeDataProvider, 0)
+IRIS_INTERFACE(addProject, 1)
+IRIS_INTERFACE(removeProject, 1)
+IRIS_INTERFACE(getSettingInt, 1)
+IRIS_INTERFACE(getSettingString, 1)
+IRIS_INTERFACE(setSettingInt, 2)
+IRIS_INTERFACE(setSettingString, 2)
+IRIS_INTERFACE(loadProject, 1)
 
-// STL
-#include <fstream>
-#include <map>
-#include <memory>
-#include <sstream>
-#include <string>
-#include <vector>
-
-// Windows
-#include <windows.h>
-#include <ShlObj.h>
-#include <Shlwapi.h>
-
-extern "C" {
-
-    // utf8rewind
-    #include <utf8rewind.h>
-
-    // Flash API
-    #include "mm_jsapi.h"
-
-}
-
-// TinyXML
-#include <tinyxml.h>
-
-// Settings
-#define IRIS_SAVE_VERSION 1
-
-#define IRIS_SETTING_LOGGER_LEVEL  1
-
-// Public interface
-extern "C" JSBool initialize(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
-extern "C" JSBool createSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
-extern "C" JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
-extern "C" JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
-extern "C" JSBool verifySolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
-extern "C" JSBool getSolutionTreeDataProvider(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
-extern "C" JSBool addProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
-extern "C" JSBool removeProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
-extern "C" JSBool getSettingInt(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
-extern "C" JSBool getSettingString(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
-extern "C" JSBool setSettingInt(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
-extern "C" JSBool setSettingString(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
-extern "C" JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result);
+#undef IRIS_INTERFACE
+#undef IRIS_WIDEN

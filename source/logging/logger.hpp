@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../interface.hpp"
+#include "../main.hpp"
 
 #define IRIS_LOG_ERROR(_message, ...)   ::iris::Logger::get().write(::iris::Logger::Level::Error, __FILE__, __LINE__, _message, __VA_ARGS__)
 #define IRIS_LOG_WARN(_message, ...)    ::iris::Logger::get().write(::iris::Logger::Level::Warning, __FILE__, __LINE__, _message, __VA_ARGS__)

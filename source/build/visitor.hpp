@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../interface.hpp"
+#include "../main.hpp"
 
 namespace iris {
     class Project;

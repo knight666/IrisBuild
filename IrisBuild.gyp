@@ -38,6 +38,7 @@
 				'source/interface.hpp',
 				'source/mm_jsapi.h',
 				'source/main.cpp',
+				'source/main.hpp',
 			],
 			'conditions': [
 				['OS=="win"', {

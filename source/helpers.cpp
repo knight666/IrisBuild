@@ -94,7 +94,7 @@ namespace helpers {
             ::GetFileTime(file, nullptr, nullptr, &write_file_time) == FALSE ||
             ::FileTimeToSystemTime(&write_file_time, &write_system_time) == FALSE)
         {
-            return "";
+            return std::string("");
         }
 
         ::CloseHandle(file);
@@ -159,9 +159,9 @@ namespace helpers {
         TiXmlElement* element = parent->FirstChildElement(name);
         if (element == nullptr)
         {
-            IRIS_LOG_INFO("ERROR! Missing \"%s\" element under \"%s\".", name, parent->Value());
+            IRIS_LOG_ERROR("Missing \"%s\" element under \"%s\".", name, parent->Value());
 
-            return "";
+            return std::string("");
         }
 
         const char* text = element->GetText();
@@ -172,7 +172,7 @@ namespace helpers {
     std::string readAttributeText(TiXmlElement* owner, const char* name)
     {
         const char* value = owner->Attribute(name);
-        return (value != nullptr) ? std::string(value) : "";
+        return std::string((value != nullptr) ? value : "");
     }
 
 };

@@ -1,3 +1,5 @@
+#include "main.hpp"
+
 #include "interface.hpp"
 
 #include "build/project.hpp"

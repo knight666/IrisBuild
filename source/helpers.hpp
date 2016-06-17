@@ -1,6 +1,6 @@
 #pragma once
 
-#include "interface.hpp"
+#include "main.hpp"
 
 #define XML_FOR_EACH(_element, _name, _iterator) \
     for (TiXmlElement*  ##_iterator = (_element)->FirstChildElement(_name); \

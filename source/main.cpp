@@ -1,23 +1,16 @@
 #include "logging/logger.hpp"
 #include "application.hpp"
+#include "main.hpp"
+
+#include "interface.hpp"
 
 MM_STATE
 
 void MM_Init()
 {
-    JS_DefineFunction(L"initialize", initialize, 1);
-    JS_DefineFunction(L"createSolution", createSolution, 1);
-    JS_DefineFunction(L"loadSolution", loadSolution, 1);
-    JS_DefineFunction(L"saveSolution", saveSolution, 1);
-    JS_DefineFunction(L"verifySolution", verifySolution, 0);
-    JS_DefineFunction(L"getSolutionTreeDataProvider", getSolutionTreeDataProvider, 0);
-    JS_DefineFunction(L"addProject", addProject, 1);
-    JS_DefineFunction(L"removeProject", removeProject, 1);
-    JS_DefineFunction(L"getSettingInt", getSettingInt, 1);
-    JS_DefineFunction(L"setSettingInt", setSettingInt, 2);
-    JS_DefineFunction(L"getSettingString", getSettingString, 1);
-    JS_DefineFunction(L"setSettingString", setSettingString, 2);
-    JS_DefineFunction(L"loadProject", loadProject, 1);
+#define IRIS_IMPLEMENT_FUNCTIONS
+    #include "interface.hpp"
+#undef IRIS_IMPLEMENT_FUNCTIONS
 
     iris::Logger::create();
     iris::Application::create();
