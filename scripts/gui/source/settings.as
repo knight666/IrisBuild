@@ -6,7 +6,11 @@ import mx.managers.PopUpManager;
 
 public function onCreationComplete(e:Event):void
 {
-	loadSettings();
+	var persistentData:SharedObject = SharedObject.getLocal("persistentData");
+	if (persistentData)
+	{
+		drpLogging.selectedIndex = persistentData.data.IrisBuild_LoggerMaximumLevel;
+	}
 }
 
 public function onClose(e:CloseEvent):void
@@ -35,27 +39,4 @@ public function onDrpLoggingChange(e:IndexChangeEvent):void
 	}
 	
 	persistentData.data.IrisBuild_LoggerMaximumLevel = e.currentTarget.selectedIndex;
-}
-
-private function loadSettings():void
-{
-	var persistentData:SharedObject = SharedObject.getLocal("persistentData");
-	if (!persistentData)
-	{
-		return;
-	}
-	
-	persistentData.data.IrisBuild_LoggerMaximumLevel = execute("getSettingInt", IRIS_SETTING_LOGGER_LEVEL);
-	drpLogging.selectedIndex = persistentData.data.IrisBuild_LoggerMaximumLevel;
-}
-
-private function saveSettings():void
-{
-	var persistentData:SharedObject = SharedObject.getLocal("persistentData");
-	if (!persistentData)
-	{
-		return;
-	}
-	
-	execute("setSettingInt", IRIS_SETTING_LOGGER_LEVEL, persistentData.data.IrisBuild_LoggerMaximumLevel);
 }

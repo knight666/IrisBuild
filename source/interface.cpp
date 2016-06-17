@@ -149,8 +149,6 @@ JSBool getSettingInt(JSContext* context, JSObject* target, unsigned int argument
         return JS_FALSE;
     }
 
-    IRIS_LOG_WARN("getSettingInt setting %d", (uint32_t)setting);
-
     switch ((uint32_t)setting)
     {
 
@@ -159,8 +157,6 @@ JSBool getSettingInt(JSContext* context, JSObject* target, unsigned int argument
             Logger::Level level = Logger::get().getMaximumLevel();
 
             helpers::toJsfl(context, (double)level, *result);
-
-            IRIS_LOG_WARN("getSettingInt loggerLevel %d", (uint32_t)level);
 
         } break;
 
@@ -201,9 +197,9 @@ JSBool setSettingInt(JSContext* context, JSObject* target, unsigned int argument
         return JS_FALSE;
     }
 
-    int32_t value_cast = (int32_t)value;
+    IRIS_LOG_ERROR("setSettingInt setting %f value %f", setting, value);
 
-    IRIS_LOG_WARN("setSettingInt setting %d value %d", (uint32_t)setting, value_cast);
+    int32_t value_cast = (int32_t)value;
 
     switch ((uint32_t)setting)
     {

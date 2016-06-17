@@ -32,6 +32,8 @@ namespace iris {
     void Logger::setMaximumLevel(Level level)
     {
         m_levelMaximum = level;
+
+        IRIS_LOG_ERROR("setMaximumLevel %d", level);
     }
 
     void Logger::setFilePath(const std::string& filePath)

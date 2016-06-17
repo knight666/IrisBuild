@@ -23,6 +23,8 @@ public function onCreationComplete(e:Event):void
 {
 	execute("initialize");
 	
+	loadSettings();
+	
 	var persistentData:SharedObject = SharedObject.getLocal("persistentData");
 	if (persistentData && persistentData.data.hasOwnProperty("IrisBuild_CurrentSolution"))
 	{
