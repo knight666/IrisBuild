@@ -188,16 +188,19 @@ JSBool setSettingInt(JSContext* context, JSObject* target, unsigned int argument
     double setting;
     double value;
 
+    // For some reason the second argument from the list should be skipped if
+    // the first value is a double.
+    //
+    // This SDK is insane...
+
     if (argumentCount < 2 ||
         !helpers::fromJsfl(context, argumentList[0], setting) ||
-        !helpers::fromJsfl(context, argumentList[1], value))
+        !helpers::fromJsfl(context, argumentList[2], value))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"setSettingInt\".");
 
         return JS_FALSE;
     }
-
-    IRIS_LOG_ERROR("setSettingInt setting %f value %f", setting, value);
 
     int32_t value_cast = (int32_t)value;
 

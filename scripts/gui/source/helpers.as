@@ -31,7 +31,7 @@ public function execute(... parameters):String
 	
 	scriptPath += ");";
 	
-	flashTrace(scriptPath);
+	// flashTrace(scriptPath);
 	
 	return MMExecute(scriptPath);
 }
@@ -44,7 +44,14 @@ private function loadSettings():void
 		return;
 	}
 	
-	persistentData.data.IrisBuild_LoggerMaximumLevel = execute("getSettingInt", IRIS_SETTING_LOGGER_LEVEL) as Number;
+	if (persistentData.data.hasOwnProperty("IrisBuild_LoggerMaximumLevel"))
+	{
+		execute("setSettingInt", IRIS_SETTING_LOGGER_LEVEL, persistentData.data.IrisBuild_LoggerMaximumLevel);
+	}
+	else
+	{
+		persistentData.data.IrisBuild_LoggerMaximumLevel = Number(execute("getSettingInt", IRIS_SETTING_LOGGER_LEVEL));
+	}
 }
 
 private function saveSettings():void
