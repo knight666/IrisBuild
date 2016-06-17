@@ -137,31 +137,104 @@ JSBool removeProject(JSContext* context, JSObject* target, unsigned int argument
     return JS_TRUE;
 }
 
-JSBool getLoggerMaximumLevel(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+JSBool getSettingInt(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {
-    Logger::Level level = Logger::get().getMaximumLevel();
-
-    helpers::toJsfl(context, (double)level, *result);
-
-    return JS_TRUE;
-}
-
-JSBool setLoggerMaximumLevel(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
-{
-    double level;
+    double setting;
 
     if (argumentCount < 1 ||
-        !helpers::fromJsfl(context, argumentList[0], level))
+        !helpers::fromJsfl(context, argumentList[0], setting))
     {
-        IRIS_LOG_ERROR("Invalid arguments supplied for \"setLoggerMaximumLevel\".");
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"getSettingInt\".");
 
         return JS_FALSE;
     }
 
-    uint32_t level_cast = (uint32_t)level;
-    Logger::get().setMaximumLevel((Logger::Level)level_cast);
+    IRIS_LOG_WARN("getSettingInt setting %d", (uint32_t)setting);
 
-    IRIS_LOG_WARN("setLoggerMaximumLevel level %d", level_cast);
+    switch ((uint32_t)setting)
+    {
+
+    case IRIS_SETTING_LOGGER_LEVEL:
+        {
+            Logger::Level level = Logger::get().getMaximumLevel();
+
+            helpers::toJsfl(context, (double)level, *result);
+
+            IRIS_LOG_WARN("getSettingInt loggerLevel %d", (uint32_t)level);
+
+        } break;
+
+    default:
+        return JS_FALSE;
+
+    }
+
+    return JS_TRUE;
+}
+
+JSBool getSettingString(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    double setting;
+
+    if (argumentCount < 1 ||
+        !helpers::fromJsfl(context, argumentList[0], setting))
+    {
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"getSettingString\".");
+
+        return JS_FALSE;
+    }
+
+    return JS_TRUE;
+}
+
+JSBool setSettingInt(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    double setting;
+    double value;
+
+    if (argumentCount < 2 ||
+        !helpers::fromJsfl(context, argumentList[0], setting) ||
+        !helpers::fromJsfl(context, argumentList[1], value))
+    {
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"setSettingInt\".");
+
+        return JS_FALSE;
+    }
+
+    int32_t value_cast = (int32_t)value;
+
+    IRIS_LOG_WARN("setSettingInt setting %d value %d", (uint32_t)setting, value_cast);
+
+    switch ((uint32_t)setting)
+    {
+
+    case IRIS_SETTING_LOGGER_LEVEL:
+    {
+        Logger::get().setMaximumLevel((Logger::Level)value_cast);
+
+    } break;
+
+    default:
+        return JS_FALSE;
+
+    }
+
+    return JS_TRUE;
+}
+
+JSBool setSettingString(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    double setting;
+    std::string value;
+
+    if (argumentCount < 2 ||
+        !helpers::fromJsfl(context, argumentList[0], setting) ||
+        !helpers::fromJsfl(context, argumentList[1], value))
+    {
+        IRIS_LOG_ERROR("Invalid arguments supplied for \"setSettingString\".");
+
+        return JS_FALSE;
+    }
 
     return JS_TRUE;
 }

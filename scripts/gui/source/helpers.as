@@ -1,5 +1,7 @@
 import adobe.utils.MMExecute;
 
+public var IRIS_SETTING_LOGGER_LEVEL:String = "1";
+
 public function execute(... parameters):String
 {
 	var scriptPath:String = "fl.runScript(fl.configURI + 'IrisBuild/jsfl/interface.jsfl', '" + parameters.shift().toString() + "'";
@@ -16,6 +18,8 @@ public function execute(... parameters):String
 	}
 	
 	scriptPath += ");";
+	
+	// MMExecute('fl.trace("' + scriptPath + '");');
 	
 	return MMExecute(scriptPath);
 }

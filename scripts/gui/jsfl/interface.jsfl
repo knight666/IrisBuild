@@ -46,17 +46,27 @@ function removeProject(path)
 	return IrisBuild.removeProject(path) == "true";
 }
 
-function getLoggerMaximumLevel()
-{
-	return IrisBuild.getLoggerMaximumLevel();
-}
-
-function setLoggerMaximumLevel(level)
-{
-	IrisBuild.setLoggerMaximumLevel(level);
-}
-
 function getSolutionTreeDataProvider()
 {
 	return IrisBuild.getSolutionTreeDataProvider();
+}
+
+function getSettingInt(setting)
+{
+	return IrisBuild.getSettingInt(setting);
+}
+
+function getSettingString(setting)
+{
+	return IrisBuild.getSettingString(setting);
+}
+
+function setSettingInt(setting, value)
+{
+	IrisBuild.setSettingInt(setting, value);
+}
+
+function setSettingString(setting, value)
+{
+	IrisBuild.setSettingString(setting, value);
 }

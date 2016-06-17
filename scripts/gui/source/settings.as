@@ -45,7 +45,7 @@ private function loadSettings():void
 		return;
 	}
 	
-	persistentData.data.IrisBuild_LoggerMaximumLevel = execute("getLoggerMaximumLevel");
+	persistentData.data.IrisBuild_LoggerMaximumLevel = execute("getSettingInt", IRIS_SETTING_LOGGER_LEVEL);
 	drpLogging.selectedIndex = persistentData.data.IrisBuild_LoggerMaximumLevel;
 }
 
@@ -57,5 +57,5 @@ private function saveSettings():void
 		return;
 	}
 	
-	execute("setLoggerMaximumLevel", persistentData.data.IrisBuild_LoggerMaximumLevel);
+	execute("setSettingInt", IRIS_SETTING_LOGGER_LEVEL, persistentData.data.IrisBuild_LoggerMaximumLevel);
 }
