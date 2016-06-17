@@ -87,6 +87,36 @@ namespace helpers {
         return JS_DoubleToValue(context, input, &target) == JS_TRUE;
     }
 
+    template<>
+    inline bool toJsfl(JSContext* context, const std::vector<std::string>& input, jsval& target)
+    {
+        // Allocate a string first, which prevents a crash in Flash.
+        if (JS_StringToValue(context, L"0", 1, &target) != JS_TRUE)
+        {
+            return false;
+        }
+
+        std::vector<jsval> values;
+        values.reserve(input.size());
+
+        for (const std::string& text : input)
+        {
+            jsval converted;
+            helpers::toJsfl(context, text, converted);
+            values.push_back(converted);
+        }
+
+        JSObject* array = JS_NewArrayObject(context, (uint32_t)values.size(), &values[0]);
+        if (array == nullptr)
+        {
+            return false;
+        }
+
+        target = JS_ObjectToValue(array);
+
+        return true;
+    }
+
     // OS
     bool createDirectory(const std::string& path);
     bool fileExists(const std::string& path);

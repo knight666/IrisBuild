@@ -98,7 +98,7 @@ typedef JSBool (*JSNative)(JSContext *cx, JSObject *obj, unsigned int argc,
 /* JSBool JS_ExecuteScript(JSContext *cx, JSObject *obj, unsigned short *script,
  *     unsigned int sz, jsval *rval) */
 #define JS_ExecuteScript(c, o, s, z, r) \
-    (mmEnv.executeScript  ? (*(mmEnv.executeScript))(c, o, s, z, (LPCTSTR)__FILE__, \
+    (mmEnv.executeScript  ? (*(mmEnv.executeScript))(c, o, s, z, (unsigned short*)__FILE__, \
         __LINE__, r) : JS_FALSE)
 
 /* JSBool JS_ReportError(JSContext *cx, unsigned short *error, unsigned int sz) */

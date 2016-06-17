@@ -4,6 +4,7 @@
 
 #include "build/project.hpp"
 #include "build/solution.hpp"
+#include "build/buildvisitor.hpp"
 #include "build/treevisitor.hpp"
 #include "logging/logger.hpp"
 #include "application.hpp"
@@ -137,6 +138,22 @@ JSBool removeProject(JSContext* context, JSObject* target, unsigned int argument
     helpers::toJsfl(context, success, *result);
 
     return JS_TRUE;
+}
+
+JSBool getProjectsOutOfDate(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+{
+    BuildVisitor visitor;
+    Application::get().getSolution()->accept(visitor);
+
+    std::vector<std::string> paths;
+
+    std::vector<Project*> projects = visitor.getProjects();
+    for (Project* project : projects)
+    {
+        paths.push_back(project->getProjectPath());
+    }
+
+    return helpers::toJsfl(context, paths, *result) ? JS_TRUE : JS_FALSE;
 }
 
 JSBool getSettingInt(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)

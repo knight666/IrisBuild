@@ -17,6 +17,8 @@
 				'source/build/dom/document.hpp',
 				'source/build/dom/symbol.cpp',
 				'source/build/dom/symbol.hpp',
+				'source/build/buildvisitor.cpp',
+				'source/build/buildvisitor.hpp',
 				'source/build/project.cpp',
 				'source/build/project.hpp',
 				'source/build/publish.cpp',

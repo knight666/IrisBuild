@@ -60,7 +60,8 @@ public function onBtnCheckClicked(e:Event):void
 
 public function onBtnBuildClicked(e:Event):void
 {
-
+	var projects:String = execute("getProjectsOutOfDate");
+	flashTrace("projects " + String(projects));
 }
 
 public function onBtnSettingsClicked(e:Event):void
