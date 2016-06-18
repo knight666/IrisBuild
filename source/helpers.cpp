@@ -63,6 +63,29 @@ namespace helpers {
         return converted;
     }
 
+    bool evaluate(JSContext* context, JSObject* object, const std::string& script, jsval* result, const char* filePath, uint32_t line)
+    {
+        std::wstring wide_file_name = wide(filePath);
+        size_t last_slash = wide_file_name.find_last_of(L'\\');
+        if (last_slash != std::wstring::npos)
+        {
+            wide_file_name.erase(last_slash, wide_file_name.length() - last_slash);
+        }
+
+        IRIS_LOG_TRACE("evaluate %s", script.c_str());
+
+        std::wstring wide_script = wide(script);
+
+        return mmEnv.executeScript(
+            context,
+            object,
+            (uint16_t*)wide_script.c_str(),
+            (uint32_t)(wide_script.size() / UTF8_WCHAR_SIZE),
+            (uint16_t*)wide_file_name.c_str(),
+            line,
+            result) == JS_TRUE;
+    }
+
     bool createDirectory(const std::string& path)
     {
         std::wstring wide_path = wide(path);

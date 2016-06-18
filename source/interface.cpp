@@ -207,14 +207,18 @@ JSBool setSettingInt(JSContext* context, JSObject* target, unsigned int argument
     double setting;
     double value;
 
-    // For some reason the second argument from the list should be skipped if
-    // the first value is a double.
+    // On a 64-bit target, the second argument should be ignored, because
+    // the double is actually 128 bits?
     //
     // This SDK is insane...
 
     if (argumentCount < 2 ||
         !helpers::fromJsfl(context, argumentList[0], setting) ||
+    #if _WIN64
         !helpers::fromJsfl(context, argumentList[2], value))
+    #else
+        !helpers::fromJsfl(context, argumentList[1], value))
+    #endif
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"setSettingInt\".");
 

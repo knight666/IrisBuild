@@ -7,6 +7,9 @@
         ##_iterator != nullptr; \
         ##_iterator = ##_iterator -> NextSiblingElement(_name))
 
+#define IRIS_JS_EVAL(_context, _object, _script, _result) \
+    ::helpers::evaluate(_context, _object, _script, _result, __FILE__, __LINE__)
+
 namespace iris {
 namespace helpers {
 
@@ -116,6 +119,8 @@ namespace helpers {
 
         return true;
     }
+
+    bool evaluate(JSContext* context, JSObject* object, const std::string& script, jsval* result, const char* filePath, uint32_t line);
 
     // OS
     bool createDirectory(const std::string& path);
