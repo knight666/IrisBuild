@@ -28,6 +28,9 @@ namespace iris {
 
     bool BuildVisitor::visitLeave(Solution& solution)
     {
+        std::stringstream ss_log;
+        size_t index = 1;
+
         for (Project* project : m_projects)
         {
             char filename[_MAX_FNAME] = { 0 };
@@ -35,9 +38,12 @@ namespace iris {
 
             IRIS_LOG_INFO("Building \"%s\".", filename);
 
+            ss_log << "fl.trace(\"" << index << "> Building '" << filename << "'\");" << std::endl;
+
             std::stringstream ss_build;
 
             ss_build << "var errors_uri = '" << helpers::absolutePathToUri(project->getIntermediatePath() + "\\errors.log") << "';" << std::endl;
+            ss_build << "fl.trace(errors_uri);" << std::endl;
             ss_build << "fl.publishDocument('" << helpers::absolutePathToUri(project->getFilePath()) << "');" << std::endl;
             ss_build << "if (FLfile.write(errors_uri, '')) { fl.compilerErrors.save(errors_uri, false); }" << std::endl;
             ss_build << "FLfile.read(errors_uri, true);";
@@ -48,10 +54,16 @@ namespace iris {
             if (Scripting::get().fromJsfl(errors, s_errors))
             {
                 IRIS_LOG_ERROR("Errors: %s", s_errors.c_str());
+
+                ss_log << "fl.trace(\"" << index << "> " << s_errors << "\");" << std::endl;
             }
 
             IRIS_LOG_TRACE("errors %d errorsString %s", errors, s_errors.c_str());
+
+            index++;
         }
+
+        IRIS_JS_EVAL(m_context, ss_log.str());
 
         return true;
     }
