@@ -153,7 +153,10 @@ JSBool getProjectsOutOfDate(JSContext* context, JSObject* target, unsigned int a
         paths.push_back(project->getProjectPath());
     }
 
-    return helpers::toJsfl(context, paths, *result) ? JS_TRUE : JS_FALSE;
+    *result = IRIS_JS_EVAL(context, target, "fl.trace(\"bleh\");");
+
+    //return helpers::toJsfl(context, paths, *result) ? JS_TRUE : JS_FALSE;
+    return JS_TRUE;
 }
 
 JSBool getSettingInt(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)

@@ -7,11 +7,15 @@
         ##_iterator != nullptr; \
         ##_iterator = ##_iterator -> NextSiblingElement(_name))
 
+#define IRIS_JS_EVAL(_context, _object, _script) \
+    ::iris::helpers::evaluate(_context, _object, _script, __FILE__, __LINE__)
+
 namespace iris {
 namespace helpers {
 
     // Strings
     std::string utf8(const std::wstring& text);
+    std::vector<uint16_t> utf16(const std::string& text);
     std::wstring wide(const std::string& text);
     std::string casefold(const std::string& text);
 
@@ -116,6 +120,8 @@ namespace helpers {
 
         return true;
     }
+
+    jsval evaluate(JSContext* context, JSObject* object, const std::string& script, const char* filePath, uint32_t line);
 
     // OS
     bool createDirectory(const std::string& path);
