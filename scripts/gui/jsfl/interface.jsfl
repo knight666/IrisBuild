@@ -51,9 +51,9 @@ function getSolutionTreeDataProvider()
 	return IrisBuild.getSolutionTreeDataProvider();
 }
 
-function getProjectsOutOfDate()
+function buildProjects()
 {
-	return IrisBuild.getProjectsOutOfDate();
+	return IrisBuild.buildProjects();
 }
 
 function getSettingInt(setting)

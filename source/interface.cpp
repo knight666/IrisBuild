@@ -143,22 +143,11 @@ JSBool removeProject(JSContext* context, JSObject* target, unsigned int argument
     return JS_TRUE;
 }
 
-JSBool getProjectsOutOfDate(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
+JSBool buildProjects(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {
-    BuildVisitor visitor;
+    BuildVisitor visitor(target);
     Application::get().getSolution()->accept(visitor);
 
-    std::vector<std::string> paths;
-
-    std::vector<Project*> projects = visitor.getProjects();
-    for (Project* project : projects)
-    {
-        paths.push_back(project->getProjectPath());
-    }
-
-    *result = IRIS_JS_EVAL(target, "fl.trace(\"bleh\");");
-
-    //return Scripting::get().toJsfl(paths, *result) ? JS_TRUE : JS_FALSE;
     return JS_TRUE;
 }
 
