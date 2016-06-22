@@ -6,6 +6,7 @@
 #include <time.h>
 
 // STL
+#include <algorithm>
 #include <fstream>
 #include <map>
 #include <memory>

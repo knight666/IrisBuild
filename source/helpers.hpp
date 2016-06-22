@@ -23,6 +23,7 @@ namespace helpers {
     std::string absolutePath(const std::string& path);
     std::string relativePath(const std::string& pathFrom, const std::string& pathTo);
     std::string uriToAbsolute(const std::string& uri);
+    std::string absolutePathToUri(const std::string& path);
 
     // XML
     std::string readElementText(TiXmlElement* parent, const char* name);

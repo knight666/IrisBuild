@@ -1,6 +1,7 @@
 #include "buildvisitor.hpp"
 
 #include "../logging/logger.hpp"
+#include "../helpers.hpp"
 #include "../scripting.hpp"
 #include "project.hpp"
 #include "solution.hpp"
@@ -34,16 +35,18 @@ namespace iris {
 
             IRIS_LOG_INFO("Building \"%s\".", filename);
 
+            std::string uri_errors_log = helpers::absolutePathToUri(project->getIntermediatePath() + "\\errors.log");
+
             std::stringstream ss_build;
 
-            ss_build << "fl.publishDocument('" << project->getFilePath() << "');" << std::endl;
-            ss_build << "fl.compilerErrors.save('" << project->getIntermediatePath() << "\\errors.log', true);";
+            ss_build << "fl.publishDocument('" << helpers::absolutePathToUri(project->getFilePath()) << "');" << std::endl;
+            ss_build << "fl.compilerErrors.save('" << uri_errors_log << "', true);";
 
             IRIS_JS_EVAL(m_context, ss_build.str());
 
             std::stringstream ss_read;
 
-            ss_read << "FLfile.read('" << project->getIntermediatePath() << "\\errors.log', true);";
+            ss_read << "FLfile.read('" << uri_errors_log << "', true);";
 
             jsval errors = IRIS_JS_EVAL(m_context, ss_read.str());
 
