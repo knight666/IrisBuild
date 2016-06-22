@@ -175,13 +175,9 @@ namespace helpers {
 
     std::string absolutePathToUri(const std::string& path)
     {
-        std::string uri("file:///");
+        std::string uri = std::string("file:///") + path;
 
-        uri += path;
-
-        size_t drive_separator = uri.find(':', 6);
-        uri.replace(drive_separator, drive_separator + 1, 1, '|');
-
+        std::replace(uri.begin() + 6, uri.end(), ':', '|');
         std::replace(uri.begin(), uri.end(), '\\', '/');
 
         return uri;

@@ -35,20 +35,14 @@ namespace iris {
 
             IRIS_LOG_INFO("Building \"%s\".", filename);
 
-            std::string uri_errors_log = helpers::absolutePathToUri(project->getIntermediatePath() + "\\errors.log");
-
             std::stringstream ss_build;
 
+            ss_build << "var errors_uri = '" << helpers::absolutePathToUri(project->getIntermediatePath() + "\\errors.log") << "';" << std::endl;
             ss_build << "fl.publishDocument('" << helpers::absolutePathToUri(project->getFilePath()) << "');" << std::endl;
-            ss_build << "fl.compilerErrors.save('" << uri_errors_log << "', true);";
+            ss_build << "if (FLfile.write(errors_uri, '')) { fl.compilerErrors.save(errors_uri, false); }" << std::endl;
+            ss_build << "FLfile.read(errors_uri, true);";
 
-            IRIS_JS_EVAL(m_context, ss_build.str());
-
-            std::stringstream ss_read;
-
-            ss_read << "FLfile.read('" << uri_errors_log << "', true);";
-
-            jsval errors = IRIS_JS_EVAL(m_context, ss_read.str());
+            jsval errors = IRIS_JS_EVAL(m_context, ss_build.str());
 
             std::string s_errors;
             if (Scripting::get().fromJsfl(errors, s_errors))
