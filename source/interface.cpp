@@ -9,15 +9,18 @@
 #include "logging/logger.hpp"
 #include "application.hpp"
 #include "helpers.hpp"
+#include "scripting.hpp"
 
 using namespace iris;
 
 JSBool initialize(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {
+    Scripting::get().setContext(context);
+
     std::string configurationPath;
 
     if (argumentCount < 1 ||
-        !helpers::fromJsfl(context, argumentList[0], configurationPath))
+        !Scripting::get().fromJsfl(argumentList[0], configurationPath))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"initialize\".");
 
@@ -25,7 +28,7 @@ JSBool initialize(JSContext* context, JSObject* target, unsigned int argumentCou
     }
 
     bool success = Application::get().initialize(helpers::uriToAbsolute(configurationPath));
-    helpers::toJsfl(context, success, *result);
+    Scripting::get().toJsfl(success, *result);
 
     return JS_TRUE;
 }
@@ -35,7 +38,7 @@ JSBool createSolution(JSContext* context, JSObject* target, unsigned int argumen
     std::string path;
 
     if (argumentCount < 1 ||
-        !helpers::fromJsfl(context, argumentList[0], path))
+        !Scripting::get().fromJsfl(argumentList[0], path))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"createSolution\".");
 
@@ -43,7 +46,7 @@ JSBool createSolution(JSContext* context, JSObject* target, unsigned int argumen
     }
 
     bool success = Application::get().createSolution(helpers::uriToAbsolute(path));
-    helpers::toJsfl(context, success, *result);
+    Scripting::get().toJsfl(success, *result);
 
     return JS_TRUE;
 }
@@ -53,7 +56,7 @@ JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentC
     std::string path;
 
     if (argumentCount < 1 ||
-        !helpers::fromJsfl(context, argumentList[0], path))
+        !Scripting::get().fromJsfl(argumentList[0], path))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"loadSolution\".");
 
@@ -61,7 +64,7 @@ JSBool loadSolution(JSContext* context, JSObject* target, unsigned int argumentC
     }
 
     bool success = Application::get().getSolution()->load(helpers::uriToAbsolute(path));
-    helpers::toJsfl(context, success, *result);
+    Scripting::get().toJsfl(success, *result);
 
     return JS_TRUE;
 }
@@ -71,7 +74,7 @@ JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentC
     std::string path;
 
     if (argumentCount < 1 ||
-        !helpers::fromJsfl(context, argumentList[0], path))
+        !Scripting::get().fromJsfl(argumentList[0], path))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"saveSolution\".");
 
@@ -79,7 +82,7 @@ JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentC
     }
 
     bool success = Application::get().getSolution()->save(helpers::uriToAbsolute(path));
-    helpers::toJsfl(context, success, *result);
+    Scripting::get().toJsfl(success, *result);
 
     return JS_TRUE;
 }
@@ -87,7 +90,7 @@ JSBool saveSolution(JSContext* context, JSObject* target, unsigned int argumentC
 JSBool verifySolution(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {
     bool success = Application::get().getSolution()->verify();
-    helpers::toJsfl(context, success, *result);
+    Scripting::get().toJsfl(success, *result);
 
     return JS_TRUE;
 }
@@ -99,7 +102,7 @@ JSBool getSolutionTreeDataProvider(JSContext* context, JSObject* target, unsigne
 
     IRIS_LOG_TRACE("serialized: \"%s\"", printer.getSerialized().c_str());
 
-    helpers::toJsfl(context, printer.getSerialized(), *result);
+    Scripting::get().toJsfl(printer.getSerialized(), *result);
 
     return JS_TRUE;
 }
@@ -109,7 +112,7 @@ JSBool addProject(JSContext* context, JSObject* target, unsigned int argumentCou
     std::string path;
 
     if (argumentCount < 1 ||
-        !helpers::fromJsfl(context, argumentList[0], path))
+        !Scripting::get().fromJsfl(argumentList[0], path))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"addProject\".");
 
@@ -117,7 +120,7 @@ JSBool addProject(JSContext* context, JSObject* target, unsigned int argumentCou
     }
 
     std::shared_ptr<Project> project = Application::get().getSolution()->addProject(helpers::uriToAbsolute(path));
-    helpers::toJsfl(context, project != nullptr, *result);
+    Scripting::get().toJsfl(project != nullptr, *result);
 
     return JS_TRUE;
 }
@@ -127,7 +130,7 @@ JSBool removeProject(JSContext* context, JSObject* target, unsigned int argument
     std::string path;
 
     if (argumentCount < 1 ||
-        !helpers::fromJsfl(context, argumentList[0], path))
+        !Scripting::get().fromJsfl(argumentList[0], path))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"removeProject\".");
 
@@ -135,7 +138,7 @@ JSBool removeProject(JSContext* context, JSObject* target, unsigned int argument
     }
 
     bool success = Application::get().getSolution()->removeProject(helpers::uriToAbsolute(path));
-    helpers::toJsfl(context, success, *result);
+    Scripting::get().toJsfl(success, *result);
 
     return JS_TRUE;
 }
@@ -153,9 +156,9 @@ JSBool getProjectsOutOfDate(JSContext* context, JSObject* target, unsigned int a
         paths.push_back(project->getProjectPath());
     }
 
-    *result = IRIS_JS_EVAL(context, target, "fl.trace(\"bleh\");");
+    *result = IRIS_JS_EVAL(target, "fl.trace(\"bleh\");");
 
-    //return helpers::toJsfl(context, paths, *result) ? JS_TRUE : JS_FALSE;
+    //return Scripting::get().toJsfl(paths, *result) ? JS_TRUE : JS_FALSE;
     return JS_TRUE;
 }
 
@@ -164,7 +167,7 @@ JSBool getSettingInt(JSContext* context, JSObject* target, unsigned int argument
     double setting;
 
     if (argumentCount < 1 ||
-        !helpers::fromJsfl(context, argumentList[0], setting))
+        !Scripting::get().fromJsfl(argumentList[0], setting))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"getSettingInt\".");
 
@@ -178,7 +181,7 @@ JSBool getSettingInt(JSContext* context, JSObject* target, unsigned int argument
         {
             Logger::Level level = Logger::get().getMaximumLevel();
 
-            helpers::toJsfl(context, (double)level, *result);
+            Scripting::get().toJsfl((double)level, *result);
 
         } break;
 
@@ -195,7 +198,7 @@ JSBool getSettingString(JSContext* context, JSObject* target, unsigned int argum
     double setting;
 
     if (argumentCount < 1 ||
-        !helpers::fromJsfl(context, argumentList[0], setting))
+        !Scripting::get().fromJsfl(argumentList[0], setting))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"getSettingString\".");
 
@@ -216,8 +219,8 @@ JSBool setSettingInt(JSContext* context, JSObject* target, unsigned int argument
     // This SDK is insane...
 
     if (argumentCount < 2 ||
-        !helpers::fromJsfl(context, argumentList[0], setting) ||
-        !helpers::fromJsfl(context, argumentList[2], value))
+        !Scripting::get().fromJsfl(argumentList[0], setting) ||
+        !Scripting::get().fromJsfl(argumentList[2], value))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"setSettingInt\".");
 
@@ -249,8 +252,8 @@ JSBool setSettingString(JSContext* context, JSObject* target, unsigned int argum
     std::string value;
 
     if (argumentCount < 2 ||
-        !helpers::fromJsfl(context, argumentList[0], setting) ||
-        !helpers::fromJsfl(context, argumentList[1], value))
+        !Scripting::get().fromJsfl(argumentList[0], setting) ||
+        !Scripting::get().fromJsfl(argumentList[1], value))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"setSettingString\".");
 
@@ -265,7 +268,7 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
     std::string path;
 
     if (argumentCount < 1 ||
-        !helpers::fromJsfl(context, argumentList[0], path))
+        !Scripting::get().fromJsfl(argumentList[0], path))
     {
         IRIS_LOG_ERROR("Invalid arguments supplied for \"loadProject\".");
 
@@ -289,7 +292,7 @@ JSBool loadProject(JSContext* context, JSObject* target, unsigned int argumentCo
 
     IRIS_LOG_INFO("Project is %s.", status ? "up-to-date" : "out-of-date");
 
-    helpers::toJsfl(context, status, *result);
+    Scripting::get().toJsfl(status, *result);
 
     return JS_TRUE;
 }

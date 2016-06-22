@@ -82,32 +82,6 @@ namespace helpers {
         return converted;
     }
 
-    jsval evaluate(JSContext* context, JSObject* object, const std::string& script, const char* filePath, uint32_t line)
-    {
-        std::vector<uint16_t> u_script = utf16(script);
-
-        std::string file_name(filePath);
-        size_t last_slash = file_name.find_last_of('\\');
-        if (last_slash != std::string::npos)
-        {
-            file_name.erase(0, last_slash + 1);
-        }
-
-        std::vector<uint16_t> u_file_name = utf16(file_name);
-
-        jsval value = 0;
-
-        JSBool result = mmEnv.executeScript(
-            context, object,
-            &u_script[0], (uint32_t)u_script.size(),
-            &u_file_name[0], line,
-            &value);
-
-        IRIS_LOG_TRACE("evaluate script %s result %d value 0x%08x fileName %s line %d", script.c_str(), result, value, file_name.c_str(), line);
-
-        return value;
-    }
-
     bool createDirectory(const std::string& path)
     {
         std::wstring wide_path = wide(path);

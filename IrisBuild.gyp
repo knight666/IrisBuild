@@ -41,6 +41,8 @@
 				'source/mm_jsapi.h',
 				'source/main.cpp',
 				'source/main.hpp',
+				'source/scripting.cpp',
+				'source/scripting.hpp',
 			],
 			'conditions': [
 				['OS=="win"', {
