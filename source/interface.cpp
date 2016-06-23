@@ -153,6 +153,8 @@ JSBool getProjectsOutOfDate(JSContext* context, JSObject* target, unsigned int a
         paths.push_back(project->getProjectPath());
     }
 
+    *result = IRIS_JS_EVAL(context, target, std::string("fl.trace(fl.version);"));
+
     return helpers::toJsfl(context, paths, *result) ? JS_TRUE : JS_FALSE;
 }
 

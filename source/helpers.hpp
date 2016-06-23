@@ -7,8 +7,8 @@
         ##_iterator != nullptr; \
         ##_iterator = ##_iterator -> NextSiblingElement(_name))
 
-#define IRIS_JS_EVAL(_context, _object, _script, _result) \
-    ::helpers::evaluate(_context, _object, _script, _result, __FILE__, __LINE__)
+#define IRIS_JS_EVAL(_context, _object, _script) \
+    ::helpers::evaluate(_context, _object, _script, __FILE__, __LINE__)
 
 namespace iris {
 namespace helpers {
@@ -93,12 +93,6 @@ namespace helpers {
     template<>
     inline bool toJsfl(JSContext* context, const std::vector<std::string>& input, jsval& target)
     {
-        // Allocate a string first, which prevents a crash in Flash.
-        if (JS_StringToValue(context, L"0", 1, &target) != JS_TRUE)
-        {
-            return false;
-        }
-
         std::vector<jsval> values;
         values.reserve(input.size());
 
@@ -120,7 +114,7 @@ namespace helpers {
         return true;
     }
 
-    bool evaluate(JSContext* context, JSObject* object, const std::string& script, jsval* result, const char* filePath, uint32_t line);
+    jsval evaluate(JSContext* context, JSObject* object, const std::string& script, const char* filePath, uint32_t line);
 
     // OS
     bool createDirectory(const std::string& path);

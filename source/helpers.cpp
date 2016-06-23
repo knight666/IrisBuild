@@ -63,27 +63,31 @@ namespace helpers {
         return converted;
     }
 
-    bool evaluate(JSContext* context, JSObject* object, const std::string& script, jsval* result, const char* filePath, uint32_t line)
+    jsval evaluate(JSContext* context, JSObject* object, const std::string& script, const char* filePath, uint32_t line)
     {
+        jsval result = 0;
+
         std::wstring wide_file_name = wide(filePath);
         size_t last_slash = wide_file_name.find_last_of(L'\\');
         if (last_slash != std::wstring::npos)
         {
-            wide_file_name.erase(last_slash, wide_file_name.length() - last_slash);
+            wide_file_name.erase(0, last_slash + 1);
         }
-
-        IRIS_LOG_TRACE("evaluate %s", script.c_str());
 
         std::wstring wide_script = wide(script);
 
-        return mmEnv.executeScript(
+        JSBool executed = mmEnv.executeScript(
             context,
             object,
             (uint16_t*)wide_script.c_str(),
-            (uint32_t)(wide_script.size() / UTF8_WCHAR_SIZE),
+            (uint32_t)wide_script.size(),
             (uint16_t*)wide_file_name.c_str(),
             line,
-            result) == JS_TRUE;
+            &result);
+
+        IRIS_LOG_TRACE("evaluate %s fileName %s line %d result %d", script.c_str(), utf8(wide_file_name).c_str(), line, executed);
+
+        return result;
     }
 
     bool createDirectory(const std::string& path)
