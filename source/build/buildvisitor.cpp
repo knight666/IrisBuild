@@ -42,26 +42,42 @@ namespace iris {
 
             std::stringstream ss_build;
 
-            ss_build << "var errors_uri = '" << helpers::absolutePathToUri(project->getIntermediatePath() + "\\errors.log") << "';" << std::endl;
-            ss_build << "fl.trace(errors_uri);" << std::endl;
+            std::string errors_path = project->getIntermediatePath() + "\\errors.log";
+
+            ss_build << "var errors_uri = '" << helpers::absolutePathToUri(errors_path) << "';" << std::endl;
             ss_build << "fl.publishDocument('" << helpers::absolutePathToUri(project->getFilePath()) << "');" << std::endl;
-            ss_build << "if (FLfile.write(errors_uri, '')) { fl.compilerErrors.save(errors_uri, false); }" << std::endl;
-            ss_build << "FLfile.read(errors_uri, true);";
+            ss_build << "if (FLfile.write(errors_uri, '')) { fl.compilerErrors.save(errors_uri, false); }";
 
-            jsval errors = IRIS_JS_EVAL(m_context, ss_build.str());
+            IRIS_JS_EVAL(m_context, ss_build.str());
 
-            std::string s_errors;
-            if (Scripting::get().fromJsfl(errors, s_errors))
+            std::string errors;
+
+            if (helpers::fileExists(errors_path))
             {
-                IRIS_LOG_ERROR("Errors: %s", s_errors.c_str());
+                std::ifstream file(errors_path, std::ios::in | std::ios::binary);
+                std::stringstream file_stream;
+                file_stream << file.rdbuf();
+                file.close();
 
-                ss_log << "fl.trace(\"" << index << "> " << s_errors << "\");" << std::endl;
+                errors = file_stream.str();
+
+                ss_log << "fl.trace(\"" << index << "> " << errors << "\");" << std::endl;
             }
 
-            IRIS_LOG_TRACE("errors %d errorsString %s", errors, s_errors.c_str());
+            IRIS_LOG_TRACE("\"%s\" errorsString %s", filename, errors.c_str());
+
+            size_t build_failed = errors.find("**Error**");
+            if (build_failed != std::string::npos)
+            {
+                ss_log << "fl.trace(\"" << index << "> Build FAILED.\");" << std::endl;
+
+                break;
+            }
 
             index++;
         }
+
+        IRIS_LOG_TRACE("%s", ss_log.str().c_str());
 
         IRIS_JS_EVAL(m_context, ss_log.str());
 

@@ -52,13 +52,15 @@ namespace iris {
 
         jsval value = 0;
 
+        IRIS_LOG_TRACE("evaluate fileName %s line %d script \"%s\"", file_name.c_str(), line, script.c_str());
+
         JSBool result = mmEnv.executeScript(
             m_context, object,
             &u_script[0], (uint32_t)u_script.size(),
             &u_file_name[0], line,
             &value);
 
-        IRIS_LOG_TRACE("evaluate script %s result %d value 0x%08x fileName %s line %d", script.c_str(), result, value, file_name.c_str(), line);
+        IRIS_LOG_TRACE("evaluate result %d value 0x%08x", result, value);
 
         return value;
     }
