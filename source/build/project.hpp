@@ -37,6 +37,7 @@ namespace iris {
 
     private:
 
+        virtual bool onTaskBuild() override;
         virtual std::string getTaskIntermediatePath() const override;
         virtual std::string getTaskSourcePath() const override;
         virtual std::string getTaskCommand() const override;

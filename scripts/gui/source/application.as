@@ -85,7 +85,12 @@ public function onBtnRemoveProjectClicked(e:Event):void
 
 private function loadSolution(path:String):void
 {
-	execute("loadSolution", path);
+	if (!execute("loadSolution", path))
+	{
+		flashTrace("Failed to load solution at \"" + path + "\".");
+		
+		return;
+	}
 	
 	_solutionTreeData = XML(execute("getSolutionTreeDataProvider"));
 	treSolution.expandItem(_solutionTreeData.root.getItemAt(0), true);
@@ -94,4 +99,6 @@ private function loadSolution(path:String):void
 	persistentData.data.IrisBuild_CurrentSolution = path;
 	
 	_targetSolutionURI = path;
+	
+	return;
 }

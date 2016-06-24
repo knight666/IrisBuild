@@ -2,6 +2,7 @@
 
 #include "../logging/logger.hpp"
 #include "../helpers.hpp"
+#include "dependencygraph.hpp"
 #include "project.hpp"
 #include "visitor.hpp"
 
@@ -66,6 +67,45 @@ namespace iris {
         {
             result = result && project.second->check();
         }
+
+        return result;
+    }
+
+    bool Solution::build()
+    {
+        bool result = true;
+
+        // Clear result cache
+
+        for (std::pair<std::string, std::shared_ptr<Project>> project : m_projects)
+        {
+            project.second->reset();
+        }
+
+        // Build dependency graph
+
+        DependencyGraph graph;
+
+        for (std::pair<std::string, std::shared_ptr<Project>> project : m_projects)
+        {
+            project.second->update(graph);
+        }
+
+        std::vector<DependencyGraph::Dependency> dependencies = graph.getFlattenedList();
+
+        // Build tasks
+
+        for (DependencyGraph::Dependency& dependency : dependencies)
+        {
+            if (!dependency.task->build())
+            {
+                result = false;
+
+                break;
+            }
+        }
+
+        IRIS_LOG_TRACE("build result %s", (result ? "succeeded" : "failed"));
 
         return result;
     }

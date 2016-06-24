@@ -37,6 +37,11 @@ namespace dom {
         return true;
     }
 
+    bool BitmapItem::onTaskBuild()
+    {
+        return true;
+    }
+
     std::string BitmapItem::getTaskIntermediatePath() const
     {
         char directory[_MAX_DIR] = { 0 };

@@ -27,6 +27,11 @@ namespace dom {
         return true;
     }
 
+    bool Symbol::onTaskBuild()
+    {
+        return true;
+    }
+
     std::string Symbol::getTaskIntermediatePath() const
     {
         char directory[_MAX_DIR] = { 0 };

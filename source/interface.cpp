@@ -145,8 +145,8 @@ JSBool removeProject(JSContext* context, JSObject* target, unsigned int argument
 
 JSBool buildProjects(JSContext* context, JSObject* target, unsigned int argumentCount, jsval* argumentList, jsval* result)
 {
-    BuildVisitor visitor(target);
-    Application::get().getSolution()->accept(visitor);
+    bool success = Application::get().getSolution()->build();
+    Scripting::get().toJsfl(success, *result);
 
     return JS_TRUE;
 }

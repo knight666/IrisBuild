@@ -2,6 +2,7 @@
 
 #include "../logging/logger.hpp"
 #include "../helpers.hpp"
+#include "dependencygraph.hpp"
 
 namespace iris {
 
@@ -132,24 +133,44 @@ namespace iris {
         return m_cacheResult;
     }
 
-    void Task::update()
+    void Task::update(DependencyGraph& graph)
     {
-        // Write intermediate file
+        std::vector<std::shared_ptr<Task>> dependencies = getTaskDependencies();
+        for (std::shared_ptr<Task> task : dependencies)
+        {
+            task->update(graph);
+        }
 
         if (!check())
         {
-            std::string intermediate = getTaskIntermediatePath();
-
-            char drive[_MAX_DRIVE] = { 0 };
-            char directory[_MAX_DIR] = { 0 };
-            _splitpath(intermediate.c_str(), drive, directory, nullptr, nullptr);
-
-            helpers::createDirectory(std::string(drive) + directory);
-
-            std::ofstream file(intermediate, std::ios::out | std::ios::binary | std::ios::trunc);
-            file << m_cacheCommand;
-            file.close();
+            graph.addDependency(*this);
         }
+    }
+
+    bool Task::build()
+    {
+        IRIS_LOG_TRACE("Building \"%s\".", getTaskSourcePath().c_str());
+
+        if (!onTaskBuild())
+        {
+            return false;
+        }
+
+        // Write intermediate file
+
+        std::string intermediate = getTaskIntermediatePath();
+
+        char drive[_MAX_DRIVE] = { 0 };
+        char directory[_MAX_DIR] = { 0 };
+        _splitpath(intermediate.c_str(), drive, directory, nullptr, nullptr);
+
+        helpers::createDirectory(std::string(drive) + directory);
+
+        std::ofstream file(intermediate, std::ios::out | std::ios::binary | std::ios::trunc);
+        file << m_cacheCommand;
+        file.close();
+
+        return true;
     }
 
 };

@@ -85,6 +85,11 @@ namespace dom {
         return true;
     }
 
+    bool Document::onTaskBuild()
+    {
+        return true;
+    }
+
     std::string Document::getTaskIntermediatePath() const
     {
         return m_project.getIntermediatePath() + "\\DOMDocument.tlog";

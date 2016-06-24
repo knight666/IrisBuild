@@ -101,6 +101,11 @@ namespace iris {
         return true;
     }
 
+    bool Project::onTaskBuild()
+    {
+        return true;
+    }
+
     std::string Project::getTaskIntermediatePath() const
     {
         char filename[_MAX_FNAME] = { 0 };
