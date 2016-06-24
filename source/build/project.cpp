@@ -2,6 +2,7 @@
 
 #include "../logging/logger.hpp"
 #include "../helpers.hpp"
+#include "../scripting.hpp"
 #include "dom/document.hpp"
 #include "publish.hpp"
 #include "solution.hpp"
@@ -101,9 +102,33 @@ namespace iris {
         return true;
     }
 
-    bool Project::onTaskBuild()
+    bool Project::onTaskBuild(JSObject* context)
     {
-        return true;
+        std::string relative = helpers::relativePath(m_solution.getWorkingDirectory(), m_filePath);
+
+        IRIS_LOG_INFO("Building \"%s\".", relative.c_str());
+
+        std::string errors_path = m_intermediatePath + "\\errors.log";
+
+        std::stringstream ss_build;
+        ss_build << "var errors_uri = '" << helpers::absolutePathToUri(errors_path) << "';" << std::endl;
+        ss_build << "fl.publishDocument('" << helpers::absolutePathToUri(m_filePath) << "');" << std::endl;
+        ss_build << "if (FLfile.write(errors_uri, '')) { fl.compilerErrors.save(errors_uri, false); }";
+        IRIS_JS_EVAL(context, ss_build.str());
+
+        std::string errors;
+
+        if (helpers::fileExists(errors_path))
+        {
+            std::ifstream file(errors_path, std::ios::in | std::ios::binary);
+            std::stringstream file_stream;
+            file_stream << file.rdbuf();
+            file.close();
+
+            errors = file_stream.str();
+        }
+
+        return errors.find("**Error**") == std::string::npos;
     }
 
     std::string Project::getTaskIntermediatePath() const

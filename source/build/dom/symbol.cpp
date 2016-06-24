@@ -27,7 +27,7 @@ namespace dom {
         return true;
     }
 
-    bool Symbol::onTaskBuild()
+    bool Symbol::onTaskBuild(JSObject* context)
     {
         return true;
     }

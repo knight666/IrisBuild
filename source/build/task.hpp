@@ -19,7 +19,7 @@ namespace iris {
         void reset();
         bool check();
         void update(DependencyGraph& graph);
-        bool build();
+        bool build(JSObject* context);
 
         virtual std::string getTaskIntermediatePath() const = 0;
         virtual std::string getTaskSourcePath() const = 0;
@@ -28,7 +28,7 @@ namespace iris {
 
     protected:
 
-        virtual bool onTaskBuild() = 0;
+        virtual bool onTaskBuild(JSObject* context) = 0;
 
     private:
 

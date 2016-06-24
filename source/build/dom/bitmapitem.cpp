@@ -37,7 +37,7 @@ namespace dom {
         return true;
     }
 
-    bool BitmapItem::onTaskBuild()
+    bool BitmapItem::onTaskBuild(JSObject* context)
     {
         return true;
     }

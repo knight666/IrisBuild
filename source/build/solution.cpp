@@ -71,7 +71,7 @@ namespace iris {
         return result;
     }
 
-    bool Solution::build()
+    bool Solution::build(JSObject* context)
     {
         bool result = true;
 
@@ -97,7 +97,7 @@ namespace iris {
 
         for (DependencyGraph::Dependency& dependency : dependencies)
         {
-            if (!dependency.task->build())
+            if (!dependency.task->build(context))
             {
                 result = false;
 

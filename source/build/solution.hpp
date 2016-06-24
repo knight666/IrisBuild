@@ -24,7 +24,7 @@ namespace iris {
         bool removeProject(const std::string& filePath);
 
         bool verify();
-        bool build();
+        bool build(JSObject* context);
 
         bool accept(Visitor& visitor);
 

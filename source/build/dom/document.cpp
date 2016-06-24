@@ -85,7 +85,7 @@ namespace dom {
         return true;
     }
 
-    bool Document::onTaskBuild()
+    bool Document::onTaskBuild(JSObject* context)
     {
         return true;
     }

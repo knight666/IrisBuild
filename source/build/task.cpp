@@ -147,11 +147,11 @@ namespace iris {
         }
     }
 
-    bool Task::build()
+    bool Task::build(JSObject* context)
     {
         IRIS_LOG_TRACE("Building \"%s\".", getTaskSourcePath().c_str());
 
-        if (!onTaskBuild())
+        if (!onTaskBuild(context))
         {
             return false;
         }
