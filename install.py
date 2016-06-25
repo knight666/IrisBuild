@@ -36,8 +36,8 @@ if __name__ == '__main__':
 
 			if os.path.exists('output\\windows\\x64\\Release\\IrisBuild.dll'):
 				installFile('output\\windows\\x64\\Release\\IrisBuild.dll', target_libs)
-			elif os.path.exists('output\\windows\\x64\\Debug\\IrisBuild.dll'):
-				installFile('output\\windows\\x64\\Debug\\IrisBuild.dll', target_libs)
+			elif os.path.exists('output\\windows\\Win32\\Release\\IrisBuild.dll'):
+				installFile('output\\windows\\Win32\\Release\\IrisBuild.dll', target_libs)
 
 			# Scripts
 
